@@ -42,27 +42,27 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _ewEntity() {
-        return "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0";
+        return "sensor.myelectricaldata_rte_ecowatt_j0";
     }
 
     get _ewEntityJ1() {
-        return "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J1";
+        return "sensor.myelectricaldata_rte_ecowatt_j1";
     }
 
     get _ewEntityJ2() {
-        return "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J2";
+        return "sensor.myelectricaldata_rte_ecowatt_j2";
     }
 
     get _tempoEntity() {
-        return "sensor.edf_tempo_myelectricaldata_edf_tempoinfo";
+        return "sensor.myelectricaldata_edf_tempo_info";
     }
 
     get _tempoEntityJ0() {
-        return "sensor.rte_tempo_myelectricaldata_rte_tempotoday";
+        return "sensor.myelectricaldata_rte_tempo_today";
     }
 
     get _tempoEntityJ1() {
-        return "sensor.rte_tempo_myelectricaldata_rte_tempotomorrow";
+        return "sensor.myelectricaldata_rte_tempo_tomorrow";
     }
 
     get _name() {
