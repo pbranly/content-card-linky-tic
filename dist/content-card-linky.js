@@ -749,6 +749,7 @@ class ContentCardLinky extends LitElement {
         if (this.config.showTempo === false) {
             return html``;
         }
+        let sensorName = this.config.tempoEntity;
         const tempoInfo = this.hass.states[sensorName];
         let sensorNameJ0 = this.config.tempoEntityJ0;
         const tempoJ0 = this.hass.states[sensorNameJ0];
