@@ -647,9 +647,9 @@ class ContentCardLinky extends LitElement {
             return html`EcoWatt : uniquement disponible avec myElectricData`;
         }
 
-        const ecoWattForecast = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
-        const ecoWattForecastJ1 = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
-        const ecoWattForecastJ2 = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J1"];
+        const ecoWattForecast = this.hass.states["rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
+        const ecoWattForecastJ1 = this.hass.states["rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
+        const ecoWattForecastJ2 = this.hass.states["rte_ecowatt_myelectricaldata_rte_ecowatt_J1"];
 
         return html`
             <table style="width:100%">
@@ -746,9 +746,9 @@ class ContentCardLinky extends LitElement {
         if (this.config.showTempo === false) {
             return html``;
         }
-        const tempoInfo = this.hass.states["sensor.edf_tempo_myelectricaldata_edf_tempoinfo"];
-        const tempoJ0 = this.hass.states["sensor.rte_tempo_myelectricaldata_rte_tempotoday"];
-        const tempoJ1 = this.hass.states["sensor.rte_tempo_myelectricaldata_rte_tempotomorrow"];
+        const tempoInfo = this.hass.states["edf_tempo_myelectricaldata_edf_tempoinfo"];
+        const tempoJ0 = this.hass.states["rte_tempo_myelectricaldata_rte_tempotoday"];
+        const tempoJ1 = this.hass.states["rte_tempo_myelectricaldata_rte_tempotomorrow"];
 
         if (!tempoJ0 || tempoJ0.length === 0 || !tempoJ1 || tempoJ1.length === 0) {
             return html`Tempo: sensor(s) J0 et/ou J1 indisponible ou incorrecte`;
