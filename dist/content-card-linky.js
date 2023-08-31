@@ -625,6 +625,7 @@ class ContentCardLinky extends LitElement {
     }
 
     getOneDayNextEcoWatt(ecoWattForecastEntity) {
+        alert(ecoWattForecastEntity)
         let ecoWattForecastList = [];
         for (let [time, value] of Object.entries(
             ecoWattForecastEntity.attributes["forecast"]
