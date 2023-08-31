@@ -767,6 +767,7 @@ class ContentCardLinky extends LitElement {
         let [dateJ1, valueJ1, stateJ1] = this.getTempoDateValue(tempoJ1);
         let [remainingRed, remainingWhite, remainingBlue] = this.getTempoRemainingDays(tempoInfo);
 
+
         return html`
             <table class="tempo-color">
                 <tr>
