@@ -648,9 +648,9 @@ class ContentCardLinky extends LitElement {
             return html`EcoWatt : uniquement disponible avec myElectricData`;
         }
 
-        const ecoWattForecast = this.hass.states["rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
-        const ecoWattForecastJ1 = this.hass.states["rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
-        const ecoWattForecastJ2 = this.hass.states["rte_ecowatt_myelectricaldata_rte_ecowatt_J1"];
+        const ecoWattForecast = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
+        const ecoWattForecastJ1 = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
+        const ecoWattForecastJ2 = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J1"];
 
         return html`
             <table style="width:100%">
