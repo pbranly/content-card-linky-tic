@@ -1077,7 +1077,7 @@ class ContentCardLinky extends LitElement {
      	text-transform: capitalize;
       }
       .tempo-grey {
-        color: white;
+        color: #002654;
 	text-align: center;
         background: grey;
 	border: 2px solid var(--divider-color);
