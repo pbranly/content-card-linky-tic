@@ -756,6 +756,8 @@ class ContentCardLinky extends LitElement {
         let sensorNameJ1 = this.config.tempoEntityJ1;
         const tempoJ1 = this.hass.states[sensorNameJ1];
 
+        alert(tempoJ0)
+
         if (!tempoJ0 || tempoJ0.length === 0 || !tempoJ1 || tempoJ1.length === 0) {
             return html`Tempo: sensor(s) J0 et/ou J1 indisponible ou incorrecte`;
         }
