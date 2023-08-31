@@ -39,31 +39,7 @@ export class contentCardLinkyEditor extends LitElement {
 
   get _entity() {
     return this._config.entity || "";
-  }
-  
-  get _ewEntity() {
-    return this._config.ewEntity || "";
-  }
-  
-  get _ewEntityJ1() {
-    return this._config.ewEntityJ1 || "";
-  }
-
-  get _ewEntityJ2() {
-    return this._config.ewEntityJ2 || "";
-  }  
-  
-  get _tempoEntity() {
-    return this._config.tempoEntityInfo || "";
-  }  
-  
-  get _tempoEntityJ0() {
-    return this._config.tempoEntityJ0 || "";
-  }
-
-  get _tempoEntityJ1() {
-    return this._config.tempoEntityJ1 || "";
-  }    
+  } 
 
   get _name() {
     return this._config.name || "";
@@ -196,12 +172,6 @@ export class contentCardLinkyEditor extends LitElement {
             @value-changed="${this._valueChanged}"
           ></paper-input>
           ${this.renderSensorPicker("Entity", this._entity, "entity")}
-		  ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
-		  ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
-          ${this.renderSensorPicker("EcoWattJ2", this._ewEntityJ2, "ewEntityJ2")}
-		  ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
-		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
-		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
           <!-- Switches -->
           <ul class="switches">
             ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -213,7 +183,7 @@ export class contentCardLinkyEditor extends LitElement {
             ${this.renderSwitchOption("Show prix HC/HP", this._showDayPriceHCHP, "showDayPriceHCHP")}
             ${this.renderSwitchOption("Show prix", this._showPrice, "showPrice")}
             ${this.renderSwitchOption("Show jours HC/HP", this._showDayHCHP, "showDayHCHP")}
-			${this.renderSwitchOption("Show jours Max Puissance", this._showDayMaxPower, "showDayMaxPower")}
+	    ${this.renderSwitchOption("Show jours Max Puissance", this._showDayMaxPower, "showDayMaxPower")}
             ${this.renderSwitchOption("Show ratio year", this._showYearRatio, "showYearRatio")}
             ${this.renderSwitchOption("Show ratio mois", this._showCurrentMonthRatio, "showCurrentMonthRatio")}
             ${this.renderSwitchOption("Show ratio mois precedent", this._showMonthRatio, "showMonthRatio")}
@@ -223,8 +193,8 @@ export class contentCardLinkyEditor extends LitElement {
             ${this.renderSwitchOption("Show error", this._showError, "showError")}
             ${this.renderSwitchOption("Show header", this._showHeader, "showHeader")}
             ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
-			${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
-			${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
+	    ${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
+	    ${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
           </ul>
           <!-- -->
           <paper-input
