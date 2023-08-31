@@ -19,9 +19,9 @@ endef
 
 .ONESHELL:
 
-create-pre-release: git-add git-commit git git-push github-pre-release
+create-pre-release: git-add git-commit git-push github-pre-release
 
-create-release: git-add git-commit git git-push github-release
+create-release: git-add git-commit git-push github-release
 
 git-add:
 	git add --all;
