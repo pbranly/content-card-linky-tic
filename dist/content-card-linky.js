@@ -641,6 +641,9 @@ class ContentCardLinky extends LitElement {
     }
 
     renderEcoWatt(attributes, config) {
+        let sensorName = config.entity + "_ecowatt" ;
+        alert(sensorName)
+
         if (attributes.serviceEnedis === undefined) {
             return html``;
         }
@@ -648,6 +651,7 @@ class ContentCardLinky extends LitElement {
             return html`EcoWatt : uniquement disponible avec myElectricData`;
         }
 
+        alert(this.hass.states)
         const ecoWattForecast = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
         const ecoWattForecastJ1 = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0"];
         const ecoWattForecastJ2 = this.hass.states["sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J1"];
