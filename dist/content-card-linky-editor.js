@@ -41,6 +41,30 @@ export class contentCardLinkyEditor extends LitElement {
         return this._config.entity || "";
     }
 
+    get _ewEntity() {
+        return "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J0";
+    }
+
+    get _ewEntityJ1() {
+        return "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J1";
+    }
+
+    get _ewEntityJ2() {
+        return "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_J2";
+    }
+
+    get _tempoEntity() {
+        return "sensor.edf_tempo_myelectricaldata_edf_tempoinfo";
+    }
+
+    get _tempoEntityJ0() {
+        return "sensor.rte_tempo_myelectricaldata_rte_tempotoday";
+    }
+
+    get _tempoEntityJ1() {
+        return "sensor.rte_tempo_myelectricaldata_rte_tempotomorrow";
+    }
+
     get _name() {
         return this._config.name || "";
     }
