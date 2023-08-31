@@ -1046,16 +1046,16 @@ class ContentCardLinky extends LitElement {
       }
       .tempo-days {
        	width:100%;
-	border-spacing: 2px;
+	border-spacing: 6px;
       }
       .tempo-color {
         width:100%;
-	border-spacing: 2px;
+	border-spacing: 6px;
       }
       .tempo-blue {
         color: white;
 	text-align: center;
-        background: #009dfa;
+        background: var(--label-badge-blue);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
 	text-transform: capitalize;
@@ -1071,7 +1071,7 @@ class ContentCardLinky extends LitElement {
       .tempo-red {
         color: white;
 	text-align: center;
-        background: #ff2700;
+        background: var(--label-badge-red);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
      	text-transform: capitalize;
