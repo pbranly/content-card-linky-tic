@@ -19,25 +19,9 @@ endef
 
 .ONESHELL:
 
-create-pre-release: git-add git-commit git git-push
-	@$(call check_version)
-	@$(call check_commit)
-	gh release delete $(VERSION) -y
-	git tag -d $(VERSION)
-	git push --delete origin $(VERSION)
-	git tag $(VERSION)
-	git push origin $(VERSION)
-	gh release create -t $(VERSION) --generate-notes --prerelease $(VERSION)
+create-pre-release: git-add git-commit git git-push github-pre-release
 
-create-release: git-add git-commit git git-push
-	@$(call check_version)
-	@$(call check_commit)
-	gh release delete $(VERSION) -y
-	git tag -d $(VERSION)
-	git push --delete origin $(VERSION)
-	git tag $(VERSION)
-	git push origin $(VERSION)
-	gh release create -t $(VERSION) --generate-notes --prerelease $(VERSION)
+create-release: git-add git-commit git git-push github-release
 
 git-add:
 	git add --all;
@@ -48,3 +32,21 @@ git-commit:
 
 git-push:
 	git push origin dev
+
+github-pre-release:
+	@$(call check_version)
+	gh release delete $(VERSION) -y
+	git tag -d $(VERSION)
+	git push --delete origin $(VERSION)
+	git tag $(VERSION)
+	git push origin $(VERSION)
+	gh release create -t $(VERSION) --generate-notes --prerelease $(VERSION)
+
+github-release:
+	@$(call check_version)
+	gh release delete $(VERSION) -y
+	git tag -d $(VERSION)
+	git push --delete origin $(VERSION)
+	git tag $(VERSION)
+	git push origin $(VERSION)
+	gh release create -t $(VERSION) --generate-notes $(VERSION)
