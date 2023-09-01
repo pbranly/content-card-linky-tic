@@ -26,11 +26,11 @@ create-release: git-add git-commit git-push github-release
 git-commit-push-main: git-add git-commit git-push
 
 git-add:
-	git add --all;
+	git add --all
 
 git-commit:
 	@$(call check_commit)
-	git commit -m "$(commit_msg)";
+	git commit -m "$(commit_msg)"
 
 git-push:
 	git push origin main
