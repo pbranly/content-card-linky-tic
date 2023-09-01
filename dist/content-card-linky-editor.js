@@ -42,27 +42,27 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _ewEntity() {
-        return this._config.ewEntity || "sensor.myelectricaldata_rte_ecowatt_j0";
+        return this._config.ewEntity || "sensor.rte_ecowatt_j0";
     }
 
     get _ewEntityJ1() {
-        return this._config.ewEntityJ1 || "sensor.myelectricaldata_rte_ecowatt_j1";
+        return this._config.ewEntityJ1 || "sensorrte_ecowatt_j1";
     }
 
     get _ewEntityJ2() {
-        return this._config.ewEntityJ2 || "sensor.myelectricaldata_rte_ecowatt_j2";
+        return this._config.ewEntityJ2 || "sensorrte_ecowatt_j2";
     }
 
-    get _tempoEntity() {
-        return this._config.tempoEntityInfo || "sensor.myelectricaldata_edf_tempo_info";
+    get _tempoEntityInfo() {
+        return this._config.tempoEntityInfo || "sensor.edf_tempo_info";
     }
 
     get _tempoEntityJ0() {
-        return this._config.tempoEntityJ0 || "sensor.myelectricaldata_rte_tempo_today";
+        return this._config.tempoEntityJ0 || "sensor.rte_tempo_today";
     }
 
     get _tempoEntityJ1() {
-        return this._config.tempoEntityJ1 || "sensor.myelectricaldata_rte_tempo_tomorrow";
+        return this._config.tempoEntityJ1 || "sensor.rte_tempo_tomorrow";
     }
 
     get _name() {
@@ -195,9 +195,7 @@ export class contentCardLinkyEditor extends LitElement {
                 <div>
                     <paper-input label="Titre" .value="${this._titleName}" .configValue="${"titleName"}" @value-changed="${this._valueChanged}"></paper-input>
                       ${this.renderSensorPicker("Entity", this._entity, "entity")}
-                      Default : sensor.rte_ecowatt_j0
                       ${this.renderSensorPicker("rte_ecowatt_j0", this._ewEntity, "ewEntity")}
-                      Default : sensor.rte_ecowatt_j1
                       ${this.renderSensorPicker("rte_ecowatt_j1", this._ewEntityJ1, "ewEntityJ1")}
                       ${this.renderSensorPicker("rte_ecowatt_j2", this._ewEntityJ2, "ewEntityJ2")}
                       ${this.renderSensorPicker("edf_tempo_info", this._tempoEntityInfo, "tempoEntityInfo")}		  
