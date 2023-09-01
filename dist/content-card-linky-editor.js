@@ -42,27 +42,27 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _ewEntity() {
-        return "sensor.myelectricaldata_rte_ecowatt_j0";
+        return this._config.ewEntity || "sensor.myelectricaldata_rte_ecowatt_j0";
     }
 
     get _ewEntityJ1() {
-        return "sensor.myelectricaldata_rte_ecowatt_j1";
+        return this._config.ewEntityJ1 || "sensor.myelectricaldata_rte_ecowatt_j1";
     }
 
     get _ewEntityJ2() {
-        return "sensor.myelectricaldata_rte_ecowatt_j2";
+        return this._config.ewEntityJ2 || "sensor.myelectricaldata_rte_ecowatt_j2";
     }
 
     get _tempoEntity() {
-        return "sensor.myelectricaldata_edf_tempo_info";
+        return this._config.tempoEntity || "sensor.myelectricaldata_edf_tempo_info";
     }
 
     get _tempoEntityJ0() {
-        return "sensor.myelectricaldata_rte_tempo_today";
+        return this._config.tempoEntityJ0 || "sensor.myelectricaldata_rte_tempo_today";
     }
 
     get _tempoEntityJ1() {
-        return "sensor.myelectricaldata_rte_tempo_tomorrow";
+        return this._config.tempoEntityJ1 || "sensor.myelectricaldata_rte_tempo_tomorrow";
     }
 
     get _name() {
@@ -193,13 +193,14 @@ export class contentCardLinkyEditor extends LitElement {
         return html`
             <div class="card-config">
                 <div>
-                    <paper-input
-                            label="Titre"
-                            .value="${this._titleName}"
-                            .configValue="${"titleName"}"
-                            @value-changed="${this._valueChanged}"
-                    ></paper-input>
-                    ${this.renderSensorPicker("Entity", this._entity, "entity")}
+                    <paper-input label="Titre" .value="${this._titleName}" .configValue="${"titleName"}" @value-changed="${this._valueChanged}"></paper-input>
+                      ${this.renderSensorPicker("Entity", this._entity, "entity")}
+                      ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
+                      ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
+                      ${this.renderSensorPicker("EcoWattJ2", this._ewEntityJ2, "ewEntityJ2")}
+                      ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
+                      ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
+                      ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
                     <!-- Switches -->
                     <ul class="switches">
                         ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -225,22 +226,9 @@ export class contentCardLinkyEditor extends LitElement {
                         ${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
                     </ul>
                     <!-- -->
-                    <paper-input
-                            label="nombre de jours"
-                            type="number"
-                            min="1"
-                            max="12"
-                            value=${this._nbJoursAffichage}
-                            .configValue="${"nbJoursAffichage"}"
-                            @value-changed="${this._valueChanged}"
-                    ></paper-input>
+                    <paper-input label="nombre de jours" type="number" min="1" max="12" value=${this._nbJoursAffichage} .configValue="${"nbJoursAffichage"}" @value-changed="${this._valueChanged}"></paper-input>
                     <br>
-                    <paper-input
-                            label="Nom du jour de la semaine( valeur possible : long, short, narrow )"
-                            .value="${this._showDayName}"
-                            .configValue="${"showDayName"}"
-                            @value-changed="${this._valueChanged}"
-                    ></paper-input>
+                    <paper-input label="Nom du jour de la semaine( valeur possible : long, short, narrow )" .value="${this._showDayName}" .configValue="${"showDayName"}" @value-changed="${this._valueChanged}" ></paper-input>
                 </div>
             </div>
         `;
