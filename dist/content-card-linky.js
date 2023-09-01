@@ -647,12 +647,9 @@ class ContentCardLinky extends LitElement {
             return html`EcoWatt : uniquement disponible avec myElectricData`;
         }
 
-        let sensorName = this.config.ewEntity;
-        const ecoWattForecast = this.hass.states[sensorName];
-        let sensorNameJ1 = this.config.ewEntityJ1;
-        const ecoWattForecastJ1 = this.hass.states[sensorNameJ1];
-        let sensorNameJ2 = this.config.ewEntityJ2;
-        const ecoWattForecastJ2 = this.hass.states[sensorNameJ2];
+        const ecoWattForecast = this.hass.states[this.config.ewEntity];
+        const ecoWattForecastJ1 = this.hass.states[this.config.ewEntityJ1];
+        const ecoWattForecastJ2 = this.hass.states[this.config.ewEntityJ2];
 
         return html`
             <table style="width:100%">
@@ -749,12 +746,9 @@ class ContentCardLinky extends LitElement {
         if (this.config.showTempo === false) {
             return html``;
         }
-        let sensorName = this.config.tempoEntity;
-        const tempoInfo = this.hass.states[sensorName];
-        let sensorNameJ0 = this.config.tempoEntityJ0;
-        const tempoJ0 = this.hass.states[sensorNameJ0];
-        let sensorNameJ1 = this.config.tempoEntityJ1;
-        const tempoJ1 = this.hass.states[sensorNameJ1];
+        const tempoInfo = this.hass.states[this.config.tempoEntity];
+        const tempoJ0 = this.hass.states[this.config.tempoEntityJ0];
+        const tempoJ1 = this.hass.states[this.config.tempoEntityJ1];
 
         alert(tempoJ0)
 
