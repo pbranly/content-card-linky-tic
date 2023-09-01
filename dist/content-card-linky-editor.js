@@ -42,27 +42,27 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _ewEntity() {
-        return this._config.ewEntity || "sensor.rte_ecowatt_j0";
+        return this._config.ewEntity || "";
     }
 
     get _ewEntityJ1() {
-        return this._config.ewEntityJ1 || "sensor.rte_ecowatt_j1";
+        return this._config.ewEntityJ1 || "";
     }
 
     get _ewEntityJ2() {
-        return this._config.ewEntityJ2 || "sensor.rte_ecowatt_j2";
+        return this._config.ewEntityJ2 || "";
     }
 
     get _tempoEntityInfo() {
-        return this._config.tempoEntityInfo || "sensor.edf_tempo_info";
+        return this._config.tempoEntityInfo || "";
     }
 
     get _tempoEntityJ0() {
-        return this._config.tempoEntityJ0 || "sensor.rte_tempo_today";
+        return this._config.tempoEntityJ0 || "";
     }
 
     get _tempoEntityJ1() {
-        return this._config.tempoEntityJ1 || "sensor.rte_tempo_tomorrow";
+        return this._config.tempoEntityJ1 || "";
     }
 
     get _name() {
