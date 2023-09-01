@@ -46,11 +46,11 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _ewEntityJ1() {
-        return this._config.ewEntityJ1 || "sensorrte_ecowatt_j1";
+        return this._config.ewEntityJ1 || "sensor.rte_ecowatt_j1";
     }
 
     get _ewEntityJ2() {
-        return this._config.ewEntityJ2 || "sensorrte_ecowatt_j2";
+        return this._config.ewEntityJ2 || "sensor.rte_ecowatt_j2";
     }
 
     get _tempoEntityInfo() {
