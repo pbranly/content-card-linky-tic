@@ -23,6 +23,8 @@ create-pre-release: git-add git-commit git-push github-pre-release
 
 create-release: git-add git-commit git-push github-release
 
+git-commit-push-main: git-add git-commit git-push
+
 git-add:
 	git add --all;
 
@@ -31,7 +33,7 @@ git-commit:
 	git commit -m "$(commit_msg)";
 
 git-push:
-	git push origin dev
+	git push origin main
 
 github-pre-release:
 	@$(call check_version)
