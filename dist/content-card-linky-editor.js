@@ -195,12 +195,14 @@ export class contentCardLinkyEditor extends LitElement {
                 <div>
                     <paper-input label="Titre" .value="${this._titleName}" .configValue="${"titleName"}" @value-changed="${this._valueChanged}"></paper-input>
                       ${this.renderSensorPicker("Entity", this._entity, "entity")}
-                      ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
-                      ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
-                      ${this.renderSensorPicker("EcoWattJ2", this._ewEntityJ2, "ewEntityJ2")}
-                      ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
-                      ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
-                      ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
+                      Default : sensor.rte_ecowatt_j0
+                      ${this.renderSensorPicker("rte_ecowatt_j0", this._ewEntity, "ewEntity")}
+                      Default : sensor.rte_ecowatt_j1
+                      ${this.renderSensorPicker("rte_ecowatt_j1", this._ewEntityJ1, "ewEntityJ1")}
+                      ${this.renderSensorPicker("rte_ecowatt_j2", this._ewEntityJ2, "ewEntityJ2")}
+                      ${this.renderSensorPicker("edf_tempo_info", this._tempoEntityInfo, "tempoEntityInfo")}		  
+                      ${this.renderSensorPicker("rte_tempo_today", this._tempoEntityJ0, "tempoEntityJ0")}
+                      ${this.renderSensorPicker("rte_tempo_tomorrow", this._tempoEntityJ1, "tempoEntityJ1")}
                     <!-- Switches -->
                     <ul class="switches">
                         ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
