@@ -54,7 +54,7 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _tempoEntity() {
-        return this._config.tempoEntity || "sensor.myelectricaldata_edf_tempo_info";
+        return this._config.tempoEntityInfo || "sensor.myelectricaldata_edf_tempo_info";
     }
 
     get _tempoEntityJ0() {

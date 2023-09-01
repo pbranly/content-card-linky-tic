@@ -746,7 +746,7 @@ class ContentCardLinky extends LitElement {
         if (this.config.showTempo === false) {
             return html``;
         }
-        const tempoInfo = this.hass.states[this.config.tempoEntity];
+        const tempoInfo = this.hass.states[this.config.tempoEntityInfo];
         const tempoJ0 = this.hass.states[this.config.tempoEntityJ0];
         const tempoJ1 = this.hass.states[this.config.tempoEntityJ1];
 
