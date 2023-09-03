@@ -4,14 +4,13 @@ const LitElement = Object.getPrototypeOf(
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-
 window.customCards = window.customCards || [];
 window.customCards.push({
     type: "content-card-linky",
-    name: "Carte Enedis1",
+    name: "Carte Enedis",
     description: "Carte pour l'intégration myElectricalData.",
     preview: true,
-    documentationURL: "https://github.com/saniho/content-card-linky",
+    documentationURL: "https://github.com/myElectricalData/content-card-linky",
 });
 const fireEvent = (node, type, detail, options) => {
     options = options || {};
@@ -364,7 +363,7 @@ class ContentCardLinky extends LitElement {
                 return html
                     `
                         <div class="week-history">
-                            ${this.renderTitreLigne(config)}
+                            ${this.renderTitleLine(config)}
                             ${daily.slice(0, nbJours).reverse().map((day, index) => this.renderDay(day, nbJours - index, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP,
                                     dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, config))}
                         </div>
@@ -389,10 +388,10 @@ class ContentCardLinky extends LitElement {
             `
     }
 
-    renderDailyWeekTitre(maConfig, monTitre) {
-        if (maConfig === true) {
+    renderDailyWeekTitle(myConfig, myTitle) {
+        if (myConfig === true) {
             return html
-                `${monTitre}<br>
+                `${myTitle}<br>
                 `
         } else {
             return html
@@ -401,27 +400,27 @@ class ContentCardLinky extends LitElement {
         }
     }
 
-    renderTitreLigne(config) {
-        if (this.config.showTitreLigne === true) {
+    renderTitleLine(config) {
+        if (this.config.showTitleLine === true) {
             return html
                 `
                     <div class="day">
-                        ${this.renderDailyWeekTitre(true, "")}
-                        ${this.renderDailyWeekTitre(true, "Conso")}
-                        ${this.renderDailyWeekTitre(this.config.showDayPrice, "Prix")}
-                        ${this.renderDailyWeekTitre(this.config.showDayPriceHCHP, "Prix HC")}
-                        ${this.renderDailyWeekTitre(this.config.showDayPriceHCHP, "Prix HP")}
-                        ${this.renderDailyWeekTitre(this.config.showDayHCHP, "HC")}
-                        ${this.renderDailyWeekTitre(this.config.showDayHCHP, "HP")}
-                        ${this.renderDailyWeekTitre(this.config.showDayMaxPower, "MP")}
-                        ${this.renderDailyWeekTitre(this.config.showDayMaxPowerTime, "MPtime")}
+                        ${this.renderDailyWeekTitle(true, "")}
+                        ${this.renderDailyWeekTitle(true, "Conso")}
+                        ${this.renderDailyWeekTitle(this.config.showDayPrice, "Prix")}
+                        ${this.renderDailyWeekTitle(this.config.showDayPriceHCHP, "Prix HC")}
+                        ${this.renderDailyWeekTitle(this.config.showDayPriceHCHP, "Prix HP")}
+                        ${this.renderDailyWeekTitle(this.config.showDayHCHP, "HC")}
+                        ${this.renderDailyWeekTitle(this.config.showDayHCHP, "HP")}
+                        ${this.renderDailyWeekTitle(this.config.showDayMaxPower, "MP")}
+                        ${this.renderDailyWeekTitle(this.config.showDayMaxPowerTime, "MPtime")}
                     </div>
                 `
         }
     }
 
-    r_enderTitreLigne(config) {
-        if (this.config.showTitreLigne === true) {
+    r_enderTitleLine(config) {
+        if (this.config.showTitleLine === true) {
             return html
                 `
                     <div class="day">
@@ -490,7 +489,7 @@ class ContentCardLinky extends LitElement {
                     <br><span class="cons-val">${this.toFloat(day)} 
                   ${this.config.showInTableUnit
                           ? html`
-                              ${unit_of_measurement}`
+                              <span class="unit">${unit_of_measurement}<span>`
                           : html``
                   }</span>
                 `;
@@ -511,7 +510,12 @@ class ContentCardLinky extends LitElement {
             } else {
                 return html
                     `
-                        <br><span class="cons-val">${this.toFloat(valeur)} €</span>
+                        <br><span class="cons-val">${this.toFloat(valeur)} 
+						${this.config.showInTableUnit
+                          ? html`
+                              <span class="unit">€</span>`
+                          : html``
+						}</span>
                     `;
             }
         }
@@ -525,7 +529,12 @@ class ContentCardLinky extends LitElement {
             } else {
                 return html
                     `
-                        <br><span class="cons-val">${this.toFloat(valeur, 2)} €</span>
+                        <br><span class="cons-val">${this.toFloat(valeur,1)} 
+						${this.config.showInTableUnit
+                          ? html`
+                              <span class="unit">€</span>`
+                          : html``
+						}</span>
                     `;
             }
         }
@@ -539,10 +548,10 @@ class ContentCardLinky extends LitElement {
             } else {
                 return html
                     `
-                        <br><span class="cons-val">${this.toFloat(valeur, 2)} 
+                        <br><span class="cons-val">${this.toFloat(valeur,1)} 
            ${this.config.showInTableUnit
                    ? html`
-                       ${unit_of_measurement}`
+                       <span class="unit">${unit_of_measurement}<span>`
                    : html``
            }</span>
                     `;
@@ -560,7 +569,13 @@ class ContentCardLinky extends LitElement {
                 if (over === "true") {
                     return html
                         `
-                            <br><span class="cons-val" style="color:red">${this.toFloat(valeur, 2)}</span>
+                            <br><span class="cons-val" style="color:red">${this.toFloat(valeur, 1)}
+								${this.config.showInTableUnit
+								? html`
+								<span class="unit">kW</span>`
+								: html``
+								}</span>					
+							</span>
                             <br><span class="cons-val"
                                       style="color:red">${new Date(MPtime.toString().split(",")[dayNumber - 1]).toLocaleTimeString('fr-FR', {
                                 hour: "2-digit",
@@ -570,7 +585,13 @@ class ContentCardLinky extends LitElement {
                 } else {
                     return html
                         `
-                            <br><span class="cons-val">${this.toFloat(valeur, 2)}</span>
+                            <br><span class="cons-val">${this.toFloat(valeur, 1)}
+								${this.config.showInTableUnit
+								? html`
+								<span class="unit">kW</span>`
+								: html``
+								}</span>
+							</span>
                             <br><span
                                     class="cons-val">${new Date(MPtime.toString().split(",")[dayNumber - 1]).toLocaleTimeString('fr-FR', {
                                 hour: "2-digit",
@@ -784,49 +805,18 @@ class ContentCardLinky extends LitElement {
         `
 
     }
-
-    setConfig(config) {
-        if (!config.entity) {
+	setConfig(config) {
+		if (!config.entity) {
             throw new Error('You need to define an entity');
         }
 
         if (config.kWhPrice && isNaN(config.kWhPrice)) {
             throw new Error('kWhPrice should be a number')
         }
-
-        const defaultConfig = {
-            showHistory: true,
-            showHeader: true,
-            showPeakOffPeak: true,
-            showIcon: false,
-            showInTableUnit: false,
-            showDayPrice: false,
-            showDayPriceHCHP: false,
-            showDayMaxPower: false,
-            showDayHCHP: false,
-            showDayName: "long",
-            showError: true,
-            shoInformation: true,
-            showPrice: true,
-            showTitle: false,
-            showCurrentMonthRatio: true,
-            showMonthRatio: true,
-            showWeekRatio: false,
-            showYesterdayRatio: false,
-            showTitreLigne: false,
-            showEcoWatt: false,
-            showEcoWattJ12: false,
-            showTempo: false,
-            titleName: "",
-            nbJoursAffichage: 7,
-            kWhPrice: undefined,
-        }
-
-        this.config = {
-            ...defaultConfig,
+		this.config = {
             ...config
         };
-    }
+	}
 
     shouldUpdate(changedProps) {
         return hasConfigOrEntityChanged(this, changedProps);
@@ -1096,6 +1086,7 @@ class ContentCardLinky extends LitElement {
       .tempo-blue {
         color: white;
 	    text-align: center;
+		border-radius: 5px;
         background: var(--label-badge-blue);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
@@ -1104,6 +1095,7 @@ class ContentCardLinky extends LitElement {
       .tempo-white {
         color: #002654;
 	    text-align: center;
+		border-radius: 5px;		
         background: white;
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
@@ -1112,6 +1104,7 @@ class ContentCardLinky extends LitElement {
       .tempo-red {
         color: white;
 	    text-align: center;
+		border-radius: 5px;		
         background: var(--label-badge-red);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
@@ -1120,6 +1113,7 @@ class ContentCardLinky extends LitElement {
       .tempo-grey {
         color: #002654;
 	    text-align: center;
+		border-radius: 5px;
         background: grey;
         border: 2px solid var(--divider-color);
         box-shadow: var(--ha-card-box-shadow,none);
