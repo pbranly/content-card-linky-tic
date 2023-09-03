@@ -55,12 +55,12 @@ export class contentCardLinkyEditor extends LitElement {
             showMonthRatio: true,
             showWeekRatio: true,
             showYesterdayRatio: true,
-            showTitleLine: false,
+            showTitleLine: true,
             showEcoWatt: true,
             showEcoWattJ12: true,
             showTempo: false,
             titleName: "",
-            nbJoursAffichage: 7,
+            nbJoursAffichage: 6,
             kWhPrice: undefined,
 			ewEntity: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j0",
 			ewEntityJ1: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j1",
@@ -109,7 +109,7 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _showIcon() {
-        return this._config.showIcon || false;
+        return this._config.showIcon !== false;
     }
 
     get _showHeader() {
@@ -117,7 +117,7 @@ export class contentCardLinkyEditor extends LitElement {
     }
 
     get _showHistory() {
-        return this._config.showHistory || false;
+        return this._config.showHistory !== false;
     }
 
     get _showPeakOffPeak() {
