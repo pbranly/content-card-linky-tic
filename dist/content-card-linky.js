@@ -419,52 +419,6 @@ class ContentCardLinky extends LitElement {
         }
     }
 
-    r_enderTitleLine(config) {
-        if (this.config.showTitleLine === true) {
-            return html
-                `
-                    <div class="day">
-                        <br><span class="cons-val">Conso.</span>
-                        ${this.config.showDayPrice
-                                ? html`
-                                    <br><span class="cons-val">Prix</span>`
-                                : html``
-                        }
-                        ${this.config.showDayPriceHCHP
-                                ? html`
-                                    <br><span class="cons-val">Prix HC</span>`
-                                : html``
-                        }
-                        ${this.config.showDayPriceHCHP
-                                ? html`
-                                    <br><span class="cons-val">Prix HP</span>`
-                                : html``
-                        }
-                        ${this.config.showDayHCHP
-                                ? html`
-                                    <br><span class="cons-val">HC</span>`
-                                : html``
-                        }
-                        ${this.config.showDayHCHP
-                                ? html`
-                                    <br><span class="cons-val">HP</span>`
-                                : html``
-                        }
-                        ${this.config.showDayMaxPower
-                                ? html`
-                                    <br><span class="cons-val">MP</span>`
-                                : html``
-                        }
-                        ${this.config.showDayMaxPower
-                                ? html`
-                                    <br><span class="cons-val">MPtime</span>`
-                                : html``
-                        }
-                    </div>
-                `;
-        }
-    }
-
     renderDailyWeek(value, dayNumber, config) {
         return html
             `

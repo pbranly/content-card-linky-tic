@@ -55,7 +55,7 @@ export class contentCardLinkyEditor extends LitElement {
             showMonthRatio: true,
             showWeekRatio: true,
             showYesterdayRatio: true,
-            showTitreLigne: false,
+            showTitleLine: false,
             showEcoWatt: true,
             showEcoWattJ12: true,
             showTempo: false,
