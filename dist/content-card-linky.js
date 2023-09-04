@@ -711,7 +711,7 @@ class ContentCardLinky extends LitElement {
                                             ${this.getOneDayNextEcoWatt(ecoWattForecastJ2).map(
                                                     (forecast) => html`
                                                         <li title="${forecast[0]}">
-                                                            ${(forecast[0] % 2 == 1) ? forecast[0] : ''}
+                                                            ${(forecast[0] % 2 == 1) ? forecast[0] : ' '}
                                                         </li>`
                                             )}
                                         `}
@@ -1100,6 +1100,8 @@ class ContentCardLinky extends LitElement {
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
 	    text-transform: capitalize;
+	    font-weight: bold;
+	    border-radius: 5px;
       }
       .tempo-white {
         color: #002654;
@@ -1108,6 +1110,8 @@ class ContentCardLinky extends LitElement {
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
 	    text-transform: capitalize;
+	    font-weight: bold;
+	    border-radius: 5px;
       }
       .tempo-red {
         color: white;
@@ -1116,16 +1120,19 @@ class ContentCardLinky extends LitElement {
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
      	text-transform: capitalize;
+     	font-weight: bold;
+     	border-radius: 5px;
       }
       .tempo-grey {
-        color: #002654;
-	    text-align: center;
-        background: grey;
+        color: var(--black-color);
+        text-align: center;
+        background: linear-gradient(45deg, #C0C0C0 12.5%, #DEDEDE 12.5%, #DEDEDE 37.5%, #C0C0C0 37.5%, #C0C0C0 62.5%, #DEDEDE 62.5%, #DEDEDE 87.5%, #C0C0C0 87.5%);
         border: 2px solid var(--divider-color);
         box-shadow: var(--ha-card-box-shadow,none);
-        background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-        background-size: 28.28px 28.28px;
         text-transform: capitalize;
+        background-size: 20px 20px;
+        font-weight: bold;
+        border-radius: 5px;
       }	  
       `;
     }
