@@ -3,13 +3,11 @@
 
 **Cette carte est compatible avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)**
 
-Depuis Aout 2023: avec le changement vers MyElectricalData, cette carte **n'est plus garanti d'être compatible** avec l'integration : [MyEnedis](https://github.com/saniho/apiEnedis)
-
 **Un question ? Un problème ? Une demande ? Venez en parler sur le [forum HACF](https://forum.hacf.fr/).**
 
 ## Bienvenue !
 
-Cette carte est initialement inspirée de [@royto](https://github.com/royto/linky-card)
+Cette carte est basé sur [@saniho](https://github.com/saniho/content-card-linky)
 
 Avant de pouvoir utiliser cette intégration, assurez vous : 
 * D'avoir validé l'installation correcte de [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)
@@ -78,7 +76,7 @@ entity: sensor.myelectricaldata_123456          Sensor de l'integration MyElectr
 ewEntity: sensor.myelectricaldata_123456_J0     Sensor de l'intégration Ecowatt J+0 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
 ewEntityJ1: sensor.myelectricaldata_123456_J1   Sensor de l'intégration Ecowatt J+1 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
 ewEntityJ2: sensor.myelectricaldata_123456_J2   Sensor de l'intégration Ecowatt J+2 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
-tempoInfo: sensor.myelec..._tempoinfo           Sensor de l'intégratoin Tempo, contient des prix et jours restant par couleur (sensor dispo dès v0.9.2 ou en dev 0.9.2.b4)
+tempoInfo: sensor.myelec..._tempoinfo           Sensor de l'intégratoin Tempo, contient des prix et jours restant par couleur (dispo dès MyElectricalData v0.9.2 ou dev 0.9.2.b4)
 tempoEntityJ0: sensor.myelec..._tempotoday      Sensor de l'intégration Tempo aujourd'hui
 tempoEntityJ1: sensor.myelec..._tempotomorrow   Sensor de l'intégration Tempo demain
 showIcon: false                                 Affiche l'icon Linky
@@ -95,9 +93,9 @@ showCurrentMonthRatio: true
 showWeekRatio: true                             
 showDayName: short                              Affichage des jours de la semaine : "short", "narrow", "long"
 showDayMaxPower: true                           Affichage MaxPower avec indication si dépassé
-showTitreLigne: true
+showTitleLine: true                             Affichage des titres par ligne
 showEcoWatt: true                               Affichage EcoWatt pour ajourd'hui
-showEcoWattJ12: false                           Affichage EcoWatt pour demains et après (sensor dispo dès MyElectricaldata v0.9.1)
+showEcoWattJ12: true                            Affichage EcoWatt pour demains et après (sensor dispo dès MyElectricaldata v0.9.1)
 showTempo: false                                Affichage Tempo
 ````
 

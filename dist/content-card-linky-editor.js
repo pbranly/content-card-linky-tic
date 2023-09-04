@@ -29,12 +29,50 @@ const css = LitElement.prototype.css;
 const HELPERS = window.loadCardHelpers();
 
 export class contentCardLinkyEditor extends LitElement {
-    setConfig(config) {
-        this._config = {...config};
-    }
 
     static get properties() {
         return {hass: {}, _config: {}};
+    }
+
+    setConfig(config) {
+        const defaultConfig = {
+            showHistory: true,
+            showHeader: true,
+            showPeakOffPeak: false,
+            showIcon: true,
+            showInTableUnit: false,
+            showDayPrice: true,
+            showDayPriceHCHP: false,
+            showDayMaxPower: false,
+            showDayHCHP: false,
+            showDayName: "short",
+            showError: true,
+            shoInformation: true,
+            showPrice: true,
+            showTitle: false,
+            showCurrentMonthRatio: true,
+            showMonthRatio: true,
+            showWeekRatio: true,
+            showYesterdayRatio: true,
+            showTitleLine: true,
+            showEcoWatt: true,
+            showEcoWattJ12: true,
+            showTempo: false,
+            titleName: "",
+            nbJoursAffichage: 6,
+            kWhPrice: undefined,
+            ewEntity: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j0",
+            ewEntityJ1: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j1",
+            ewEntityJ2: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j2",
+            tempoEntityInfo: "sensor.edf_tempo_myelectricaldata_edf_tempoinfo",
+            tempoEntityJ0: "sensor.rte_tempo_myelectricaldata_rte_tempotoday",
+            tempoEntityJ1: "sensor.rte_tempo_myelectricaldata_rte_tempotomorrow",
+        }
+
+        this._config = {
+            ...defaultConfig,
+            ...config
+        };
     }
 
     get _entity() {
@@ -53,7 +91,7 @@ export class contentCardLinkyEditor extends LitElement {
         return this._config.ewEntityJ2 || "";
     }
 
-    get _tempoEntityInfo() {
+    get _tempoEntity() {
         return this._config.tempoEntityInfo || "";
     }
 
@@ -137,8 +175,8 @@ export class contentCardLinkyEditor extends LitElement {
         return this._config.showError !== false;
     }
 
-    get _showTitreLigne() {
-        return this._config.showTitreLigne !== false;
+    get _showTitleLine() {
+        return this._config.showTitleLine !== false;
     }
 
     get _showEcoWatt() {
@@ -189,18 +227,24 @@ export class contentCardLinkyEditor extends LitElement {
         if (!this.hass) {
             return html``;
         }
-
         return html`
             <div class="card-config">
                 <div>
-                    <paper-input label="Titre" .value="${this._titleName}" .configValue="${"titleName"}" @value-changed="${this._valueChanged}"></paper-input>
-                      ${this.renderSensorPicker("Entity", this._entity, "entity")}
-                      ${this.renderSensorPicker("rte_ecowatt_j0", this._ewEntity, "ewEntity")}
-                      ${this.renderSensorPicker("rte_ecowatt_j1", this._ewEntityJ1, "ewEntityJ1")}
-                      ${this.renderSensorPicker("rte_ecowatt_j2", this._ewEntityJ2, "ewEntityJ2")}
-                      ${this.renderSensorPicker("edf_tempo_info", this._tempoEntityInfo, "tempoEntityInfo")}		  
-                      ${this.renderSensorPicker("rte_tempo_today", this._tempoEntityJ0, "tempoEntityJ0")}
-                      ${this.renderSensorPicker("rte_tempo_tomorrow", this._tempoEntityJ1, "tempoEntityJ1")}
+                    <paper-input label="Titre" .value="${this._titleName}" .configValue="${"titleName"}"
+                                 @value-changed="${this._valueChanged}"></paper-input>
+                    ${this.renderSensorPicker("Entity", this._entity, "entity")}
+                    ${!this._config.ewEntity ?
+                            html`${this.renderSensorPicker("rte_ecowatt_j0", this._ewEntity, "ewEntity")}` : html``}
+                    ${!this._config.ewEntityJ1 ?
+                            html`${this.renderSensorPicker("rte_ecowatt_j1", this._ewEntity, "ewEntityJ1")}` : html``}
+                    ${!this._config.ewEntityJ2 ?
+                            html`${this.renderSensorPicker("rte_ecowatt_j2", this._ewEntity, "ewEntityJ2")}` : html``}
+                    ${!this._config.tempoEntityInfo ?
+                            html`${this.renderSensorPicker("edf_tempoinfo", this._tempoEntityInfo, "tempoEntityInfo")}` : html``}
+                    ${!this._config.tempoEntityJ0 ?
+                            html`${this.renderSensorPicker("edf_tempotoday", this._tempoEntityJ0, "tempoEntityJ0")}` : html``}
+                    ${!this._config.tempoEntityJ1 ?
+                            html`${this.renderSensorPicker("edf_tempotomorrow", this._tempoEntityJ1, "tempoEntityJ1")}` : html``}
                     <!-- Switches -->
                     <ul class="switches">
                         ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -218,7 +262,7 @@ export class contentCardLinkyEditor extends LitElement {
                         ${this.renderSwitchOption("Show ratio mois precedent", this._showMonthRatio, "showMonthRatio")}
                         ${this.renderSwitchOption("Show ratio semaine", this._showWeekRatio, "showWeekRatio")}
                         ${this.renderSwitchOption("Show ratio hier", this._showYesterdayRatio, "showYesterdayRatio")}
-                        ${this.renderSwitchOption("Show titre ligne", this._showTitreLigne, "showTitreLigne")}
+                        ${this.renderSwitchOption("Show titre ligne", this._showTitleLine, "showTitleLine")}
                         ${this.renderSwitchOption("Show error", this._showError, "showError")}
                         ${this.renderSwitchOption("Show header", this._showHeader, "showHeader")}
                         ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
@@ -226,9 +270,13 @@ export class contentCardLinkyEditor extends LitElement {
                         ${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
                     </ul>
                     <!-- -->
-                    <paper-input label="nombre de jours" type="number" min="1" max="12" value=${this._nbJoursAffichage} .configValue="${"nbJoursAffichage"}" @value-changed="${this._valueChanged}"></paper-input>
+                    <paper-input label="nombre de jours" type="number" min="1" max="12" value=${this._nbJoursAffichage}
+                                 .configValue="${"nbJoursAffichage"}"
+                                 @value-changed="${this._valueChanged}"></paper-input>
                     <br>
-                    <paper-input label="Nom du jour de la semaine( valeur possible : long, short, narrow )" .value="${this._showDayName}" .configValue="${"showDayName"}" @value-changed="${this._valueChanged}" ></paper-input>
+                    <paper-input label="Nom du jour de la semaine( valeur possible : long, short, narrow )"
+                                 .value="${this._showDayName}" .configValue="${"showDayName"}"
+                                 @value-changed="${this._valueChanged}"></paper-input>
                 </div>
             </div>
         `;
