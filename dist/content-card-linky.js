@@ -1087,24 +1087,24 @@ class ContentCardLinky extends LitElement {
       }
       .tempo-blue {
         color: white;
-	text-align: center;
-	border-radius: 5px;
+        text-align: center;
+        border-radius: 5px;
         background: var(--label-badge-blue);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
-	text-transform: capitalize;
-	font-weight: bold;
-	border-radius: 5px;
+        text-transform: capitalize;
+        font-weight: bold;
+        border-radius: 5px;
       }
       .tempo-white {
         color: #002654;
-	text-align: center;
+	    text-align: center;
         background: white;
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
-	text-transform: capitalize;
-	font-weight: bold;
-	border-radius: 5px;
+        text-transform: capitalize;
+        font-weight: bold;
+        border-radius: 5px;
       }
       .tempo-red {
         color: white;

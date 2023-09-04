@@ -61,12 +61,12 @@ export class contentCardLinkyEditor extends LitElement {
             titleName: "",
             nbJoursAffichage: 6,
             kWhPrice: undefined,
-            ewEntity: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j0",
-            ewEntityJ1: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j1",
-            ewEntityJ2: "sensor.rte_ecowatt_myelectricaldata_rte_ecowatt_j2",
-            tempoEntityInfo: "sensor.edf_tempo_myelectricaldata_edf_tempoinfo",
-            tempoEntityJ0: "sensor.rte_tempo_myelectricaldata_rte_tempotoday",
-            tempoEntityJ1: "sensor.rte_tempo_myelectricaldata_rte_tempotomorrow",
+            ewEntity: "sensor.rte_ecowatt_j0",
+            ewEntityJ1: "sensor.rte_ecowatt_j1",
+            ewEntityJ2: "sensor.rte_ecowatt_j2",
+            tempoEntityInfo: "sensor.edf_tempo_info",
+            tempoEntityJ0: "sensor.rte_tempo_today",
+            tempoEntityJ1: "sensor.rte_tempo_tomorrow",
         }
 
         this._config = {
