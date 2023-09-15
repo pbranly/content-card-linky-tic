@@ -217,7 +217,7 @@ class ContentCardLinky extends LitElement {
                                         ? html`
                                             <div class="icon-block">
                                                 <span class="linky-icon bigger"
-                                                      style="background: none, url(https://apps.lincs.enedis.fr/mes-prms/assets/images/compteurs/linky.svg) no-repeat; background-size: contain;"></span>
+                                                      style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
                                             </div>`
                                         : html``
                                 }
