@@ -4,6 +4,7 @@ const LitElement = Object.getPrototypeOf(
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
+
 window.customCards = window.customCards || [];
 window.customCards.push({
     type: "content-card-linky",
@@ -419,6 +420,52 @@ class ContentCardLinky extends LitElement {
         }
     }
 
+    r_enderTitreLigne(config) {
+        if (this.config.showTitreLigne === true) {
+            return html
+                `
+                    <div class="day">
+                        <br><span class="cons-val">Conso.</span>
+                        ${this.config.showDayPrice
+                                ? html`
+                                    <br><span class="cons-val">Prix</span>`
+                                : html``
+                        }
+                        ${this.config.showDayPriceHCHP
+                                ? html`
+                                    <br><span class="cons-val">Prix HC</span>`
+                                : html``
+                        }
+                        ${this.config.showDayPriceHCHP
+                                ? html`
+                                    <br><span class="cons-val">Prix HP</span>`
+                                : html``
+                        }
+                        ${this.config.showDayHCHP
+                                ? html`
+                                    <br><span class="cons-val">HC</span>`
+                                : html``
+                        }
+                        ${this.config.showDayHCHP
+                                ? html`
+                                    <br><span class="cons-val">HP</span>`
+                                : html``
+                        }
+                        ${this.config.showDayMaxPower
+                                ? html`
+                                    <br><span class="cons-val">MP</span>`
+                                : html``
+                        }
+                        ${this.config.showDayMaxPower
+                                ? html`
+                                    <br><span class="cons-val">MPtime</span>`
+                                : html``
+                        }
+                    </div>
+                `;
+        }
+    }
+
     renderDailyWeek(value, dayNumber, config) {
         return html
             `
@@ -466,10 +513,10 @@ class ContentCardLinky extends LitElement {
                     `
                         <br><span class="cons-val">${this.toFloat(valeur)} 
 						${this.config.showInTableUnit
-                          ? html`
-                              <span class="unit">€</span>`
-                          : html``
-						}</span>
+                                ? html`
+                                    <span class="unit">€</span>`
+                                : html``
+                        }</span>
                     `;
             }
         }
@@ -483,12 +530,12 @@ class ContentCardLinky extends LitElement {
             } else {
                 return html
                     `
-                        <br><span class="cons-val">${this.toFloat(valeur,1)} 
+                        <br><span class="cons-val">${this.toFloat(valeur, 1)} 
 						${this.config.showInTableUnit
-                          ? html`
-                              <span class="unit">€</span>`
-                          : html``
-						}</span>
+                                ? html`
+                                    <span class="unit">€</span>`
+                                : html``
+                        }</span>
                     `;
             }
         }
@@ -502,7 +549,7 @@ class ContentCardLinky extends LitElement {
             } else {
                 return html
                     `
-                        <br><span class="cons-val">${this.toFloat(valeur,1)} 
+                        <br><span class="cons-val">${this.toFloat(valeur, 1)} 
            ${this.config.showInTableUnit
                    ? html`
                        <span class="unit">${unit_of_measurement}<span>`
@@ -525,11 +572,11 @@ class ContentCardLinky extends LitElement {
                         `
                             <br><span class="cons-val" style="color:red">${this.toFloat(valeur, 1)}
 								${this.config.showInTableUnit
-								? html`
-								<span class="unit">kW</span>`
-								: html``
-								}</span>					
-							</span>
+                                        ? html`
+                                            <span class="unit">kW</span>`
+                                        : html``
+                                }</span>
+                            </span>
                             <br><span class="cons-val"
                                       style="color:red">${new Date(MPtime.toString().split(",")[dayNumber - 1]).toLocaleTimeString('fr-FR', {
                                 hour: "2-digit",
@@ -541,11 +588,11 @@ class ContentCardLinky extends LitElement {
                         `
                             <br><span class="cons-val">${this.toFloat(valeur, 1)}
 								${this.config.showInTableUnit
-								? html`
-								<span class="unit">kW</span>`
-								: html``
-								}</span>
-							</span>
+                                        ? html`
+                                            <span class="unit">kW</span>`
+                                        : html``
+                                }</span>
+                            </span>
                             <br><span
                                     class="cons-val">${new Date(MPtime.toString().split(",")[dayNumber - 1]).toLocaleTimeString('fr-FR', {
                                 hour: "2-digit",
@@ -759,18 +806,19 @@ class ContentCardLinky extends LitElement {
         `
 
     }
-	setConfig(config) {
-		if (!config.entity) {
+
+    setConfig(config) {
+        if (!config.entity) {
             throw new Error('You need to define an entity');
         }
 
         if (config.kWhPrice && isNaN(config.kWhPrice)) {
             throw new Error('kWhPrice should be a number')
         }
-		this.config = {
+        this.config = {
             ...config
         };
-	}
+    }
 
     shouldUpdate(changedProps) {
         return hasConfigOrEntityChanged(this, changedProps);
@@ -1039,41 +1087,45 @@ class ContentCardLinky extends LitElement {
       }
       .tempo-blue {
         color: white;
-	    text-align: center;
-		border-radius: 5px;
+        text-align: center;
+        border-radius: 5px;
         background: var(--label-badge-blue);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
-	    text-transform: capitalize;
+        text-transform: capitalize;
+        font-weight: bold;
+        border-radius: 5px;
       }
       .tempo-white {
         color: #002654;
 	    text-align: center;
-		border-radius: 5px;		
         background: white;
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
-	    text-transform: capitalize;
+        text-transform: capitalize;
+        font-weight: bold;
+        border-radius: 5px;
       }
       .tempo-red {
         color: white;
 	    text-align: center;
-		border-radius: 5px;		
         background: var(--label-badge-red);
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
      	text-transform: capitalize;
+     	font-weight: bold;
+     	border-radius: 5px;
       }
       .tempo-grey {
-        color: #002654;
-	    text-align: center;
-		border-radius: 5px;
-        background: grey;
+        color: var(--black-color);
+        text-align: center;
+        background: linear-gradient(45deg, #C0C0C0 12.5%, #DEDEDE 12.5%, #DEDEDE 37.5%, #C0C0C0 37.5%, #C0C0C0 62.5%, #DEDEDE 62.5%, #DEDEDE 87.5%, #C0C0C0 87.5%);
         border: 2px solid var(--divider-color);
         box-shadow: var(--ha-card-box-shadow,none);
-        background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-        background-size: 28.28px 28.28px;
         text-transform: capitalize;
+        background-size: 20px 20px;
+        font-weight: bold;
+        border-radius: 5px;
       }	  
       `;
     }
