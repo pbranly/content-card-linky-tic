@@ -187,7 +187,7 @@ class ContentCardLinky extends LitElement {
                    }
                   
                 </div>
-                ${this.renderHistory(attributes.daily, attributes.unit_of_measurement, attributes.dailyweek, attributes.dailyweek_cost, attributes.dailyweek_costHC, attributes.dailyweek_costHP, attributes.dailyweek_HC, attributes.dailyweek_HP, attributes.dailyweek_MP, attributes.dailyweek_MP_over, attributes.dailyweek_MP_time, attribute.dailyweek_Tempo, this.config)}
+                ${this.renderHistory(attributes.daily, attributes.unit_of_measurement, attributes.dailyweek, attributes.dailyweek_cost, attributes.dailyweek_costHC, attributes.dailyweek_costHP, attributes.dailyweek_HC, attributes.dailyweek_HP, attributes.dailyweek_MP, attributes.dailyweek_MP_over, attributes.dailyweek_MP_time, attributes.dailyweek_Tempo, this.config)}
                 ${this.renderEcoWatt(attributes, this.config)}
 				${this.renderTempo(attributes, this.config)}
                 ${this.renderError(attributes.errorLastCall, this.config)}
@@ -355,9 +355,9 @@ class ContentCardLinky extends LitElement {
     return html
       `
         <div class="day">
-          ${this.renderDailyWeek(dailyweek, dayNumber, config)}
+          ${this.renderDailyWeek(dailyweek, dailyweek_Tempo, dayNumber, config)}
           ${this.renderDailyValue(day, dayNumber, unit_of_measurement, config)}
-          ${this.renderDayPrice(dailyweek_cost, dailyweek_Tempo, dayNumber, config)}
+          ${this.renderDayPrice(dailyweek_cost, dayNumber, config)}
           ${this.renderDayPriceHCHP(dailyweek_costHC, dayNumber, config)}
           ${this.renderDayPriceHCHP(dailyweek_costHP, dayNumber, config)}
           ${this.renderDayHCHP(dailyweek_HC, dayNumber, unit_of_measurement, config)}
@@ -441,10 +441,22 @@ class ContentCardLinky extends LitElement {
         `;
       }
   }
-  renderDailyWeek(value, dayNumber, config) {
+  renderDailyWeek(value, valueC, dayNumber, config) {
+	if (config.showTempoColor) {
+		const valeurColor = valueC.toString().split(",")[dayNumber-1] ;
+		if ( valeurColor === "-1" ) {
+			valueC = "color" ;
+		}
+		else {
+		valueC = valeurColor.toLowerCase() ;
+		}
+	}  
+	else {
+		valueC = "white";
+	}
     return html
     `
-    <span class="dayname">${new Date(value.toString().split(",")[dayNumber-1]).toLocaleDateString('fr-FR', {weekday: config.showDayName})}</span>
+    <span class="tempoday-${valueC}">${new Date(value.toString().split(",")[dayNumber-1]).toLocaleDateString('fr-FR', {weekday: config.showDayName})}</span>
     `;
   }
   renderNoData(){
@@ -469,18 +481,11 @@ class ContentCardLinky extends LitElement {
        `;
     }
   }
-  renderDayPrice(value, valueC, dayNumber, config) {
-	if (config.showTempoColor) {
-		const valeurColor = valueC.toString().split(",")[dayNumber-1] ;
-		if ( valeurColor === "-1" ) {
-			valeurColor = 'COLOR' ;
-		}	
-	}
-	else {valeurColor = 'COLOR';}
+  renderDayPrice(value, dayNumber, config) {
     if (config.kWhPrice) {
       return html
       `
-        <br><span class="tempo-${valeurColor.toLowerCase()}">${this.toFloat(value * config.kWhPrice, 2)} €</span>
+        <br><span class="cons-val">${this.toFloat(value * config.kWhPrice, 2)} €</span>
       `;
     }
     if (config.showDayPrice) {
@@ -491,7 +496,7 @@ class ContentCardLinky extends LitElement {
        else{
           return html
           `
-             <br><span class="tempo-${valeurColor.toLowerCase()}">${this.toFloat(valeur)} €</span>
+             <br><span class="cons-val">${this.toFloat(valeur)} €</span>
            `;
        }
     }
@@ -1060,11 +1065,23 @@ class ContentCardLinky extends LitElement {
         width:100%;
 	border-spacing: 2px;
       }
+	  .tempoborder-color {
+        width:100%;
+	border-spacing: 2px;
+      }
       .tempo-blue {
         color: white;
 	text-align: center;
         background: #009dfa;
     	border: 2px solid var(--divider-color);
+    	box-shadow: var(--ha-card-box-shadow,none);
+	text-transform: capitalize;
+      }
+	  .tempoday-blue {
+        color: #009dfa;
+		font-weight: bold;
+	text-align: center;
+        background: var( --ha-card-background, var(--card-background-color, white) );
     	box-shadow: var(--ha-card-box-shadow,none);
 	text-transform: capitalize;
       }
@@ -1076,6 +1093,17 @@ class ContentCardLinky extends LitElement {
     	box-shadow: var(--ha-card-box-shadow,none);
 	text-transform: capitalize;
       }
+	  .tempoday-white {
+		font-weight: bold;
+	text-align: center;
+	text-transform: capitalize;
+      }
+	  .tempoday-grey {
+		font-weight: bold;
+		background: grey;
+	text-align: center;
+	text-transform: capitalize;
+      }	  
       .tempo-red {
         color: white;
 	text-align: center;
@@ -1083,6 +1111,14 @@ class ContentCardLinky extends LitElement {
     	border: 2px solid var(--divider-color);
     	box-shadow: var(--ha-card-box-shadow,none);
      	text-transform: capitalize;
+      }
+	  .tempoday-red {
+        color: #ff2700;
+		font-weight: bold;
+	text-align: center;
+        background: var( --ha-card-background, var(--card-background-color, white) );
+    	box-shadow: var(--ha-card-box-shadow,none);
+	text-transform: capitalize;
       }
       .tempo-grey {
         color: #002654;

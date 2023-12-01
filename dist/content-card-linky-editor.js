@@ -144,15 +144,12 @@ export class contentCardLinkyEditor extends LitElement {
   get _showEcoWattJ12() {
     return this._config.showEcoWattJ12 !== false;
   }
-  
   get _showTempo() {
     return this._config.showTempo !== false;
-  }  
-  
+  }
 get _showTempoColor() {
     return this._config.showTempoColor !== false;
   }  
-
   get _title() {
     return this._config.showTitle !== false;
   }
@@ -229,7 +226,7 @@ get _showTempoColor() {
             ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
 			${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
 			${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
-			${this.renderSwitchOption("Show Tempo Color", this._showTempoColor, "showTempoColor")}
+			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
           </ul>
           <!-- -->
           <paper-input
