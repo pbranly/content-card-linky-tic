@@ -496,6 +496,7 @@ class ContentCardLinky extends LitElement {
 		if ( valeurColor === "-1" ) {
 			valeurColor = 'COLOR' ;
 		}	
+	}
     if (config.showDayPriceHCHP) {
        const valeur = value.toString().split(",")[dayNumber-1] ;
        if ( valeur === "-1" ){
