@@ -8,10 +8,10 @@ const css = LitElement.prototype.css;
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky",
-  name: "Carte Enedis1",
-  description: "Carte pour l'intégration myElectricalData.",
+  name: "Carte Enedis",
+  description: "Carte pour l'intégration MyElectricalData.",
   preview: true,
-  documentationURL: "https://github.com/saniho/content-card-linky",
+  documentationURL: "https://github.com/MyElectricalData/content-card-linky",
 });
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
