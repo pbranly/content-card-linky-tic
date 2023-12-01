@@ -20,7 +20,7 @@ Avant de pouvoir utiliser cette intégration, assurez vous :
  
  *si vous n'avez pas HACS, pour l'installer cela se passe ici : [HACS : Ajoutez des modules et des cartes personnalisées](https://forum.hacf.fr/t/hacs-ajoutez-des-modules-et-des-cartes-personnalisees/359)
  
-* Ajoutez le dépot personnalisé : `https://github.com/saniho/content-card-linky`
+* Ajoutez le dépot personnalisé : `https://github.com/MyElectricalData/content-card-linky`
 
 * Choisir la catégorie `Lovelace`
 
@@ -35,7 +35,7 @@ Avant de pouvoir utiliser cette intégration, assurez vous :
 
 <details>
   <summary><b>Manuellement (à faire à chaque mise à jour)</b></summary>
-* Telecharger le fichier [content-card-linky.js](https://github.com/saniho/content-card-linky/blob/main/content-card-linky.js) et le dossier [images](https://github.com/saniho/content-card-linky/tree/main/images) 
+* Telecharger le fichier [content-card-linky.js](https://github.com/MyElectricalData/content-card-linky/blob/main/content-card-linky.js) et le dossier [images](https://github.com/MyElectricalData/content-card-linky/tree/main/images) 
   
 * Les mettre dans votre repertoire `www` et l'ajouter dans l'interface ressource
   
