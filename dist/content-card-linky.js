@@ -187,7 +187,7 @@ class ContentCardLinky extends LitElement {
                    }
                   
                 </div>
-                ${this.renderHistory(attributes.daily, attributes.unit_of_measurement, attributes.dailyweek, attributes.dailyweek_cost, attributes.dailyweek_costHC, attributes.dailyweek_costHP, attributes.dailyweek_HC, attributes.dailyweek_HP, attributes.dailyweek_MP, attributes.dailyweek_MP_over, attributes.dailyweek_MP_time, this.config)}
+                ${this.renderHistory(attributes.daily, attributes.unit_of_measurement, attributes.dailyweek, attributes.dailyweek_cost, attributes.dailyweek_costHC, attributes.dailyweek_costHP, attributes.dailyweek_HC, attributes.dailyweek_HP, attributes.dailyweek_MP, attributes.dailyweek_MP_over, attributes.dailyweek_MP_time, dailyweek_Tempo, this.config)}
                 ${this.renderEcoWatt(attributes, this.config)}
 				${this.renderTempo(attributes, this.config)}
                 ${this.renderError(attributes.errorLastCall, this.config)}
@@ -334,7 +334,7 @@ class ContentCardLinky extends LitElement {
     }
   }
 
-  renderHistory(daily, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP, dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, config) {
+  renderHistory(daily, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP, dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, dailyweek_Tempo, config) {
     if (this.config.showHistory === true) {
       if ( dailyweek != undefined){
         var nbJours = dailyweek.toString().split(",").length ; 
@@ -351,7 +351,7 @@ class ContentCardLinky extends LitElement {
     }
   }
 
-  renderDay(day, dayNumber, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP, dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, config) {
+  renderDay(day, dayNumber, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP, dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, dailyweek_Tempo, config) {
     return html
       `
         <div class="day">
@@ -490,6 +490,12 @@ class ContentCardLinky extends LitElement {
     }
   }
   renderDayPriceHCHP(value, dayNumber, config) {
+	valeurColor = 'COLOR';
+	if (config.showTempoColor) {
+		const valeurColor = dailyweek_Tempo.toString().split(",")[dayNumber-1] ;
+		if ( valeurColor === "-1" ) {
+			valeurColor = 'COLOR' ;
+		}	
     if (config.showDayPriceHCHP) {
        const valeur = value.toString().split(",")[dayNumber-1] ;
        if ( valeur === "-1" ){
@@ -498,7 +504,7 @@ class ContentCardLinky extends LitElement {
        else{
           return html
           `
-             <br><span class="cons-val">${this.toFloat(valeur, 2)} €</span>
+             <br><span class="tempo-${valeurColor.toLowerCase()}">${this.toFloat(valeur, 2)} €</span>
           `;
        }
     }
@@ -779,6 +785,7 @@ class ContentCardLinky extends LitElement {
       showEcoWatt: false,
 	  showEcoWattJ12: false,
 	  showTempo: false,
+	  showTempoColor: false,
       titleName: "",
       nbJoursAffichage: 7,
       kWhPrice: undefined,
