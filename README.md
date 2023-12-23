@@ -95,9 +95,11 @@ showTitleLine: true                             Affichage des titres par ligne
 showEcoWatt: true                               Affichage EcoWatt pour ajourd'hui
 showEcoWattJ12: true                            Affichage EcoWatt pour demains et après (sensor dispo dès MyElectricaldata v0.9.1)
 showTempo: false                                Affichage Tempo
+showTempoColor: true                            Affichage couleurs Tempo historique pas colorer les titres des jours (apd MED 0.9.3)     
 ````
 
-![image](https://github.com/saniho/content-card-linky/assets/44190435/222621d5-70bb-4b69-97a7-6d140f6de98e)
+![image](https://github.com/MyElectricalData/content-card-linky/assets/44190435/04dac630-1d05-43f0-bb9e-cfed3ae5a943)
+
 
 ## Merci ##
 
