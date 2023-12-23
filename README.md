@@ -98,7 +98,8 @@ showTempo: false                                Affichage Tempo
 showTempoColor: true                            Affichage couleurs Tempo historique pas colorer les titres des jours (apd MED 0.9.3)     
 ````
 
-![image](https://github.com/MyElectricalData/content-card-linky/assets/44190435/04dac630-1d05-43f0-bb9e-cfed3ae5a943)
+![image](https://github.com/MyElectricalData/content-card-linky/assets/44190435/04dac630-1d05-43f0-bb9e-cfed3ae5a943)![image](https://github.com/MyElectricalData/content-card-linky/assets/44190435/a99ee251-c464-4199-bb33-35499e412771)
+
 
 
 ## Merci ##
