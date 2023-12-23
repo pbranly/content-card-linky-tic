@@ -1,13 +1,11 @@
 # content-card-linky
 [![HACS Supported](https://img.shields.io/badge/HACS-Supported-green.svg)](https://github.com/custom-components/hacs)
 
-**Cette carte est compatible avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)**
+**Cette carte est compatible qu'avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)**
 
 **Un question ? Un problème ? Une demande ? Venez en parler sur le [forum HACF](https://forum.hacf.fr/).**
 
 ## Bienvenue !
-
-Cette carte est basé sur [@saniho](https://github.com/saniho/content-card-linky)
 
 Avant de pouvoir utiliser cette intégration, assurez vous : 
 * D'avoir validé l'installation correcte de [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)
@@ -101,7 +99,9 @@ showTempo: false                                Affichage Tempo
 
 ![image](https://github.com/saniho/content-card-linky/assets/44190435/222621d5-70bb-4b69-97a7-6d140f6de98e)
 
+## Merci ##
 
+Cette carte est basé sur [@saniho](https://github.com/saniho/content-card-linky)
 
 **************
 
