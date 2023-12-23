@@ -58,7 +58,7 @@ resources:
 
 ````
 type: 'custom:content-card-linky'
-entity: sensor.xxx_myelctricaldata_xxxx
+entity: sensor.linky_<pdl>_consumption
 ````
 </details>
 
