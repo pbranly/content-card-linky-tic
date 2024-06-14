@@ -1,14 +1,14 @@
 # content-card-linky
 [![HACS Supported](https://img.shields.io/badge/HACS-Supported-green.svg)](https://github.com/custom-components/hacs)
 
-**Cette carte est compatible qu'avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)**
+**Cette carte est compatible qu'avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata_import)**
 
 **Un question ? Un problème ? Une demande ? Venez en parler sur le [forum HACF](https://forum.hacf.fr/).**
 
 ## Bienvenue !
 
 Avant de pouvoir utiliser cette intégration, assurez vous : 
-* D'avoir validé l'installation correcte de [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)
+* D'avoir validé l'installation correcte de [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata_import)
 
 ## Installer la carte
 <details>
