@@ -249,6 +249,26 @@ get _showTempoColor() {
             `
   }
   
+  renderTextField(label, state, configAttr) {
+    return this.renderField(label, state, configAttr, "text");
+  }
+
+  renderNumberField(label, state, configAttr) {
+    return this.renderField(label, state, configAttr, "number");
+  }
+
+  renderField(label, state, configAttr, type) {
+    return html`
+      <ha-textfield
+        label="${label}"
+        .value="${state}"
+        type="${type}"
+        .configValue=${configAttr}
+        @input=${this._valueChanged}
+      ></ha-textfield>
+    `;
+  }  
+  
   renderSwitchOption(label, state, configAttr) {
     return html`
       <li class="switch">
