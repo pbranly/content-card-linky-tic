@@ -135,8 +135,8 @@ export class contentCardLinkyEditor extends LitElement {
   get _showError() {
     return this._config.showError !== false;
   }
-  get _showTitreLigne() {
-    return this._config.showTitreLigne !== false;
+  get _showTitleLign() {
+    return this._config.showTitleLign !== false;
   }
   get _showEcoWatt() {
     return this._config.showEcoWatt !== false;
@@ -190,12 +190,7 @@ get _showTempoColor() {
     return html`
       <div class="card-config">
         <div>
-          <paper-input
-            label="Titre"
-            .value="${this._titleName}"
-            .configValue="${"titleName"}"
-            @value-changed="${this._valueChanged}"
-          ></paper-input>
+		  ${this.renderTextField("Titre", this._titleName, "titleName")}
           ${this.renderSensorPicker("Entity", this._entity, "entity")}
 		  ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
 		  ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
@@ -203,6 +198,7 @@ get _showTempoColor() {
 		  ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
 		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
 		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
+		  ${this.renderNumberField("Nombres de jours", this._nbJoursAffichage, "nbJoursAffichage")}
           <!-- Switches -->
           <ul class="switches">
             ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -220,7 +216,7 @@ get _showTempoColor() {
             ${this.renderSwitchOption("Show ratio mois precedent", this._showMonthRatio, "showMonthRatio")}
             ${this.renderSwitchOption("Show ratio semaine", this._showWeekRatio, "showWeekRatio")}
             ${this.renderSwitchOption("Show ratio hier", this._showYesterdayRatio, "showYesterdayRatio")}
-            ${this.renderSwitchOption("Show titre ligne", this._showTitreLigne, "showTitreLigne")}
+            ${this.renderSwitchOption("Show titre ligne", this._showTitleLign, "showTitleLign")}
             ${this.renderSwitchOption("Show error", this._showError, "showError")}
             ${this.renderSwitchOption("Show header", this._showHeader, "showHeader")}
             ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
@@ -229,15 +225,15 @@ get _showTempoColor() {
 			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
           </ul>
           <!-- -->
-          <paper-input
-            label="nombre de jours"
-            type="number"
-            min="1"
-            max="12"
-            value=${this._nbJoursAffichage}
-            .configValue="${"nbJoursAffichage"}"
-            @value-changed="${this._valueChanged}"
-          ></paper-input><br>
+		  <br>
+		  <paper-dropdown-menu-light label="Your favourite pastry">
+			  <paper-listbox slot="dropdown-content">
+				<paper-item>Croissant</paper-item>
+				<paper-item>Donut</paper-item>
+				<paper-item>Financier</paper-item>
+				<paper-item>Madeleine</paper-item>
+			  </paper-listbox>
+		  </paper-dropdown-menu-light>
           <paper-input
             label="Nom du jour de la semaine( valeur possible : long, short, narrow )"
             .value="${this._showDayName}"
