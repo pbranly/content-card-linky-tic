@@ -167,11 +167,11 @@ get _showTempoColor() {
   }
 
   get _showDayName() {
-    return this._config.showDayName;
+    return this._config.showDayName || "short";
   }
   
   get _titleName() {
-    return this._config.titleName || "";
+    return this._config.titleName || "LINKY";
   }
 
   firstUpdated() {
@@ -199,6 +199,7 @@ get _showTempoColor() {
 		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
 		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
 		  ${this.renderNumberField("Nombres de jours", this._nbJoursAffichage, "nbJoursAffichage")}
+		  ${this.renderTextField("Day format (long, short, narrow)", this._showDayName, "showDayName")}
           <!-- Switches -->
           <ul class="switches">
             ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -225,7 +226,6 @@ get _showTempoColor() {
 			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
           </ul>
           <!-- -->
-		  ${this.renderTextField("Day format (long, short, narrow)", this._showDayName, "showDayName")}
         </div>
       </div>
     `;
@@ -281,11 +281,15 @@ get _showTempoColor() {
           </li>
     `
   }
+  
   _valueChanged(ev) {
     if (!this._config || !this.hass) {
       return;
     }
     const target = ev.target;
+    if (this[`_${target.configValue}`] === target.value) {
+      return;
+    }
     if (target.configValue) {
       if (target.value === "") {
         delete this._config[target.configValue];
