@@ -225,21 +225,7 @@ get _showTempoColor() {
 			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
           </ul>
           <!-- -->
-		  <br>
-		  <paper-dropdown-menu-light label="Your favourite pastry">
-			  <paper-listbox slot="dropdown-content">
-				<paper-item>Croissant</paper-item>
-				<paper-item>Donut</paper-item>
-				<paper-item>Financier</paper-item>
-				<paper-item>Madeleine</paper-item>
-			  </paper-listbox>
-		  </paper-dropdown-menu-light>
-          <paper-input
-            label="Nom du jour de la semaine( valeur possible : long, short, narrow )"
-            .value="${this._showDayName}"
-            .configValue="${"showDayName"}"
-            @value-changed="${this._valueChanged}"
-          ></paper-input>
+		  ${this.renderTextField("Day format (long, short, narrow)", this._showDayName, "showDayName")}
         </div>
       </div>
     `;
