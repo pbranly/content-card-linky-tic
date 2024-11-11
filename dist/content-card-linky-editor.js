@@ -163,11 +163,11 @@ get _showTempoColor() {
   }
 
   get _nbJoursAffichage() {
-    return this._config.nbJoursAffichage || 7;
+    return this._config.nbJoursAffichage || "7";
   }
 
   get _showDayName() {
-    return this._config.showDayName || "short";
+    return this._config.showDayName || "long";
   }
   
   get _titleName() {
@@ -198,8 +198,8 @@ get _showTempoColor() {
 		  ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
 		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
 		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
-		  ${this.renderNumberField("Nombres de jours", this._nbJoursAffichage, "nbJoursAffichage")}
-		  ${this.renderTextField("Day format (long, short, narrow)", this._showDayName, "showDayName")}
+		  ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
+		  ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
           <!-- Switches -->
           <ul class="switches">
             ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -281,6 +281,26 @@ get _showTempoColor() {
           </li>
     `
   }
+  
+  renderSelectField(label, config_key, options, value, default_value) {
+	let selectOptions = [];
+	for (let i = 0; i < options.length; i++) {
+		let currentOption = options[i];
+		selectOptions.push(html`<ha-list-item .value="${currentOption.value}">${currentOption.label}</ha-list-item>`);
+	}
+
+	return html`
+		<ha-select
+			label="${label}"
+			.value=${value || default_value}
+			.configValue=${config_key}                
+			@change=${this._valueChanged}
+			@closed=${(ev) => ev.stopPropagation()}
+		>
+			${selectOptions}
+		</ha-select>
+	`
+	}  
   
   _valueChanged(ev) {
     if (!this._config || !this.hass) {

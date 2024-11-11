@@ -792,8 +792,8 @@ class ContentCardLinky extends LitElement {
 	  showEcoWattJ12: false,
 	  showTempo: false,
 	  showTempoColor: false,
-      titleName: "",
-      nbJoursAffichage: 7,
+      titleName: "LINKY",
+      nbJoursAffichage: "7",
       kWhPrice: undefined,
     }
 

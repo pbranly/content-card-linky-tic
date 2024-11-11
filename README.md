@@ -68,13 +68,13 @@ entity: sensor.linky_<pdl>_consumption
 
   ````
 type: custom:content-card-linky                 Type de la carte
-nbJoursAffichage: '7'                           Nombre de jour historique
-titleName: Consommation d'hier                  Titre
+nbJoursAffichage: '7'                           Nombre de jours historique affiché
+titleName: LINKY                                Titre
 entity: sensor.linky_123456789_consumption      Sensor de l'integration MyElectricalData
 ewEntity: sensor.rte_ecowatt_j0                 Sensor de l'intégration Ecowatt J+0 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
 ewEntityJ1: sensor.rte_ecowatt_j1               Sensor de l'intégration Ecowatt J+1 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
 ewEntityJ2: sensor.rte_ecowatt_j2               Sensor de l'intégration Ecowatt J+2 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
-tempoInfo: sensor.edf_tempo_info                Sensor de l'intégratoin Tempo, contient des prix et jours restant par couleur (dispo dès MyElectricalData v0.9.2 ou dev 0.9.2.b4)
+tempoInfo: sensor.edf_tempo_info                Sensor de l'intégration Tempo, contient des prix et jours restant par couleur (dispo dès MyElectricalData v0.9.2 ou dev 0.9.2.b4)
 tempoEntityJ0: sensor.rte_tempo_today           Sensor de l'intégration Tempo aujourd'hui
 tempoEntityJ1: sensor.rte_tempo_tomorrow        Sensor de l'intégration Tempo demain
 showIcon: false                                 Affiche l'icon Linky
@@ -89,7 +89,7 @@ showDayPrice: true
 showPrice: true                                 Affiche le prix de l'historique
 showCurrentMonthRatio: true                     
 showWeekRatio: true                             
-showDayName: short                              Affichage des jours de la semaine : "short", "narrow", "long"
+showDayName: long                               Affichage des jours de la semaine : "short", "narrow", "long"
 showDayMaxPower: true                           Affichage MaxPower avec indication si dépassé
 showTitleLine: true                             Affichage des titres par ligne
 showEcoWatt: true                               Affichage EcoWatt pour ajourd'hui
