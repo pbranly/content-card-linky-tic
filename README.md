@@ -1,16 +1,14 @@
 # content-card-linky
 [![HACS Supported](https://img.shields.io/badge/HACS-Supported-green.svg)](https://github.com/custom-components/hacs)
 
-**Cette carte est compatible avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)**
+**Cette carte est compatible qu'avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata_import)**
 
 **Un question ? Un problème ? Une demande ? Venez en parler sur le [forum HACF](https://forum.hacf.fr/).**
 
 ## Bienvenue !
 
-Cette carte est basé sur [@saniho](https://github.com/saniho/content-card-linky)
-
 Avant de pouvoir utiliser cette intégration, assurez vous : 
-* D'avoir validé l'installation correcte de [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata)
+* D'avoir validé l'installation correcte de [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata_import)
 
 ## Installer la carte
 <details>
@@ -20,7 +18,7 @@ Avant de pouvoir utiliser cette intégration, assurez vous :
  
  *si vous n'avez pas HACS, pour l'installer cela se passe ici : [HACS : Ajoutez des modules et des cartes personnalisées](https://forum.hacf.fr/t/hacs-ajoutez-des-modules-et-des-cartes-personnalisees/359)
  
-* Ajoutez le dépot personnalisé : `https://github.com/saniho/content-card-linky`
+* Ajoutez le dépot personnalisé : `https://github.com/MyElectricalData/content-card-linky`
 
 * Choisir la catégorie `Lovelace`
 
@@ -35,7 +33,7 @@ Avant de pouvoir utiliser cette intégration, assurez vous :
 
 <details>
   <summary><b>Manuellement (à faire à chaque mise à jour)</b></summary>
-* Telecharger le fichier [content-card-linky.js](https://github.com/saniho/content-card-linky/blob/main/content-card-linky.js) et le dossier [images](https://github.com/saniho/content-card-linky/tree/main/images) 
+* Telecharger le fichier [content-card-linky.js](https://github.com/MyElectricalData/content-card-linky/blob/main/content-card-linky.js) et le dossier [images](https://github.com/MyElectricalData/content-card-linky/tree/main/images) 
   
 * Les mettre dans votre repertoire `www` et l'ajouter dans l'interface ressource
   
@@ -60,7 +58,7 @@ resources:
 
 ````
 type: 'custom:content-card-linky'
-entity: sensor.xxx_myelctricaldata_xxxx
+entity: sensor.linky_<pdl>_consumption
 ````
 </details>
 
@@ -72,13 +70,13 @@ entity: sensor.xxx_myelctricaldata_xxxx
 type: custom:content-card-linky                 Type de la carte
 nbJoursAffichage: '7'                           Nombre de jour historique
 titleName: Consommation d'hier                  Titre
-entity: sensor.myelectricaldata_123456          Sensor de l'integration MyElectricalData
-ewEntity: sensor.myelectricaldata_123456_J0     Sensor de l'intégration Ecowatt J+0 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
-ewEntityJ1: sensor.myelectricaldata_123456_J1   Sensor de l'intégration Ecowatt J+1 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
-ewEntityJ2: sensor.myelectricaldata_123456_J2   Sensor de l'intégration Ecowatt J+2 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
-tempoInfo: sensor.myelec..._tempoinfo           Sensor de l'intégratoin Tempo, contient des prix et jours restant par couleur (dispo dès MyElectricalData v0.9.2 ou dev 0.9.2.b4)
-tempoEntityJ0: sensor.myelec..._tempotoday      Sensor de l'intégration Tempo aujourd'hui
-tempoEntityJ1: sensor.myelec..._tempotomorrow   Sensor de l'intégration Tempo demain
+entity: sensor.linky_123456789_consumption      Sensor de l'integration MyElectricalData
+ewEntity: sensor.rte_ecowatt_j0                 Sensor de l'intégration Ecowatt J+0 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
+ewEntityJ1: sensor.rte_ecowatt_j1               Sensor de l'intégration Ecowatt J+1 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
+ewEntityJ2: sensor.rte_ecowatt_j2               Sensor de l'intégration Ecowatt J+2 via (!) MyElectricalData (sensor dispo dès MyElectricaldata v0.9.1)
+tempoInfo: sensor.edf_tempo_info                Sensor de l'intégratoin Tempo, contient des prix et jours restant par couleur (dispo dès MyElectricalData v0.9.2 ou dev 0.9.2.b4)
+tempoEntityJ0: sensor.rte_tempo_today           Sensor de l'intégration Tempo aujourd'hui
+tempoEntityJ1: sensor.rte_tempo_tomorrow        Sensor de l'intégration Tempo demain
 showIcon: false                                 Affiche l'icon Linky
 showHistory: true                               Affiche l'historique sur plusieurs jours
 showInTableUnit: false                          
@@ -97,11 +95,16 @@ showTitleLine: true                             Affichage des titres par ligne
 showEcoWatt: true                               Affichage EcoWatt pour ajourd'hui
 showEcoWattJ12: true                            Affichage EcoWatt pour demains et après (sensor dispo dès MyElectricaldata v0.9.1)
 showTempo: false                                Affichage Tempo
+showTempoColor: true                            Affichage couleurs Tempo historique pas colorer les titres des jours (apd MED 0.9.3)     
 ````
 
-![image](https://github.com/saniho/content-card-linky/assets/44190435/222621d5-70bb-4b69-97a7-6d140f6de98e)
+![image](https://github.com/MyElectricalData/content-card-linky/assets/44190435/04dac630-1d05-43f0-bb9e-cfed3ae5a943)![image](https://github.com/MyElectricalData/content-card-linky/assets/44190435/a99ee251-c464-4199-bb33-35499e412771)
 
 
+
+## Merci ##
+
+Cette carte est basé sur [@saniho](https://github.com/saniho/content-card-linky)
 
 **************
 
