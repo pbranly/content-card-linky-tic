@@ -135,8 +135,8 @@ export class contentCardLinkyEditor extends LitElement {
   get _showError() {
     return this._config.showError !== false;
   }
-  get _showTitreLigne() {
-    return this._config.showTitreLigne !== false;
+  get _showTitleLign() {
+    return this._config.showTitleLign !== false;
   }
   get _showEcoWatt() {
     return this._config.showEcoWatt !== false;
@@ -163,15 +163,15 @@ get _showTempoColor() {
   }
 
   get _nbJoursAffichage() {
-    return this._config.nbJoursAffichage || 7;
+    return this._config.nbJoursAffichage || "7";
   }
 
   get _showDayName() {
-    return this._config.showDayName;
+    return this._config.showDayName || "long";
   }
   
   get _titleName() {
-    return this._config.titleName || "";
+    return this._config.titleName || "LINKY";
   }
 
   firstUpdated() {
@@ -190,12 +190,7 @@ get _showTempoColor() {
     return html`
       <div class="card-config">
         <div>
-          <paper-input
-            label="Titre"
-            .value="${this._titleName}"
-            .configValue="${"titleName"}"
-            @value-changed="${this._valueChanged}"
-          ></paper-input>
+		  ${this.renderTextField("Titre", this._titleName, "titleName")}
           ${this.renderSensorPicker("Entity", this._entity, "entity")}
 		  ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
 		  ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
@@ -203,6 +198,8 @@ get _showTempoColor() {
 		  ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
 		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
 		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
+		  ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
+		  ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
           <!-- Switches -->
           <ul class="switches">
             ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
@@ -220,7 +217,7 @@ get _showTempoColor() {
             ${this.renderSwitchOption("Show ratio mois precedent", this._showMonthRatio, "showMonthRatio")}
             ${this.renderSwitchOption("Show ratio semaine", this._showWeekRatio, "showWeekRatio")}
             ${this.renderSwitchOption("Show ratio hier", this._showYesterdayRatio, "showYesterdayRatio")}
-            ${this.renderSwitchOption("Show titre ligne", this._showTitreLigne, "showTitreLigne")}
+            ${this.renderSwitchOption("Show titre ligne", this._showTitleLign, "showTitleLign")}
             ${this.renderSwitchOption("Show error", this._showError, "showError")}
             ${this.renderSwitchOption("Show header", this._showHeader, "showHeader")}
             ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
@@ -229,21 +226,6 @@ get _showTempoColor() {
 			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
           </ul>
           <!-- -->
-          <paper-input
-            label="nombre de jours"
-            type="number"
-            min="1"
-            max="12"
-            value=${this._nbJoursAffichage}
-            .configValue="${"nbJoursAffichage"}"
-            @value-changed="${this._valueChanged}"
-          ></paper-input><br>
-          <paper-input
-            label="Nom du jour de la semaine( valeur possible : long, short, narrow )"
-            .value="${this._showDayName}"
-            .configValue="${"showDayName"}"
-            @value-changed="${this._valueChanged}"
-          ></paper-input>
         </div>
       </div>
     `;
@@ -267,6 +249,26 @@ get _showTempoColor() {
             `
   }
   
+  renderTextField(label, state, configAttr) {
+    return this.renderField(label, state, configAttr, "text");
+  }
+
+  renderNumberField(label, state, configAttr) {
+    return this.renderField(label, state, configAttr, "number");
+  }
+
+  renderField(label, state, configAttr, type) {
+    return html`
+      <ha-textfield
+        label="${label}"
+        .value="${state}"
+        type="${type}"
+        .configValue=${configAttr}
+        @input=${this._valueChanged}
+      ></ha-textfield>
+    `;
+  }  
+  
   renderSwitchOption(label, state, configAttr) {
     return html`
       <li class="switch">
@@ -279,11 +281,35 @@ get _showTempoColor() {
           </li>
     `
   }
+  
+  renderSelectField(label, config_key, options, value, default_value) {
+	let selectOptions = [];
+	for (let i = 0; i < options.length; i++) {
+		let currentOption = options[i];
+		selectOptions.push(html`<ha-list-item .value="${currentOption.value}">${currentOption.label}</ha-list-item>`);
+	}
+
+	return html`
+		<ha-select
+			label="${label}"
+			.value=${value || default_value}
+			.configValue=${config_key}                
+			@change=${this._valueChanged}
+			@closed=${(ev) => ev.stopPropagation()}
+		>
+			${selectOptions}
+		</ha-select>
+	`
+	}  
+  
   _valueChanged(ev) {
     if (!this._config || !this.hass) {
       return;
     }
     const target = ev.target;
+    if (this[`_${target.configValue}`] === target.value) {
+      return;
+    }
     if (target.configValue) {
       if (target.value === "") {
         delete this._config[target.configValue];

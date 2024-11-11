@@ -379,7 +379,7 @@ class ContentCardLinky extends LitElement {
     }
   }
   renderTitreLigne(config) {
-    if (this.config.showTitreLigne === true) {
+    if (this.config.showTitleLign === true) {
        return html
        `
         <div class="day">
@@ -397,7 +397,7 @@ class ContentCardLinky extends LitElement {
     }
   }
   r_enderTitreLigne(config) {
-    if (this.config.showTitreLigne === true) {
+    if (this.config.showTitleLign === true) {
         return html
         `
             <div class="day">
@@ -787,13 +787,13 @@ class ContentCardLinky extends LitElement {
       showMonthRatio: true,
       showWeekRatio: false,
       showYesterdayRatio: false,
-      showTitreLigne: false,
+      showTitleLign: false,
       showEcoWatt: false,
 	  showEcoWattJ12: false,
 	  showTempo: false,
 	  showTempoColor: false,
-      titleName: "",
-      nbJoursAffichage: 7,
+      titleName: "LINKY",
+      nbJoursAffichage: "7",
       kWhPrice: undefined,
     }
 
