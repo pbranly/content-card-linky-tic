@@ -66,7 +66,8 @@ entity: sensor.linky_<pdl>_consumption
 
 ## Options disponibles
 
-![image](https://github.com/user-attachments/assets/6d634d47-5ee2-4f64-b526-fbb52987020a)
+![image](https://github.com/user-attachments/assets/c00aafd2-c631-4021-82a0-583c8f31caf6)
+
 
 
   ````
