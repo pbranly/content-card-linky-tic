@@ -876,7 +876,7 @@ class ContentCardLinky extends LitElement {
     
       .ha-icon {
         margin-right: 5px;
-        color: var(--paper-item-icon-color);
+        color: var(--state-icon-color);
       }
       
       .cout-block {
@@ -1020,7 +1020,7 @@ class ContentCardLinky extends LitElement {
         height: 1em;
       }
       .oneHour > li {
-        background-color: var(--paper-item-icon-color);
+        background-color: var(--state-icon-color);
         border-right: 1px solid var(--lovelace-background, var(--primary-background-color));
       }
       .oneHour > li:first-child {
