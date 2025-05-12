@@ -66,6 +66,10 @@ entity: sensor.linky_<pdl>_consumption
 
 ## Options disponibles
 
+![image](https://github.com/user-attachments/assets/c00aafd2-c631-4021-82a0-583c8f31caf6)
+
+
+
   ````
 type: custom:content-card-linky                 Type de la carte
 nbJoursAffichage: '7'                           Nombre de jours historique affiché
