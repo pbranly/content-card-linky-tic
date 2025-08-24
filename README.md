@@ -1,4 +1,4 @@
-# content-card-linky
+# content-card-linky-tic
 [![HACS Supported](https://img.shields.io/badge/HACS-Supported-green.svg)](https://github.com/custom-components/hacs)
 
 **Cette carte est compatible qu'avec l'integration : [MyElectricalData](https://github.com/MyElectricalData/myelectricaldata_import)**
