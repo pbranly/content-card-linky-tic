@@ -7,11 +7,11 @@ const css = LitElement.prototype.css;
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "content-card-linky",
-  name: "Carte Enedis",
-  description: "Carte pour l'intégration MyElectricalData.",
+  type: "content-card-linky-tic",
+  name: "Carte Enedis TIC",
+  description: "Carte pour l'intégration LINKY TIC.",
   preview: true,
-  documentationURL: "https://github.com/MyElectricalData/content-card-linky",
+  documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
@@ -58,7 +58,7 @@ function hasConfigOrEntityChanged(element, changedProps) {
   return true;
 }
 
-class ContentCardLinky extends LitElement {
+class ContentCardLinkyTic extends LitElement {
   static get properties() {
     return {
       config: {},
@@ -1133,4 +1133,4 @@ class ContentCardLinky extends LitElement {
       `;
   }
 }
-customElements.define('content-card-linky', ContentCardLinky);
+customElements.define("content-card-linky-tic", ContentCardLinkyTic);
