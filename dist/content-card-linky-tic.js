@@ -62,7 +62,7 @@ hass: {}
 }
 
 static async getConfigElement() {
-await import(”./content-card-linky-editor-tuc.js”);
+await import(”./content-card-linky-editor-tic.js”);
 return document.createElement(“content-card-linky-editor-tic ,”);
 }
 
