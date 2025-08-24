@@ -347,3 +347,4 @@ export class contentCardLinkyTicEditor extends LitElement {
 }
 
 customElements.define("content-card-linky-tic-editor", contentCardLinkyTicEditor);
+
