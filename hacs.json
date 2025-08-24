@@ -1,7 +1,16 @@
 {
   "name": "Content Card Linky TIC",
-  "content_in_root": true,
-  "filename": "content-card-linky-tic.js",
+  "filename": "dist/content-card-linky-tic.js",
+  "resources": [
+    {
+      "file": "dist/content-card-linky-tic.js",
+      "type": "module"
+    },
+    {
+      "file": "dist/content-card-linky-tic-editor.js",
+      "type": "module"
+    }
+  ],
   "render_readme": true,
-  "domain": "lovelace"
+  "homeassistant": "2022.0.0"
 }
