@@ -63,7 +63,8 @@ hass: {}
 
 static async getConfigElement() {
 await import(”./content-card-linky-editor-tic.js”);
-return document.createElement(“content-card-linky-editor-tic ,”);
+// CORRECTION: Suppression de la virgule en trop
+return document.createElement(“content-card-linky-editor-tic”);
 }
 
 render() {
@@ -86,7 +87,7 @@ if (!stateObj) {
         </div>
       </div>
     </ha-card> 
-  `
+  `;
 }
 
 const attributes = stateObj.attributes;
@@ -96,44 +97,43 @@ const modeCompteur = attributes["typeCompteur"];
 const tempoData = this.getLinkyTempoData();
 
 if (stateObj) {
-    if (( modeCompteur === "consommation" ) || ( !modeCompteur )){
-      return html`
-        <ha-card id="card">
-          ${this.addEventListener('click', event => { this._showDetails(this.config.entity); })}
-          ${this.renderTitle(this.config)}
-          <div class="card">
-            ${this.renderHeader(attributes, this.config, stateObj)}
-            <div class="variations">
-              ${this.renderVariations(attributes, tempoData)}
-            </div>
-            ${this.renderHistory(tempoData)}
-            ${this.renderTempo(tempoData, this.config)}
-            ${this.renderError("", this.config)}
-            ${this.renderInformation(tempoData, this.config)}
+  if ((modeCompteur === "consommation") || (!modeCompteur)) {
+    return html`
+      <ha-card id="card" @click=${() => this._showDetails(this.config.entity)}>
+        ${this.renderTitle(this.config)}
+        <div class="card">
+          ${this.renderHeader(attributes, this.config, stateObj)}
+          <div class="variations">
+            ${this.renderVariations(attributes, tempoData)}
           </div>
-        </ha-card>`
-    }
-    if ( modeCompteur === "production" ){
-      return html`
-        <ha-card>
-          <div class="card">
-            <div class="main-info">
-              ${this.config.showIcon
-                ? html`
-                  <div class="icon-block">
-                  <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
-                  </div>`
-                : html `` 
-              }
-              <div class="cout-block">
-                <span class="cout">${this.toFloat(stateObj.state)}</span>
-                <span class="cout-unit">${attributes.unit_of_measurement}</span>
-              </div>
+          ${this.renderHistory(tempoData)}
+          ${this.renderTempo(tempoData, this.config)}
+          ${this.renderError("", this.config)}
+          ${this.renderInformation(tempoData, this.config)}
+        </div>
+      </ha-card>`;
+  }
+  if (modeCompteur === "production") {
+    return html`
+      <ha-card>
+        <div class="card">
+          <div class="main-info">
+            ${this.config.showIcon
+              ? html`
+                <div class="icon-block">
+                <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
+                </div>`
+              : html``
+            }
+            <div class="cout-block">
+              <span class="cout">${this.toFloat(stateObj.state)}</span>
+              <span class="cout-unit">${attributes.unit_of_measurement}</span>
             </div>
-            ${this.renderError("", this.config)}
           </div>
-        </ha-card>`
-    }
+          ${this.renderError("", this.config)}
+        </div>
+      </ha-card>`;
+  }
 }
 ```
 
@@ -181,7 +181,8 @@ return {
   hp: hpTotal,
   hc: hcTotal,
   total: hpTotal + hcTotal,
-  date: yesterday
+  date: yesterday,
+  cost: this.calculateDayCost({ hp: hpTotal, hc: hcTotal, tempo: "BLUE" }) // Valeur par défaut
 };
 ```
 
@@ -256,7 +257,7 @@ calculateDayCost(dayData) {
 let tarifHP, tarifHC;
 
 ```
-switch(dayData.tempo) {
+switch (dayData.tempo) {
   case "BLUE":
   case "BLEU":
     tarifHP = this.config.tarifTempoBleuHP || 0.1828;
@@ -290,14 +291,14 @@ const historyData = tempoData.getHistoryData();
 ```
 return html`
   ${this.config.showPeakOffPeak 
-    ? html `
+    ? html`
       <span class="variations-linky">
         <span class="ha-icon">
           <ha-icon icon="mdi:flash"></ha-icon>
         </span>
         ${Math.round((currentData.hp / (currentData.hp + currentData.hc)) * 100)}<span class="unit"> % HP</span>
       </span>`
-    : html ``
+    : html``
   }
 `;
 ```
@@ -319,9 +320,9 @@ return event;
 
 renderTitle(config) {
 if (this.config.showTitle === true) {
-return html
-` <div class="card"> <div class="main-title"> <span>${this.config.titleName}</span> </div> </div>`
+return html` <div class="card"> <div class="main-title"> <span>${this.config.titleName}</span> </div> </div>`;
 }
+return html``;
 }
 
 renderHeader(attributes, config, stateObj) {
@@ -330,7 +331,7 @@ const tempoData = this.getLinkyTempoData();
 const currentData = tempoData.getCurrentDayData();
 
 ```
-  if( config.showPeakOffPeak ) {
+  if (config.showPeakOffPeak) {
     return html`
       <div class="main-info">
       ${this.renderIcon(attributes, config)}
@@ -339,9 +340,8 @@ const currentData = tempoData.getCurrentDayData();
         <span class="conso-hp">${this.toFloat(currentData.hp)}</span><span class="conso-unit-hp"> kWh <span class="more-unit">(en HP)</span></span>
       </div>
       ${this.renderPrice(currentData, config)}
-      </div>`
-  }
-  else{
+      </div>`;
+  } else {
     return html`
       <div class="main-info">
       ${this.renderIcon(attributes, config)}
@@ -350,45 +350,44 @@ const currentData = tempoData.getCurrentDayData();
         <span class="cout-unit">kWh</span>
       </div>
       ${this.renderPrice(currentData, config)}
-      </div>`
+      </div>`;
   }
 }
+return html``;
 ```
 
 }
 
 renderIcon(attributes, config) {
-if ( this.config.showIcon ){
-return html ` <div class="icon-block"> <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span> </div>`
-}
-else{
-return html ``
+if (this.config.showIcon) {
+return html` <div class="icon-block"> <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span> </div>`;
+} else {
+return html``;
 }
 }
 
 renderPrice(currentData, config) {
-if ( this.config.showPrice ){
-return html ` <div class="cout-block"> <span class="cout" title="Coût journalier">${this.toFloat(currentData.cost, 2)}</span><span class="cout-unit"> €</span> </div>`
-}
-else{
-return html ``
+if (this.config.showPrice) {
+return html` <div class="cout-block"> <span class="cout" title="Coût journalier">${this.toFloat(currentData.cost, 2)}</span><span class="cout-unit"> €</span> </div>`;
+} else {
+return html``;
 }
 }
 
 renderError(errorMsg, config) {
 if (this.config.showError === true) {
-if ( errorMsg != “” ){
-return html
-`<div class="error-msg" style="color: red"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> ${errorMsg} </div>`
+if (errorMsg != “”) {
+return html` <div class="error-msg" style="color: red"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> ${errorMsg} </div>`;
 }
 }
+return html``;
 }
 
 renderInformation(tempoData, config) {
 if (!tempoData.hasAllSensors) {
-return html `<div class="information-msg" style="color: orange"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> Certains capteurs linky_tempo ne sont pas disponibles. </div>`
+return html` <div class="information-msg" style="color: orange"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> Certains capteurs linky_tempo ne sont pas disponibles. </div>`;
 }
-return html ``;
+return html``;
 }
 
 renderHistory(tempoData) {
@@ -397,21 +396,20 @@ const historyData = tempoData.getHistoryData();
 const nbJours = Math.min(this.config.nbJoursAffichage || 7, historyData.length);
 
 ```
-  return html
-    `
-      <div class="week-history">
-      ${this.renderTitreLigne(this.config)}
-      ${historyData.slice(-nbJours).map((day, index) => this.renderDayFromTempoData(day, index, this.config))}
-      </div>
-    `
+  return html`
+    <div class="week-history">
+    ${this.renderTitreLigne(this.config)}
+    ${historyData.slice(-nbJours).map((day, index) => this.renderDayFromTempoData(day, index, this.config))}
+    </div>
+  `;
 }
+return html``;
 ```
 
 }
 
 renderDayFromTempoData(dayData, index, config) {
-return html
-`<div class="day"> ${this.renderDailyWeekFromTempoData(dayData, config)} ${this.renderDailyValueFromTempoData(dayData, config)} ${this.renderDayPriceFromTempoData(dayData, config)} ${this.renderDayHCHPFromTempoData(dayData, config)} </div>`
+return html` <div class="day"> ${this.renderDailyWeekFromTempoData(dayData, config)} ${this.renderDailyValueFromTempoData(dayData, config)} ${this.renderDayPriceFromTempoData(dayData, config)} ${this.renderDayHCHPFromTempoData(dayData, config)} </div>`;
 }
 
 renderDailyWeekFromTempoData(dayData, config) {
@@ -428,32 +426,33 @@ return html`
 }
 
 renderDailyValueFromTempoData(dayData, config) {
-return html`<br><span class="cons-val">${this.toFloat(dayData.total)}  ${this.config.showInTableUnit  ? html`kWh`: html `` }</span>`;
+return html`<br><span class="cons-val">${this.toFloat(dayData.total)} ${this.config.showInTableUnit ? html`kWh` : html``}</span>`;
 }
 
 renderDayPriceFromTempoData(dayData, config) {
 if (config.showDayPrice) {
 return html`<br><span class="cons-val">${this.toFloat(dayData.cost, 2)} €</span>`;
 }
+return html``;
 }
 
 renderDayHCHPFromTempoData(dayData, config) {
 if (config.showDayHCHP) {
-return html`<br><span class="cons-val">${this.toFloat(dayData.hc, 2)}  ${this.config.showInTableUnit  ? html`kWh`: html `` }</span> <br><span class="cons-val">${this.toFloat(dayData.hp, 2)}  ${this.config.showInTableUnit  ? html`kWh`: html `` }</span>`;
+return html`<br><span class="cons-val">${this.toFloat(dayData.hc, 2)} ${this.config.showInTableUnit ? html`kWh` : html``}</span> <br><span class="cons-val">${this.toFloat(dayData.hp, 2)} ${this.config.showInTableUnit ? html`kWh` : html``}</span>`;
 }
+return html``;
 }
 
 renderTitreLigne(config) {
 if (this.config.showTitleLign === true) {
-return html
-`<div class="day"> <br><span class="cons-val">Jour</span> <br><span class="cons-val">Conso</span> ${this.config.showDayPrice  ? html`<br><span class="cons-val">Prix</span>`: html ``} ${this.config.showDayHCHP  ? html`<br><span class="cons-val">HC</span>
-<br><span class="cons-val">HP</span>`: html ``} </div>`
+return html` <div class="day"> <br><span class="cons-val">Jour</span> <br><span class="cons-val">Conso</span> ${this.config.showDayPrice ? html`<br><span class="cons-val">Prix</span>` : html``} ${this.config.showDayHCHP ? html`<br><span class="cons-val">HC</span><br><span class="cons-val">HP</span>` : html``} </div>`;
 }
+return html``;
 }
 
 renderTempo(tempoData, config) {
-if (this.config.showTempo === false ){
-return html ``;
+if (this.config.showTempo === false) {
+return html``;
 }
 
 ```
@@ -483,7 +482,7 @@ return html`
     <td class="tempo-red" style="width:33.33%">22</td>
   </tr>
   </table>
-`
+`;
 ```
 
 }
@@ -544,7 +543,7 @@ const defaultConfig = {
   sensorBBRHCJW: undefined,
   sensorBBRHPJR: undefined,
   sensorBBRHCJR: undefined,
-}
+};
 
 this.config = {
   ...defaultConfig,
@@ -568,33 +567,21 @@ return Number.parseFloat(value).toFixed(decimals);
 
 previousYear() {
 var d = new Date();
-d.setFullYear(d.getFullYear()-1 );
-
-```
-return d.toLocaleDateString('fr-FR', {year: "numeric"});
-```
-
+d.setFullYear(d.getFullYear() - 1);
+return d.toLocaleDateString(‘fr-FR’, {year: “numeric”});
 }
 
 previousMonth() {
 var d = new Date();
-d.setMonth(d.getMonth()-1) ;
-d.setFullYear(d.getFullYear()-1 );
-
-```
-return d.toLocaleDateString('fr-FR', {month: "long", year: "numeric"});
-```
-
+d.setMonth(d.getMonth() - 1);
+d.setFullYear(d.getFullYear() - 1);
+return d.toLocaleDateString(‘fr-FR’, {month: “long”, year: “numeric”});
 }
 
 currentMonth() {
 var d = new Date();
-d.setFullYear(d.getFullYear()-1 );
-
-```
-return d.toLocaleDateString('fr-FR', {month: "long", year: "numeric"});
-```
-
+d.setFullYear(d.getFullYear() - 1);
+return d.toLocaleDateString(‘fr-FR’, {month: “long”, year: “numeric”});
 }
 
 weekBefore() {
@@ -860,7 +847,7 @@ cursor: pointer;
     background-size: 28.28px 28.28px;
     text-transform: capitalize;
   }      
-  `;
+`;
 ```
 
 }
