@@ -252,11 +252,32 @@ return colors[Math.floor(Math.random() * colors.length)];
 }
 
 calculateDayCost(dayData) {
-// Calcul du coût basé sur les tarifs tempo
-const tarifHP = this.config.tarifTempoHP || 0.27;
-const tarifHC = this.config.tarifTempoHC || 0.20;
+// Calcul du coût basé sur les 6 tarifs tempo
+let tarifHP, tarifHC;
 
 ```
+switch(dayData.tempo) {
+  case "BLUE":
+  case "BLEU":
+    tarifHP = this.config.tarifTempoBleuHP || 0.1828;
+    tarifHC = this.config.tarifTempoBleuHC || 0.1344;
+    break;
+  case "WHITE":
+  case "BLANC":
+    tarifHP = this.config.tarifTempoBlancHP || 0.1986;
+    tarifHC = this.config.tarifTempoBlancHC || 0.1508;
+    break;
+  case "RED":
+  case "ROUGE":
+    tarifHP = this.config.tarifTempoRougeHP || 0.7562;
+    tarifHC = this.config.tarifTempoRougeHC || 0.1508;
+    break;
+  default:
+    // Tarif par défaut (bleu)
+    tarifHP = this.config.tarifTempoBleuHP || 0.1828;
+    tarifHC = this.config.tarifTempoBleuHC || 0.1344;
+}
+
 return (dayData.hp * tarifHP) + (dayData.hc * tarifHC);
 ```
 
@@ -509,8 +530,13 @@ const defaultConfig = {
   showTempoColor: false,
   titleName: "LINKY",
   nbJoursAffichage: "7",
-  tarifTempoHP: 0.27,
-  tarifTempoHC: 0.20,
+  // Nouveaux tarifs tempo (6 tarifs différents)
+  tarifTempoBleuHP: 0.1828,
+  tarifTempoBleuHC: 0.1344,
+  tarifTempoBlancHP: 0.1986,
+  tarifTempoBlancHC: 0.1508,
+  tarifTempoRougeHP: 0.7562,
+  tarifTempoRougeHC: 0.1508,
   // Nouvelles configurations pour les capteurs linky_tempo
   sensorBBRHPJB: undefined,
   sensorBBRHCJB: undefined,
