@@ -1,5 +1,7 @@
 {
-    "name": "TIC Linky Content Card",
-    "country": "FR",
-    "render_readme": true
+  "name": "Content Card Linky TIC",
+  "content_in_root": true,
+  "filename": "content-card-linky-tic.js",
+  "render_readme": true,
+  "domain": "lovelace"
 }
