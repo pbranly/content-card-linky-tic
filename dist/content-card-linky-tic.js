@@ -8,7 +8,7 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky-tic",
   name: "Carte Enedis TIC",
-  description: "Carte pour l'intégration LINKY TIC.",
+  description: "Carte pour l'integration LINKY TIC.",
   preview: true,
   documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
@@ -80,7 +80,7 @@ class ContentCardLinkyTic extends LitElement {
             <div id="states">
               <div class="name">
                 <ha-icon id="icon" icon="mdi:flash" data-state="unavailable" data-domain="connection" style="color: var(--state-icon-unavailable-color)"></ha-icon>
-                <span style="margin-right:2em">Linky : données inaccessibles pour ${this.config.entity}</span>
+                <span style="margin-right:2em">Linky : donnees inaccessibles pour ${this.config.entity}</span>
               </div>
             </div>
           </div>
@@ -331,7 +331,7 @@ class ContentCardLinkyTic extends LitElement {
 
   renderPrice(currentData, config) {
     if (this.config.showPrice) {
-      return html`<div class="cout-block"> <span class="cout" title="Coût journalier">${this.toFloat(currentData.cost, 2)}</span><span class="cout-unit"> €</span> </div>`;
+      return html`<div class="cout-block"> <span class="cout" title="Cout journalier">${this.toFloat(currentData.cost, 2)}</span><span class="cout-unit"> €</span> </div>`;
     } else {
       return html``;
     }
