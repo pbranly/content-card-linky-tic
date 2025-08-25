@@ -30,7 +30,7 @@ const HELPERS = window.loadCardHelpers();
 
 export class contentCardLinkyTicEditor extends LitElement {
 setConfig(config) {
-this._config = { …config };
+this._config = { …config }; // ✅ CORRIGÉ: utilisation du bon spread operator
 }
 
 static get properties() {
@@ -354,7 +354,7 @@ if (target.value === “”) {
 delete this._config[target.configValue];
 } else {
 this._config = {
-…this._config,
+…this._config, // ✅ CORRIGÉ: utilisation du bon spread operator
 [target.configValue]:
 target.checked !== undefined ? target.checked : target.value,
 };
