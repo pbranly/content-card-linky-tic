@@ -4,7 +4,6 @@ const LitElement = Object.getPrototypeOf(
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky-tic",
@@ -13,6 +12,7 @@ window.customCards.push({
   preview: true,
   documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
+
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
   detail = detail === null || detail === undefined ? {} : detail;
@@ -41,7 +41,6 @@ const tempoValues = new Map([
   ["RED", "red"],
 ]);
 
-
 function hasConfigOrEntityChanged(element, changedProps) {
   if (changedProps.has("config")) {
     return true;
@@ -58,7 +57,7 @@ function hasConfigOrEntityChanged(element, changedProps) {
   return true;
 }
 
-class contentCardLinkyTic extends LitElement {
+class ContentCardLinkyTic extends LitElement {
   static get properties() {
     return {
       config: {},
@@ -90,7 +89,7 @@ class contentCardLinkyTic extends LitElement {
             </div>
           </div>
         </ha-card> 
-      `
+      `;
     }
 
     const attributes = stateObj.attributes;
@@ -103,7 +102,7 @@ class contentCardLinkyTic extends LitElement {
               ${this.addEventListener('click', event => { this._showDetails(this.config.entity); })}
               ${this.renderTitle(this.config)}
               <div class="card">
-				  ${this.renderHeader(attributes, this.config, stateObj)}
+                  ${this.renderHeader(attributes, this.config, stateObj)}
                 <div class="variations">
                   ${this.config.showYearRatio 
                     ? html `
@@ -189,12 +188,12 @@ class contentCardLinkyTic extends LitElement {
                 </div>
                 ${this.renderHistory(attributes.daily, attributes.unit_of_measurement, attributes.dailyweek, attributes.dailyweek_cost, attributes.dailyweek_costHC, attributes.dailyweek_costHP, attributes.dailyweek_HC, attributes.dailyweek_HP, attributes.dailyweek_MP, attributes.dailyweek_MP_over, attributes.dailyweek_MP_time, attributes.dailyweek_Tempo, this.config)}
                 ${this.renderEcoWatt(attributes, this.config)}
-				${this.renderTempo(attributes, this.config)}
+                ${this.renderTempo(attributes, this.config)}
                 ${this.renderError(attributes.errorLastCall, this.config)}
                 ${this.renderVersion(attributes.versionUpdateAvailable, attributes.versionGit)}
                 ${this.renderInformation(attributes, this.config)}
               </div>
-            </ha-card>`
+            </ha-card>`;
         }
         if ( modeCompteur === "production" ){
           return html`
@@ -215,10 +214,11 @@ class contentCardLinkyTic extends LitElement {
                 </div>
                 ${this.renderError(attributes.errorLastCall, this.config)}
               </div>
-            </ha-card>`
+            </ha-card>`;
         }
     }
   }
+
   _showDetails(myEntity) {
     const event = new Event('hass-more-info', {
       bubbles: true,
@@ -231,106 +231,107 @@ class contentCardLinkyTic extends LitElement {
     this.dispatchEvent(event);
     return event;
   }
+
   renderTitle(config) {
     if (this.config.showTitle === true) {
-      return html
-        `
+      return html`
           <div class="card">
           <div class="main-title">
           <span>${this.config.titleName}</span>
           </div>
-          </div>` 
+          </div>`; 
        }
   }
+
   renderHeader(attributes, config, stateObj) {
     if (this.config.showHeader === true) {
-	  if( config.showPeakOffPeak ) {
+      if( config.showPeakOffPeak ) {
         return html`
-		  <div class="main-info">
-		  ${this.renderIcon(attributes, config)}
-		  <div class="hp-hc-block">
-			<span class="conso-hc">${this.toFloat(attributes.yesterday_HC)}</span><span class="conso-unit-hc"> ${attributes.unit_of_measurement} <span class="more-unit">(en HC)</span></span><br />
-			<span class="conso-hp">${this.toFloat(attributes.yesterday_HP)}</span><span class="conso-unit-hp"> ${attributes.unit_of_measurement} <span class="more-unit">(en HP)</span></span>
-		  </div>
-		  ${this.renderPrice(attributes, config)}
-          </div>`
-	  }
-	  else{
+          <div class="main-info">
+          ${this.renderIcon(attributes, config)}
+          <div class="hp-hc-block">
+            <span class="conso-hc">${this.toFloat(attributes.yesterday_HC)}</span><span class="conso-unit-hc"> ${attributes.unit_of_measurement} <span class="more-unit">(en HC)</span></span><br />
+            <span class="conso-hp">${this.toFloat(attributes.yesterday_HP)}</span><span class="conso-unit-hp"> ${attributes.unit_of_measurement} <span class="more-unit">(en HP)</span></span>
+          </div>
+          ${this.renderPrice(attributes, config)}
+          </div>`;
+      }
+      else{
         return html`
-		  <div class="main-info">
-		  ${this.renderIcon(attributes, config)}
-		  <div class="cout-block">
-			<span class="cout">${this.toFloat(stateObj.state)}</span>
-			<span class="cout-unit">${attributes.unit_of_measurement}</span>
-		  </div>
-		  ${this.renderPrice(attributes, config)}
-          </div>`
+          <div class="main-info">
+          ${this.renderIcon(attributes, config)}
+          <div class="cout-block">
+            <span class="cout">${this.toFloat(stateObj.state)}</span>
+            <span class="cout-unit">${attributes.unit_of_measurement}</span>
+          </div>
+          ${this.renderPrice(attributes, config)}
+          </div>`;
       }
     }
   }
+
   renderIcon(attributes, config) {
     if ( this.config.showIcon ){
-  	  return html `
-		<div class="icon-block">
-			<span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
-		</div>`
-	  }
+        return html `
+        <div class="icon-block">
+            <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
+        </div>`;
+      }
     else{
-	  return html ``
-	}
+        return html ``;
+    }
   }
+
   renderPrice(attributes, config) {
     if ( this.config.showPrice ){
-  	  return html `
-		<div class="cout-block">
-		  <span class="cout" title="Coût journalier">${this.toFloat(attributes.daily_cost, 2)}</span><span class="cout-unit"> €</span>
-		</div>`
-	  }
+        return html `
+        <div class="cout-block">
+          <span class="cout" title="Coût journalier">${this.toFloat(attributes.daily_cost, 2)}</span><span class="cout-unit"> €</span>
+        </div>`;
+      }
     else{
-	  return html ``
-	}
+        return html ``;
+    }
   }
+
   renderError(errorMsg, config) {
     if (this.config.showError === true) {
        if ( errorMsg != "" ){
-          return html
-            `
+          return html`
               <div class="error-msg" style="color: red">
                 <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon>
                 ${errorMsg}
-              </div>
-            `
+              </div>`;
        }
     }
   }
+
   renderInformation(attributes, config) {
     if (attributes.serviceEnedis === undefined ) {
-		return html ``
-	}
-	else{
-		if ( attributes.serviceEnedis !== "myElectricalData" ){
-		  return html `
+        return html ``;
+    }
+    else{
+        if ( attributes.serviceEnedis !== "myElectricalData" ){
+          return html `
               <div class="information-msg" style="color: red">
               <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon>
-			  Merci de migrer sur myElectricalData.<br>
-			  EnedisGateway sera desactivé courant 2023.
-			  </div>
-			  `
-		}
+              Merci de migrer sur myElectricalData.<br>
+              EnedisGateway sera desactivé courant 2023.
+              </div>`;
+        }
     }
   }
+
   renderVersion(versionUpdateAvailable, versionGit) {
     if ( versionUpdateAvailable === true ){
-          return html
-            `
+          return html`
               <div class="information-msg" style="color: red">
                 <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon>
                 Nouvelle version disponible ${versionGit}
-              </div>
-            `
+              </div>`;
     }
     else{
-       return html ``
+       return html ``;
     }
   }
 
@@ -339,21 +340,18 @@ class contentCardLinkyTic extends LitElement {
       if ( dailyweek != undefined){
         var nbJours = dailyweek.toString().split(",").length ; 
         if ( config.nbJoursAffichage <= nbJours ) { nbJours = config.nbJoursAffichage }
-        return html
-          `
+        return html`
             <div class="week-history">
             ${this.renderTitreLigne(config)}
             ${daily.slice(0, nbJours).reverse().map((day, index) => this.renderDay(day, nbJours-index, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP, 
                dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, dailyweek_Tempo, config))}
-            </div>
-          `
+            </div>`;
         }
     }
   }
 
   renderDay(day, dayNumber, unit_of_measurement, dailyweek, dailyweek_cost, dailyweek_costHC, dailyweek_costHP, dailyweek_HC, dailyweek_HP, dailyweek_MP, dailyweek_MP_over, dailyweek_MP_time, dailyweek_Tempo, config) {
-    return html
-      `
+    return html`
         <div class="day">
           ${this.renderDailyWeek(dailyweek, dailyweek_Tempo, dayNumber, config)}
           ${this.renderDailyValue(day, dayNumber, unit_of_measurement, config)}
@@ -362,26 +360,22 @@ class contentCardLinkyTic extends LitElement {
           ${this.renderDayPriceHCHP(dailyweek_costHP, dayNumber, config)}
           ${this.renderDayHCHP(dailyweek_HC, dayNumber, unit_of_measurement, config)}
           ${this.renderDayHCHP(dailyweek_HP, dayNumber, unit_of_measurement, config)}
-		  ${this.renderDayMaxPower(dailyweek_MP, dayNumber, dailyweek_MP_over, dailyweek_MP_time, config)}
-        </div>
-      `
+          ${this.renderDayMaxPower(dailyweek_MP, dayNumber, dailyweek_MP_over, dailyweek_MP_time, config)}
+        </div>`;
   }
+
   renderDailyWeekTitre( maConfig, monTitre ){
     if (maConfig === true) {
-       return html
-       `${monTitre}<br>
-       `
+       return html`${monTitre}<br>`;
       }
     else{
-       return html
-       `
-       `
+       return html``;
     }
   }
+
   renderTitreLigne(config) {
     if (this.config.showTitleLign === true) {
-       return html
-       `
+       return html`
         <div class="day">
           ${this.renderDailyWeekTitre(true, "")}
           ${this.renderDailyWeekTitre(true, "Conso")}
@@ -390,103 +384,52 @@ class contentCardLinkyTic extends LitElement {
           ${this.renderDailyWeekTitre(this.config.showDayPriceHCHP, "Prix HP")}
           ${this.renderDailyWeekTitre(this.config.showDayHCHP, "HC")}
           ${this.renderDailyWeekTitre(this.config.showDayHCHP, "HP")}
-		  ${this.renderDailyWeekTitre(this.config.showDayMaxPower, "MP")}
-		  ${this.renderDailyWeekTitre(this.config.showDayMaxPowerTime, "MPtime")}
-        </div>
-        `
+          ${this.renderDailyWeekTitre(this.config.showDayMaxPower, "MP")}
+          ${this.renderDailyWeekTitre(this.config.showDayMaxPowerTime, "MPtime")}
+        </div>`;
     }
   }
-  r_enderTitreLigne(config) {
-    if (this.config.showTitleLign === true) {
-        return html
-        `
-            <div class="day">
-        <br><span class="cons-val">Conso.</span>
-        ${this.config.showDayPrice 
-        ? html `
-        <br><span class="cons-val">Prix</span>`
-        : html ``
-        }
-        ${this.config.showDayPriceHCHP
-        ? html `
-        <br><span class="cons-val">Prix HC</span>`
-        : html ``
-        }
-        ${this.config.showDayPriceHCHP 
-        ? html `
-        <br><span class="cons-val">Prix HP</span>`
-        : html ``
-        }
-        ${this.config.showDayHCHP 
-        ? html `
-        <br><span class="cons-val">HC</span>`
-        : html ``
-        }
-        ${this.config.showDayHCHP 
-        ? html `
-        <br><span class="cons-val">HP</span>`
-        : html ``
-        }
-	${this.config.showDayMaxPower 
-        ? html `
-	<br><span class="cons-val">MP</span>`
-        : html ``
-        }
-	${this.config.showDayMaxPower 
-        ? html `
-	<br><span class="cons-val">MPtime</span>`
-        : html ``
-        }
-            </div>
-        `;
-      }
-  }
+
   renderDailyWeek(value, valueC, dayNumber, config) {
-	if (config.showTempoColor) {
-		const valeurColor = valueC.toString().split(",")[dayNumber-1] ;
-		if ( valeurColor === "-1" ) {
-			valueC = "color" ;
-		}
-		else {
-		valueC = valeurColor.toLowerCase() ;
-		}
-	}  
-	else {
-		valueC = "white";
-	}
-    return html
-    `
-    <span class="tempoday-${valueC}">${new Date(value.toString().split(",")[dayNumber-1]).toLocaleDateString('fr-FR', {weekday: config.showDayName})}</span>
-    `;
+    if (config.showTempoColor) {
+        const valeurColor = valueC.toString().split(",")[dayNumber-1] ;
+        if ( valeurColor === "-1" ) {
+            valueC = "color" ;
+        }
+        else {
+        valueC = valeurColor.toLowerCase() ;
+        }
+    }  
+    else {
+        valueC = "white";
+    }
+    return html`
+    <span class="tempoday-${valueC}">${new Date(value.toString().split(",")[dayNumber-1]).toLocaleDateString('fr-FR', {weekday: config.showDayName})}</span>`;
   }
+
   renderNoData(){
-     return html
-          `
-             <br><span class="cons-val" title="Donnée indisponible"><ha-icon id="icon" icon="mdi:alert-outline"></ha-icon></span>
-           ` ;
+     return html`
+             <br><span class="cons-val" title="Donnée indisponible"><ha-icon id="icon" icon="mdi:alert-outline"></ha-icon></span>`;
   }
+
   renderDailyValue(day, dayNumber, unit_of_measurement, config) {
     if ( day === -1 ){
         return this.renderNoData();
     }
     else{
-        return html
-        `
+        return html`
         <br><span class="cons-val">${this.toFloat(day)} 
                   ${this.config.showInTableUnit 
-                    ? html `
-                      ${unit_of_measurement}`
-                    : html ``
-                   }</span>
-       `;
+                    ? html`${unit_of_measurement}`
+                    : html``
+                   }</span>`;
     }
   }
+
   renderDayPrice(value, dayNumber, config) {
     if (config.kWhPrice) {
-      return html
-      `
-        <br><span class="cons-val">${this.toFloat(value * config.kWhPrice, 2)} €</span>
-      `;
+      return html`
+        <br><span class="cons-val">${this.toFloat(value * config.kWhPrice, 2)} €</span>`;
     }
     if (config.showDayPrice) {
        const valeur = value.toString().split(",")[dayNumber-1] ;
@@ -494,13 +437,12 @@ class contentCardLinkyTic extends LitElement {
           return this.renderNoData();
        }
        else{
-          return html
-          `
-             <br><span class="cons-val">${this.toFloat(valeur)} €</span>
-           `;
+          return html`
+             <br><span class="cons-val">${this.toFloat(valeur)} €</span>`;
        }
     }
   }
+
   renderDayPriceHCHP(value, dayNumber, config) {
     if (config.showDayPriceHCHP) {
        const valeur = value.toString().split(",")[dayNumber-1] ;
@@ -508,13 +450,12 @@ class contentCardLinkyTic extends LitElement {
           return this.renderNoData();
        }
        else{
-          return html
-          `
-             <br><span class="cons-val">${this.toFloat(valeur, 2)} €</span>
-          `;
+          return html`
+             <br><span class="cons-val">${this.toFloat(valeur, 2)} €</span>`;
        }
     }
   }
+
   renderDayHCHP(value, dayNumber, unit_of_measurement, config) {
     if (config.showDayHCHP) {
        const valeur = value.toString().split(",")[dayNumber-1] ;
@@ -522,18 +463,16 @@ class contentCardLinkyTic extends LitElement {
           return this.renderNoData();
        }
        else{
-          return html
-          `
+          return html`
              <br><span class="cons-val">${this.toFloat(valeur, 2)} 
            ${this.config.showInTableUnit 
-                   ? html `
-                     ${unit_of_measurement}`
-                   : html ``
-                  }</span>
-          `;
+                   ? html`${unit_of_measurement}`
+                   : html``
+                  }</span>`;
         }
     }
   }
+
   renderDayMaxPower(value, dayNumber, overMP, MPtime, config) {
     if (config.showDayMaxPower) {
        const valeur = value.toString().split(",")[dayNumber-1] ;
@@ -542,69 +481,41 @@ class contentCardLinkyTic extends LitElement {
           return this.renderNoData();
        }
        else{
-		   if ( over === "true") {
-		    return html
-			`
-				<br><span class="cons-val" style="color:red">${this.toFloat(valeur, 2)}</span>
-				<br><span class="cons-val" style="color:red">${new Date(MPtime.toString().split(",")[dayNumber-1]).toLocaleTimeString('fr-FR', { hour: "2-digit", minute: "2-digit" }) }</span>
-			`;
-		   }
-		   else {
-			return html
-			`
-				<br><span class="cons-val">${this.toFloat(valeur, 2)}</span>
-				<br><span class="cons-val">${new Date(MPtime.toString().split(",")[dayNumber-1]).toLocaleTimeString('fr-FR', { hour: "2-digit", minute: "2-digit" }) }</span>
-			`;
-		   }
-	   }
+           if ( over === "true") {
+            return html`
+                <br><span class="cons-val" style="color:red">${this.toFloat(valeur, 2)}</span>
+                <br><span class="cons-val" style="color:red">${new Date(MPtime.toString().split(",")[dayNumber-1]).toLocaleTimeString('fr-FR', { hour: "2-digit", minute: "2-digit" }) }</span>`;
+           }
+           else {
+            return html`
+                <br><span class="cons-val">${this.toFloat(valeur, 2)}</span>
+                <br><span class="cons-val">${new Date(MPtime.toString().split(",")[dayNumber-1]).toLocaleTimeString('fr-FR', { hour: "2-digit", minute: "2-digit" }) }</span>`;
+           }
+       }
     }
   }  
-  
-    renderDayMaxPowerTime(value, dayNumber, overMP, config) {
-    if (config.showDayMaxPower) {
-       const valeur = value.toString.split(",")[dayNumber-1] ;
-       const over = overMP.toString().split(",")[dayNumber-1];
-       if ( valeur === "-1" ){
-          return this.renderNoData();
-       }
-       else{
-		   if ( over === "true") {
-		    return html
-			`
-				<br><span class="cons-val" style="color:red">${this.toFloat(valeur, 2)}</span>
-			`;
-		   }
-		   else {
-			return html
-			`
-				<br><span class="cons-val">${this.toFloat(valeur, 2)}</span>
-			`;
-		   }
-	   }
-    }
-  } 
-  
+
   getOneDayForecastTime(ecoWattForecast) {
-	let ecoWattForecastDate = new Date(ecoWattForecast.attributes["date"]);
+    let ecoWattForecastDate = new Date(ecoWattForecast.attributes["date"]);
     return [ecoWattForecastDate];
   }
-  
+
   getOneDayNextEcoWattText(ecoWattForecastEntity) {
-	let forecastDate = new Date(ecoWattForecastEntity.attributes["date"]);
+    let forecastDate = new Date(ecoWattForecastEntity.attributes["date"]);
     for (let [time, value] of Object.entries(
       ecoWattForecastEntity.attributes["forecast"]
     )) {
       if ( time != undefined && ecoWattForecastValues.get(value) !== "green" ) {
-		let timeStr = time.replace(/([345])5/g, "$10");
-		return html `Actuellement: ${ecoWattForecastValues.get(value)}`;
+        let timeStr = time.replace(/([345])5/g, "$10");
+        return html`Actuellement: ${ecoWattForecastValues.get(value)}`;
       } else
-	  {
-		  return html `Ecowatt ${ forecastDate.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'}) }`;
-	  }
+      {
+          return html`Ecowatt ${ forecastDate.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'}) }`;
+      }
     }
     return ""
   }
-  
+
   getOneDayNextEcoWatt(ecoWattForecastEntity) {
     let ecoWattForecastList = [];
     for (let [time, value] of Object.entries(
@@ -619,144 +530,141 @@ class contentCardLinkyTic extends LitElement {
 
     return ecoWattForecastList;
   }
-  
+
   renderEcoWatt(attributes, config) {
-	if (attributes.serviceEnedis === undefined ){
-	  return html ``;
-	}
-	if ( attributes.serviceEnedis !== "myElectricalData" ){
-	  return html `EcoWatt : uniquement disponible avec myElectricData`;
-	}
-	
-	let sensorName = this.config.ewEntity;
-    const ecoWattForecast = this.hass.states[sensorName];	
-	let sensorNameJ1 = this.config.ewEntityJ1;
+    if (attributes.serviceEnedis === undefined ){
+      return html ``;
+    }
+    if ( attributes.serviceEnedis !== "myElectricalData" ){
+      return html`EcoWatt : uniquement disponible avec myElectricData`;
+    }
+    
+    let sensorName = this.config.ewEntity;
+    const ecoWattForecast = this.hass.states[sensorName];    
+    let sensorNameJ1 = this.config.ewEntityJ1;
     const ecoWattForecastJ1 = this.hass.states[sensorNameJ1];
-	let sensorNameJ2 = this.config.ewEntityJ2;
+    let sensorNameJ2 = this.config.ewEntityJ2;
     const ecoWattForecastJ2 = this.hass.states[sensorNameJ2];
 
     return html` 
-	<table style="width:100%">
-		${this.config.showEcoWatt 
-		? html`
-		<tr style="line-height:80%">
-		<td style="width:5%">J+0</td>
-		<td style="width:95%">
-			<ul class="flow-row oneHour">
-			${html`
-			${this.getOneDayNextEcoWatt(ecoWattForecast).map(
-			(forecast) => html`
-			<li class="ecowatt-${forecast[0]}" style="background: ${forecast[1]}" title="${forecast[1]} - ${forecast[0]}" ></li>`
-			)}
-			`}
-			</ul>	
-		</td>
-		</tr>`
-		: html ``}
-		${this.config.showEcoWattJ12
-		? html`
-		<tr style="line-height:80%">
-		<td style="width:5%">J+1</td>
-		<td style="width:95%">
-			<ul class="flow-row oneHour">
-			${html`
-			${this.getOneDayNextEcoWatt(ecoWattForecastJ1).map(
-			(forecast) => html`
-			<li class="ecowatt-${forecast[0]}" style="background: ${forecast[1]}" title="${forecast[1]} - ${forecast[0]}" ></li>`
-			)}
-			`}
-			</ul>	
-		</td>
-		</tr>
-		<tr style="line-height:80%">
-		<td style="width:5%">J+2</td>
-		<td style="width:95%">
-			<ul class="flow-row oneHour">
-			${html`
-			${this.getOneDayNextEcoWatt(ecoWattForecastJ2).map(
-			(forecast) => html`
-			<li class="ecowatt-${forecast[0]}" style="background: ${forecast[1]}" title="${forecast[1]} - ${forecast[0]}" ></li>`
-			)}
-			`}
-			</ul>	
-		</td>
-		</tr>
-		<tr style="line-height:80%">
-		<td style="width:5%"> </td>
-		<td style="width:95%">
-			<ul class="flow-row oneHourLabel">
-			${html`
-			${this.getOneDayNextEcoWatt(ecoWattForecastJ2).map(
-			(forecast) => html`
-			<li title="${forecast[0]}">${(forecast[0]%2==1) ? forecast[0] : ''}</li>`
-			)}
-			`}
-			</ul>
-		</td>
-		</tr>
-		`
-		: html``}
-		`;   
+    <table style="width:100%">
+        ${this.config.showEcoWatt 
+        ? html`
+        <tr style="line-height:80%">
+        <td style="width:5%">J+0</td>
+        <td style="width:95%">
+            <ul class="flow-row oneHour">
+            ${html`
+            ${this.getOneDayNextEcoWatt(ecoWattForecast).map(
+            (forecast) => html`
+            <li class="ecowatt-${forecast[0]}" style="background: ${forecast[1]}" title="${forecast[1]} - ${forecast[0]}" ></li>`
+            )}
+            `}
+            </ul>    
+        </td>
+        </tr>`
+        : html ``}
+        ${this.config.showEcoWattJ12
+        ? html`
+        <tr style="line-height:80%">
+        <td style="width:5%">J+1</td>
+        <td style="width:95%">
+            <ul class="flow-row oneHour">
+            ${html`
+            ${this.getOneDayNextEcoWatt(ecoWattForecastJ1).map(
+            (forecast) => html`
+            <li class="ecowatt-${forecast[0]}" style="background: ${forecast[1]}" title="${forecast[1]} - ${forecast[0]}" ></li>`
+            )}
+            `}
+            </ul>    
+        </td>
+        </tr>
+        <tr style="line-height:80%">
+        <td style="width:5%">J+2</td>
+        <td style="width:95%">
+            <ul class="flow-row oneHour">
+            ${html`
+            ${this.getOneDayNextEcoWatt(ecoWattForecastJ2).map(
+            (forecast) => html`
+            <li class="ecowatt-${forecast[0]}" style="background: ${forecast[1]}" title="${forecast[1]} - ${forecast[0]}" ></li>`
+            )}
+            `}
+            </ul>    
+        </td>
+        </tr>
+        <tr style="line-height:80%">
+        <td style="width:5%"> </td>
+        <td style="width:95%">
+            <ul class="flow-row oneHourLabel">
+            ${html`
+            ${this.getOneDayNextEcoWatt(ecoWattForecastJ2).map(
+            (forecast) => html`
+            <li title="${forecast[0]}">${(forecast[0]%2==1) ? forecast[0] : ''}</li>`
+            )}
+            `}
+            </ul>
+        </td>
+        </tr>
+        `
+        : html``}
+        `;   
   }
-  
+
   getTempoDateValue(tempoEntity) {
-	let tempoDate = new Date(tempoEntity.attributes["date"]);
-	let tempoValue = tempoEntity.state;
+    let tempoDate = new Date(tempoEntity.attributes["date"]);
+    let tempoValue = tempoEntity.state;
     return [tempoDate, tempoValues.get(tempoValue), tempoValue];
   } 
-  
+
   getTempoRemainingDays(tempoEntity) {
-	let tempoRemainingRed = tempoEntity.attributes["days_red"];
-	let tempoRemainingWhite = tempoEntity.attributes["days_white"];
-	let tempoRemainingBlue = tempoEntity.attributes["days_blue"];
+    let tempoRemainingRed = tempoEntity.attributes["days_red"];
+    let tempoRemainingWhite = tempoEntity.attributes["days_white"];
+    let tempoRemainingBlue = tempoEntity.attributes["days_blue"];
     return [tempoRemainingRed, tempoRemainingWhite, tempoRemainingBlue];
   } 
-  
+
   renderTempo(attributes, config) {
-	if (attributes.serviceEnedis === undefined ){
-	  return html ``;
-	}
-	if ( attributes.serviceEnedis !== "myElectricalData" ){
-	  return html `EcoWatt : uniquement disponible avec myElectricData`;
-	}
-	if (this.config.showTempo === false ){
-	  return html ``;
-	}
-	let sensorName = this.config.tempoEntityInfo;
+    if (attributes.serviceEnedis === undefined ){
+      return html ``;
+    }
+    if ( attributes.serviceEnedis !== "myElectricalData" ){
+      return html`EcoWatt : uniquement disponible avec myElectricData`;
+    }
+    if (this.config.showTempo === false ){
+      return html ``;
+    }
+    let sensorName = this.config.tempoEntityInfo;
     const tempoInfo = this.hass.states[sensorName];
-	let sensorNameJ0 = this.config.tempoEntityJ0;
+    let sensorNameJ0 = this.config.tempoEntityJ0;
     const tempoJ0 = this.hass.states[sensorNameJ0];
-	let sensorNameJ1 = this.config.tempoEntityJ1;
+    let sensorNameJ1 = this.config.tempoEntityJ1;
     const tempoJ1 = this.hass.states[sensorNameJ1];
 
     if (!tempoJ0 || tempoJ0.length === 0 || !tempoJ1 || tempoJ1.length === 0) {
-      return html `Tempo: sensor(s) J0 et/ou J1 indisponible ou incorrecte`;
+      return html`Tempo: sensor(s) J0 et/ou J1 indisponible ou incorrecte`;
     }
-	if (!tempoInfo || tempoInfo.length === 0) {
-      return html `Tempo: sensor 'info' indisponible ou incorrecte`;
+    if (!tempoInfo || tempoInfo.length === 0) {
+      return html`Tempo: sensor 'info' indisponible ou incorrecte`;
     }
 
     let [dateJ0, valueJ0, stateJ0] = this.getTempoDateValue(tempoJ0);
-	let [dateJ1, valueJ1, stateJ1] = this.getTempoDateValue(tempoJ1);
-	let [remainingRed, remainingWhite, remainingBlue] = this.getTempoRemainingDays(tempoInfo);
+    let [dateJ1, valueJ1, stateJ1] = this.getTempoDateValue(tempoJ1);
+    let [remainingRed, remainingWhite, remainingBlue] = this.getTempoRemainingDays(tempoInfo);
 
     return html`
-	  <table class="tempo-color">
-	  <tr>
-		<td class="tempo-${valueJ0}" style="width:50%">${ (new Date(dateJ0)).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}</td>
-		<td class="tempo-${valueJ1}" style="width:50%">${ (new Date(dateJ1)).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}</td>
-	  </tr>
-	  </table>
-	  <table class="tempo-days">
-	  <tr>
-	  	<td class="tempo-blue" style="width:33.33%">${remainingBlue}</td>
-		<td class="tempo-white" style="width:33.33%">${remainingWhite}</td>
-		<td class="tempo-red" style="width:33.33%">${remainingRed}</td>
-	  </tr>
-	  </table>
-		
-    `
- 
+      <table class="tempo-color">
+      <tr>
+        <td class="tempo-${valueJ0}" style="width:50%">${ (new Date(dateJ0)).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}</td>
+        <td class="tempo-${valueJ1}" style="width:50%">${ (new Date(dateJ1)).toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}</td>
+      </tr>
+      </table>
+      <table class="tempo-days">
+      <tr>
+        <td class="tempo-blue" style="width:33.33%">${remainingBlue}</td>
+        <td class="tempo-white" style="width:33.33%">${remainingWhite}</td>
+        <td class="tempo-red" style="width:33.33%">${remainingRed}</td>
+      </tr>
+      </table>`;
   }
 
   setConfig(config) {
@@ -765,7 +673,7 @@ class contentCardLinkyTic extends LitElement {
     }
 
     if (config.kWhPrice && isNaN(config.kWhPrice)) {
-      throw new Error('kWhPrice should be a number')
+      throw new Error('kWhPrice should be a number');
     }
     
     const defaultConfig = {
@@ -776,11 +684,11 @@ class contentCardLinkyTic extends LitElement {
       showInTableUnit: false,
       showDayPrice: false,
       showDayPriceHCHP: false,
-	  showDayMaxPower: false,
+      showDayMaxPower: false,
       showDayHCHP: false,
       showDayName: "long",
       showError: true,
-	  shoInformation: true,
+      shoInformation: true,
       showPrice: true,
       showTitle: false,
       showCurrentMonthRatio: true,
@@ -789,13 +697,13 @@ class contentCardLinkyTic extends LitElement {
       showYesterdayRatio: false,
       showTitleLign: false,
       showEcoWatt: false,
-	  showEcoWattJ12: false,
-	  showTempo: false,
-	  showTempoColor: false,
+      showEcoWattJ12: false,
+      showTempo: false,
+      showTempoColor: false,
       titleName: "LINKY",
       nbJoursAffichage: "7",
       kWhPrice: undefined,
-    }
+    };
 
     this.config = {
       ...defaultConfig,
@@ -807,7 +715,6 @@ class contentCardLinkyTic extends LitElement {
     return hasConfigOrEntityChanged(this, changedProps);
   }
 
-  // @TODO: This requires more intelligent logic
   getCardSize() {
     return 3;
   }
@@ -830,19 +737,21 @@ class contentCardLinkyTic extends LitElement {
     
     return d.toLocaleDateString('fr-FR', {month: "long", year: "numeric"});
   } 
+
   currentMonth() {
     var d = new Date();
     d.setFullYear(d.getFullYear()-1 );
     
     return d.toLocaleDateString('fr-FR', {month: "long", year: "numeric"});
   } 
+
   weekBefore() {
     return "semaine";
   } 
+
   dayBeforeYesterday() {
     return "avant-hier";
   } 
-
 
   static get styles() {
     return css`
@@ -852,7 +761,7 @@ class contentCardLinkyTic extends LitElement {
         position: relative;
         cursor: pointer;
       }
-	  
+      
       ha-card ul {
         list-style: none;
         padding: 0;
@@ -1010,7 +919,7 @@ class contentCardLinkyTic extends LitElement {
         visibility: visible;
         opacity: 1;
       }
-	  
+      
       .flow-row {
         display: flex;
         flex-flow: row wrap;
@@ -1032,7 +941,7 @@ class contentCardLinkyTic extends LitElement {
         border-bottom-right-radius: 5px;
         border: 0;
       }
-	  /* One Hour Labels */
+      /* One Hour Labels */
       .ecowatt-00, .ecowatt-01, .ecowatt-02, .ecowatt-03, .ecowatt-04, .ecowatt-05, .ecowatt-06, .ecowatt-07{
         flex: 2 1 0;
       }
@@ -1042,7 +951,7 @@ class contentCardLinkyTic extends LitElement {
       .ecowatt-16, .ecowatt-17, .ecowatt-18, .ecowatt-19, .ecowatt-20, .ecowatt-21, .ecowatt-22, .ecowatt-23 {
         flex: 2 1 0;
       }
-	  
+      
       .oneHourLabel > li:first-child {
         flex: 0.70 1 0;
       }
@@ -1058,79 +967,80 @@ class contentCardLinkyTic extends LitElement {
         text-align: right;
       }
       .tempo-days {
-       	width:100%;
-	border-spacing: 2px;
+        width:100%;
+    border-spacing: 2px;
       }
       .tempo-color {
         width:100%;
-	border-spacing: 2px;
+    border-spacing: 2px;
       }
-	  .tempoborder-color {
+      .tempoborder-color {
         width:100%;
-	border-spacing: 2px;
+    border-spacing: 2px;
       }
       .tempo-blue {
         color: white;
-	text-align: center;
+    text-align: center;
         background: #009dfa;
-    	border: 2px solid var(--divider-color);
-    	box-shadow: var(--ha-card-box-shadow,none);
-	text-transform: capitalize;
+        border: 2px solid var(--divider-color);
+        box-shadow: var(--ha-card-box-shadow,none);
+    text-transform: capitalize;
       }
-	  .tempoday-blue {
+      .tempoday-blue {
         color: #009dfa;
-		font-weight: bold;
-	text-align: center;
+        font-weight: bold;
+    text-align: center;
         background: var( --ha-card-background, var(--card-background-color, white) );
-    	box-shadow: var(--ha-card-box-shadow,none);
-	text-transform: capitalize;
+        box-shadow: var(--ha-card-box-shadow,none);
+    text-transform: capitalize;
       }
       .tempo-white {
         color: #002654;
-	text-align: center;
+    text-align: center;
         background: white;
-    	border: 2px solid var(--divider-color);
-    	box-shadow: var(--ha-card-box-shadow,none);
-	text-transform: capitalize;
+        border: 2px solid var(--divider-color);
+        box-shadow: var(--ha-card-box-shadow,none);
+    text-transform: capitalize;
       }
-	  .tempoday-white {
-		font-weight: bold;
-	text-align: center;
-	text-transform: capitalize;
+      .tempoday-white {
+        font-weight: bold;
+    text-align: center;
+    text-transform: capitalize;
       }
-	  .tempoday-grey {
-		font-weight: bold;
-		background: grey;
-	text-align: center;
-	text-transform: capitalize;
-      }	  
+      .tempoday-grey {
+        font-weight: bold;
+        background: grey;
+    text-align: center;
+    text-transform: capitalize;
+      }      
       .tempo-red {
         color: white;
-	text-align: center;
+    text-align: center;
         background: #ff2700;
-    	border: 2px solid var(--divider-color);
-    	box-shadow: var(--ha-card-box-shadow,none);
-     	text-transform: capitalize;
+        border: 2px solid var(--divider-color);
+        box-shadow: var(--ha-card-box-shadow,none);
+        text-transform: capitalize;
       }
-	  .tempoday-red {
+      .tempoday-red {
         color: #ff2700;
-		font-weight: bold;
-	text-align: center;
+        font-weight: bold;
+    text-align: center;
         background: var( --ha-card-background, var(--card-background-color, white) );
-    	box-shadow: var(--ha-card-box-shadow,none);
-	text-transform: capitalize;
+        box-shadow: var(--ha-card-box-shadow,none);
+    text-transform: capitalize;
       }
       .tempo-grey {
         color: #002654;
-	text-align: center;
+    text-align: center;
         background: grey;
-	border: 2px solid var(--divider-color);
-	box-shadow: var(--ha-card-box-shadow,none);
-	background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-	background-size: 28.28px 28.28px;
-	text-transform: capitalize;
-      }	  
+    border: 2px solid var(--divider-color);
+    box-shadow: var(--ha-card-box-shadow,none);
+    background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
+    background-size: 28.28px 28.28px;
+    text-transform: capitalize;
+      }      
       `;
   }
 }
-customElements.define('content-card-linky-tic', contentCardLinkyTic);
+
+customElements.define('content-card-linky-tic', ContentCardLinkyTic);
