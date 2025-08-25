@@ -28,7 +28,7 @@ const css = LitElement.prototype.css;
 
 const HELPERS = window.loadCardHelpers();
 
-export class ContentCardLinkyTicEditor extends LitElement {
+export class contentCardLinkyTicEditor extends LitElement {
   setConfig(config) {
     this._config = { ...config };
   }
