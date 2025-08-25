@@ -58,7 +58,7 @@ function hasConfigOrEntityChanged(element, changedProps) {
   return true;
 }
 
-class ContentCardLinkyTic extends LitElement {
+class contentCardLinkyTic extends LitElement {
   static get properties() {
     return {
       config: {},
@@ -1133,4 +1133,4 @@ class ContentCardLinkyTic extends LitElement {
       `;
   }
 }
-customElements.define('content-card-linky-tic', ContentCardLinkyTic);
+customElements.define('content-card-linky-tic', contentCardLinkyTic);
