@@ -62,9 +62,9 @@ hass: {}
 }
 
 static async getConfigElement() {
-await import(”./content-card-linky-editor-tic.js”);
-// CORRECTION: Suppression de la virgule en trop
-return document.createElement(“content-card-linky-editor-tic”);
+// ✅ CORRIGÉ: Nom cohérent avec l’éditeur
+await import(”./content-card-linky-tic-editor.js”);
+return document.createElement(“content-card-linky-tic-editor”);
 }
 
 render() {
@@ -82,7 +82,7 @@ if (!stateObj) {
         <div id="states">
           <div class="name">
             <ha-icon id="icon" icon="mdi:flash" data-state="unavailable" data-domain="connection" style="color: var(--state-icon-unavailable-color)"></ha-icon>
-            <span style="margin-right:2em">Linky : donnees inaccessible pour ${this.config.entity}</span>
+            <span style="margin-right:2em">Linky : données inaccessibles pour ${this.config.entity}</span>
           </div>
         </div>
       </div>
@@ -121,7 +121,7 @@ if (stateObj) {
             ${this.config.showIcon
               ? html`
                 <div class="icon-block">
-                <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
+                  <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
                 </div>`
               : html``
             }
@@ -260,23 +260,23 @@ let tarifHP, tarifHC;
 switch (dayData.tempo) {
   case "BLUE":
   case "BLEU":
-    tarifHP = this.config.tarifTempoBleuHP || 0.1828;
-    tarifHC = this.config.tarifTempoBleuHC || 0.1344;
+    tarifHP = parseFloat(this.config.tarifTempoBleuHP) || 0.1828;
+    tarifHC = parseFloat(this.config.tarifTempoBleuHC) || 0.1344;
     break;
   case "WHITE":
   case "BLANC":
-    tarifHP = this.config.tarifTempoBlancHP || 0.1986;
-    tarifHC = this.config.tarifTempoBlancHC || 0.1508;
+    tarifHP = parseFloat(this.config.tarifTempoBlancHP) || 0.1986;
+    tarifHC = parseFloat(this.config.tarifTempoBlancHC) || 0.1508;
     break;
   case "RED":
   case "ROUGE":
-    tarifHP = this.config.tarifTempoRougeHP || 0.7562;
-    tarifHC = this.config.tarifTempoRougeHC || 0.1508;
+    tarifHP = parseFloat(this.config.tarifTempoRougeHP) || 0.7562;
+    tarifHC = parseFloat(this.config.tarifTempoRougeHC) || 0.1508;
     break;
   default:
     // Tarif par défaut (bleu)
-    tarifHP = this.config.tarifTempoBleuHP || 0.1828;
-    tarifHC = this.config.tarifTempoBleuHC || 0.1344;
+    tarifHP = parseFloat(this.config.tarifTempoBleuHP) || 0.1828;
+    tarifHC = parseFloat(this.config.tarifTempoBleuHC) || 0.1344;
 }
 
 return (dayData.hp * tarifHP) + (dayData.hc * tarifHC);
@@ -286,7 +286,6 @@ return (dayData.hp * tarifHP) + (dayData.hc * tarifHC);
 
 renderVariations(attributes, tempoData) {
 const currentData = tempoData.getCurrentDayData();
-const historyData = tempoData.getHistoryData();
 
 ```
 return html`
@@ -320,7 +319,7 @@ return event;
 
 renderTitle(config) {
 if (this.config.showTitle === true) {
-return html` <div class="card"> <div class="main-title"> <span>${this.config.titleName}</span> </div> </div>`;
+return html`<div class="card"> <div class="main-title"> <span>${this.config.titleName}</span> </div> </div>`;
 }
 return html``;
 }
@@ -334,22 +333,22 @@ const currentData = tempoData.getCurrentDayData();
   if (config.showPeakOffPeak) {
     return html`
       <div class="main-info">
-      ${this.renderIcon(attributes, config)}
-      <div class="hp-hc-block">
-        <span class="conso-hc">${this.toFloat(currentData.hc)}</span><span class="conso-unit-hc"> kWh <span class="more-unit">(en HC)</span></span><br />
-        <span class="conso-hp">${this.toFloat(currentData.hp)}</span><span class="conso-unit-hp"> kWh <span class="more-unit">(en HP)</span></span>
-      </div>
-      ${this.renderPrice(currentData, config)}
+        ${this.renderIcon(attributes, config)}
+        <div class="hp-hc-block">
+          <span class="conso-hc">${this.toFloat(currentData.hc)}</span><span class="conso-unit-hc"> kWh <span class="more-unit">(en HC)</span></span><br />
+          <span class="conso-hp">${this.toFloat(currentData.hp)}</span><span class="conso-unit-hp"> kWh <span class="more-unit">(en HP)</span></span>
+        </div>
+        ${this.renderPrice(currentData, config)}
       </div>`;
   } else {
     return html`
       <div class="main-info">
-      ${this.renderIcon(attributes, config)}
-      <div class="cout-block">
-        <span class="cout">${this.toFloat(currentData.total)}</span>
-        <span class="cout-unit">kWh</span>
-      </div>
-      ${this.renderPrice(currentData, config)}
+        ${this.renderIcon(attributes, config)}
+        <div class="cout-block">
+          <span class="cout">${this.toFloat(currentData.total)}</span>
+          <span class="cout-unit">kWh</span>
+        </div>
+        ${this.renderPrice(currentData, config)}
       </div>`;
   }
 }
@@ -360,7 +359,7 @@ return html``;
 
 renderIcon(attributes, config) {
 if (this.config.showIcon) {
-return html` <div class="icon-block"> <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span> </div>`;
+return html`<div class="icon-block"> <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span> </div>`;
 } else {
 return html``;
 }
@@ -368,7 +367,7 @@ return html``;
 
 renderPrice(currentData, config) {
 if (this.config.showPrice) {
-return html` <div class="cout-block"> <span class="cout" title="Coût journalier">${this.toFloat(currentData.cost, 2)}</span><span class="cout-unit"> €</span> </div>`;
+return html`<div class="cout-block"> <span class="cout" title="Coût journalier">${this.toFloat(currentData.cost, 2)}</span><span class="cout-unit"> €</span> </div>`;
 } else {
 return html``;
 }
@@ -377,7 +376,7 @@ return html``;
 renderError(errorMsg, config) {
 if (this.config.showError === true) {
 if (errorMsg != “”) {
-return html` <div class="error-msg" style="color: red"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> ${errorMsg} </div>`;
+return html`<div class="error-msg" style="color: red"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> ${errorMsg} </div>`;
 }
 }
 return html``;
@@ -385,7 +384,7 @@ return html``;
 
 renderInformation(tempoData, config) {
 if (!tempoData.hasAllSensors) {
-return html` <div class="information-msg" style="color: orange"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> Certains capteurs linky_tempo ne sont pas disponibles. </div>`;
+return html`<div class="information-msg" style="color: orange"> <ha-icon id="icon" icon="mdi:alert-outline"></ha-icon> Certains capteurs linky_tempo ne sont pas disponibles. </div>`;
 }
 return html``;
 }
@@ -393,13 +392,13 @@ return html``;
 renderHistory(tempoData) {
 if (this.config.showHistory === true) {
 const historyData = tempoData.getHistoryData();
-const nbJours = Math.min(this.config.nbJoursAffichage || 7, historyData.length);
+const nbJours = Math.min(parseInt(this.config.nbJoursAffichage) || 7, historyData.length);
 
 ```
   return html`
     <div class="week-history">
-    ${this.renderTitreLigne(this.config)}
-    ${historyData.slice(-nbJours).map((day, index) => this.renderDayFromTempoData(day, index, this.config))}
+      ${this.renderTitreLigne(this.config)}
+      ${historyData.slice(-nbJours).map((day, index) => this.renderDayFromTempoData(day, index, this.config))}
     </div>
   `;
 }
@@ -409,7 +408,7 @@ return html``;
 }
 
 renderDayFromTempoData(dayData, index, config) {
-return html` <div class="day"> ${this.renderDailyWeekFromTempoData(dayData, config)} ${this.renderDailyValueFromTempoData(dayData, config)} ${this.renderDayPriceFromTempoData(dayData, config)} ${this.renderDayHCHPFromTempoData(dayData, config)} </div>`;
+return html`<div class="day"> ${this.renderDailyWeekFromTempoData(dayData, config)} ${this.renderDailyValueFromTempoData(dayData, config)} ${this.renderDayPriceFromTempoData(dayData, config)} ${this.renderDayHCHPFromTempoData(dayData, config)} </div>`;
 }
 
 renderDailyWeekFromTempoData(dayData, config) {
@@ -445,7 +444,7 @@ return html``;
 
 renderTitreLigne(config) {
 if (this.config.showTitleLign === true) {
-return html` <div class="day"> <br><span class="cons-val">Jour</span> <br><span class="cons-val">Conso</span> ${this.config.showDayPrice ? html`<br><span class="cons-val">Prix</span>` : html``} ${this.config.showDayHCHP ? html`<br><span class="cons-val">HC</span><br><span class="cons-val">HP</span>` : html``} </div>`;
+return html`<div class="day"> <br><span class="cons-val">Jour</span> <br><span class="cons-val">Conso</span> ${this.config.showDayPrice ? html`<br><span class="cons-val">Prix</span>` : html``} ${this.config.showDayHCHP ? html`<br><span class="cons-val">HC</span><br><span class="cons-val">HP</span>` : html``} </div>`;
 }
 return html``;
 }
@@ -466,21 +465,21 @@ const tomorrowTempo = this.getTempoColorForDate(tomorrow);
 
 return html`
   <table class="tempo-color">
-  <tr>
-    <td class="tempo-${todayTempo.toLowerCase()}" style="width:50%">
-      ${today.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}
-    </td>
-    <td class="tempo-${tomorrowTempo.toLowerCase()}" style="width:50%">
-      ${tomorrow.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}
-    </td>
-  </tr>
+    <tr>
+      <td class="tempo-${todayTempo.toLowerCase()}" style="width:50%">
+        ${today.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}
+      </td>
+      <td class="tempo-${tomorrowTempo.toLowerCase()}" style="width:50%">
+        ${tomorrow.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric'})}
+      </td>
+    </tr>
   </table>
   <table class="tempo-days">
-  <tr>
+    <tr>
       <td class="tempo-blue" style="width:33.33%">22</td>
-    <td class="tempo-white" style="width:33.33%">43</td>
-    <td class="tempo-red" style="width:33.33%">22</td>
-  </tr>
+      <td class="tempo-white" style="width:33.33%">43</td>
+      <td class="tempo-red" style="width:33.33%">22</td>
+    </tr>
   </table>
 `;
 ```
@@ -517,7 +516,7 @@ const defaultConfig = {
   showDayHCHP: false,
   showDayName: "long",
   showError: true,
-  shoInformation: true,
+  showInformation: true, // ✅ CORRIGÉ: faute de frappe
   showPrice: true,
   showTitle: false,
   showCurrentMonthRatio: true,
@@ -530,23 +529,23 @@ const defaultConfig = {
   titleName: "LINKY",
   nbJoursAffichage: "7",
   // Nouveaux tarifs tempo (6 tarifs différents)
-  tarifTempoBleuHP: 0.1828,
-  tarifTempoBleuHC: 0.1344,
-  tarifTempoBlancHP: 0.1986,
-  tarifTempoBlancHC: 0.1508,
-  tarifTempoRougeHP: 0.7562,
-  tarifTempoRougeHC: 0.1508,
+  tarifTempoBleuHP: "0.1828",
+  tarifTempoBleuHC: "0.1344",
+  tarifTempoBlancHP: "0.1986",
+  tarifTempoBlancHC: "0.1508",
+  tarifTempoRougeHP: "0.7562",
+  tarifTempoRougeHC: "0.1508",
   // Nouvelles configurations pour les capteurs linky_tempo
-  sensorBBRHPJB: undefined,
-  sensorBBRHCJB: undefined,
-  sensorBBRHPJW: undefined,
-  sensorBBRHCJW: undefined,
-  sensorBBRHPJR: undefined,
-  sensorBBRHCJR: undefined,
+  sensorBBRHPJB: "",
+  sensorBBRHCJB: "",
+  sensorBBRHPJW: "",
+  sensorBBRHCJW: "",
+  sensorBBRHPJR: "",
+  sensorBBRHCJR: "",
 };
 
 this.config = {
-  ...defaultConfig,
+  ...defaultConfig, // ✅ CORRIGÉ: utilisation du spread operator correct
   ...config
 };
 ```
@@ -770,7 +769,7 @@ cursor: pointer;
   }
   
   .tempo-days {
-       width:100%;
+    width:100%;
     border-spacing: 2px;
   }
 
@@ -783,8 +782,8 @@ cursor: pointer;
     color: white;
     text-align: center;
     background: #009dfa;
-        border: 2px solid var(--divider-color);
-        box-shadow: var(--ha-card-box-shadow,none);
+    border: 2px solid var(--divider-color);
+    box-shadow: var(--ha-card-box-shadow,none);
     text-transform: capitalize;
   }
 
@@ -793,7 +792,7 @@ cursor: pointer;
     font-weight: bold;
     text-align: center;
     background: var( --ha-card-background, var(--card-background-color, white) );
-        box-shadow: var(--ha-card-box-shadow,none);
+    box-shadow: var(--ha-card-box-shadow,none);
     text-transform: capitalize;
   }
 
@@ -801,8 +800,8 @@ cursor: pointer;
     color: #002654;
     text-align: center;
     background: white;
-        border: 2px solid var(--divider-color);
-        box-shadow: var(--ha-card-box-shadow,none);
+    border: 2px solid var(--divider-color);
+    box-shadow: var(--ha-card-box-shadow,none);
     text-transform: capitalize;
   }
 
@@ -823,9 +822,9 @@ cursor: pointer;
     color: white;
     text-align: center;
     background: #ff2700;
-        border: 2px solid var(--divider-color);
-        box-shadow: var(--ha-card-box-shadow,none);
-         text-transform: capitalize;
+    border: 2px solid var(--divider-color);
+    box-shadow: var(--ha-card-box-shadow,none);
+    text-transform: capitalize;
   }
 
   .tempoday-red {
@@ -833,7 +832,7 @@ cursor: pointer;
     font-weight: bold;
     text-align: center;
     background: var( --ha-card-background, var(--card-background-color, white) );
-        box-shadow: var(--ha-card-box-shadow,none);
+    box-shadow: var(--ha-card-box-shadow,none);
     text-transform: capitalize;
   }
 
