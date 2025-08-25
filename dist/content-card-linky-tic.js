@@ -9,7 +9,7 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky-tic",
   name: "Carte Enedis Tic",
-  description: "Carte pour l'intégration Esphome TIC.",
+  description: "Carte pour l'intégration Esphome TIC",
   preview: true,
   documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
