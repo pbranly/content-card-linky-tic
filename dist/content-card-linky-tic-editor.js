@@ -32,7 +32,7 @@ const HELPERS = window.loadCardHelpers();
 
 export class contentCardLinkyTicEditor extends LitElement {
   setConfig(config) {
-    this._config = { ...config }; // ✅ spread operator corrigé
+    this._config = { ...config }; // ✅ bon spread operator
   }
 
   static get properties() {
@@ -298,7 +298,7 @@ export class contentCardLinkyTicEditor extends LitElement {
   }
 
   renderPicker(label, entity, configAttr, domain) {
-    return html`<ha-entity-picker label="${label}" .hass="${this.hass}" .value="${entity}" .configValue="${configAttr}" .includeDomains="${domain}" @change="${this._valueChanged}" allow-custom-entity ></ha-entity-picker>`
+    return html`<ha-entity-picker label="${label}" .hass="${this.hass}" .value="${entity}" .configValue="${configAttr}" .includeDomains="${domain}" @change="${this._valueChanged}" allow-custom-entity ></ha-entity-picker>`;
   }
 
   renderTextField(label, state, configAttr) {
@@ -314,7 +314,7 @@ export class contentCardLinkyTicEditor extends LitElement {
   }
 
   renderSwitchOption(label, state, configAttr) {
-    return html`<li class="switch"> <ha-switch .checked=${state} .configValue="${configAttr}" @change="${this._valueChanged}"> </ha-switch> <span>${label}</span> </li>`
+    return html`<li class="switch"> <ha-switch .checked=${state} .configValue="${configAttr}" @change="${this._valueChanged}"> </ha-switch> <span>${label}</span> </li>`;
   }
 
   renderSelectField(label, config_key, options, value, default_value) {
@@ -334,7 +334,7 @@ export class contentCardLinkyTicEditor extends LitElement {
       >
         ${selectOptions}
       </ha-select>
-    `
+    `;
   }
 
   _valueChanged(ev) {
@@ -350,7 +350,7 @@ export class contentCardLinkyTicEditor extends LitElement {
         delete this._config[target.configValue];
       } else {
         this._config = {
-          ...this._config, // ✅ spread operator corrigé
+          ...this._config, // ✅ bon spread operator
           [target.configValue]:
             target.checked !== undefined ? target.checked : target.value,
         };
@@ -364,7 +364,7 @@ export class contentCardLinkyTicEditor extends LitElement {
       .card-config {
         padding: 16px;
       }
-    
+
       h3 {
         margin: 20px 0 10px 0;
         color: var(--primary-text-color);
