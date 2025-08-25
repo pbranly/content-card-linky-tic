@@ -58,7 +58,7 @@ function hasConfigOrEntityChanged(element, changedProps) {
   return true;
 }
 
-class ContentCardLinkytic extends LitElement {
+class ContentCardLinkyTic extends LitElement {
   static get properties() {
     return {
       config: {},
