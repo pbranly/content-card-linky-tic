@@ -8,8 +8,8 @@ const css = LitElement.prototype.css;
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky-tic",
-  name: "Carte Enedis",
-  description: "Carte pour l'intégration MyElectricalData.",
+  name: "Carte Enedis Tic",
+  description: "Carte pour l'intégration Esphome TIC.",
   preview: true,
   documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
@@ -1133,4 +1133,4 @@ class ContentCardLinkytic extends LitElement {
       `;
   }
 }
-customElements.define('content-card-linky-tic', ContentCardLinkytic);
+customElements.define('content-card-linky-tic', ContentCardLinkyTic);
