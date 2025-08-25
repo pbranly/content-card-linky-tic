@@ -18,19 +18,30 @@ customElements.get(“paper-toggle-button”)
 customElements.define(“ha-switch”, customElements.get(“paper-toggle-button”));
 }
 
+// Correction: meilleure gestion de ha-entity-picker
 if (!customElements.get(“ha-entity-picker”)) {
-(customElements.get(“hui-entities-card”)).getConfigElement();
+try {
+const entitiesCard = customElements.get(“hui-entities-card”);
+if (entitiesCard) {
+entitiesCard.getConfigElement();
+}
+} catch (error) {
+console.warn(“Impossible de charger ha-entity-picker:”, error);
+}
 }
 
-const LitElement = customElements.get(“hui-masonry-view”) ? Object.getPrototypeOf(customElements.get(“hui-masonry-view”)) : Object.getPrototypeOf(customElements.get(“hui-view”));
+const LitElement = customElements.get(“hui-masonry-view”)
+? Object.getPrototypeOf(customElements.get(“hui-masonry-view”))
+: Object.getPrototypeOf(customElements.get(“hui-view”));
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-const HELPERS = window.loadCardHelpers();
+// Correction: vérification de l’existence de loadCardHelpers
+const HELPERS = window.loadCardHelpers ? window.loadCardHelpers() : Promise.resolve({});
 
 export class contentCardLinkyTicEditor extends LitElement {
 setConfig(config) {
-this._config = { …config }; // CORRIGE: utilisation du bon spread operator
+this._config = { …config }; // CORRIGÉ: spread operator correct
 }
 
 static get properties() {
@@ -204,7 +215,9 @@ HELPERS.then(help => {
 if (help.importMoreInfoControl) {
 help.importMoreInfoControl(“fan”);
 }
-})
+}).catch(error => {
+console.warn(“Erreur lors du chargement des helpers:”, error);
+});
 }
 
 render() {
@@ -299,7 +312,7 @@ return this.renderPicker(label, entity, configAttr, “sensor”);
 }
 
 renderPicker(label, entity, configAttr, domain) {
-return html`<ha-entity-picker label="${label}" .hass="${this.hass}" .value="${entity}" .configValue="${configAttr}" .includeDomains="${domain}" @change="${this._valueChanged}" allow-custom-entity ></ha-entity-picker>`
+return html`<ha-entity-picker  label="${label}"  .hass="${this.hass}"  .value="${entity}"  .configValue="${configAttr}"  .includeDomains="${domain}"  @change="${this._valueChanged}"  allow-custom-entity ></ha-entity-picker>`;
 }
 
 renderTextField(label, state, configAttr) {
@@ -311,11 +324,11 @@ return this.renderField(label, state, configAttr, “number”);
 }
 
 renderField(label, state, configAttr, type) {
-return html`<ha-textfield label="${label}" .value="${state}" type="${type}" .configValue=${configAttr} @input=${this._valueChanged} ></ha-textfield>`;
+return html`<ha-textfield  label="${label}"  .value="${state}"  type="${type}"  .configValue=${configAttr}  @input=${this._valueChanged} ></ha-textfield>`;
 }
 
 renderSwitchOption(label, state, configAttr) {
-return html`<li class="switch"> <ha-switch .checked=${state} .configValue="${configAttr}" @change="${this._valueChanged}"> </ha-switch> <span>${label}</span> </li>`
+return html`<li class="switch"> <ha-switch  .checked=${state}  .configValue="${configAttr}"  @change="${this._valueChanged}"> </ha-switch> <span>${label}</span> </li>`;
 }
 
 renderSelectField(label, config_key, options, value, default_value) {
@@ -336,7 +349,7 @@ return html`
   >
     ${selectOptions}
   </ha-select>
-`
+`;
 ```
 
 }
@@ -354,7 +367,7 @@ if (target.value === “”) {
 delete this._config[target.configValue];
 } else {
 this._config = {
-…this._config, // CORRIGE: utilisation du bon spread operator
+…this._config, // CORRIGÉ: spread operator correct
 [target.configValue]:
 target.checked !== undefined ? target.checked : target.value,
 };
