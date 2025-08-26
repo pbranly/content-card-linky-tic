@@ -28,7 +28,7 @@ const css = LitElement.prototype.css;
 
 const HELPERS = window.loadCardHelpers();
 
-export class contentCardLinkyTicEditor extends LitElement {
+export class contentCardLinkyEditor extends LitElement {
   setConfig(config) {
     this._config = { ...config };
   }
@@ -346,4 +346,4 @@ get _showTempoColor() {
   }
 }
 
-customElements.define("content-card-linky-tic-editor", contentCardLinkyTicEditor);
+customElements.define("content-card-linky-editor", contentCardLinkyEditor);
