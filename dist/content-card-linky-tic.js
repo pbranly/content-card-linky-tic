@@ -1133,4 +1133,4 @@ class ContentCardLinkyTic extends LitElement {
       `;
   }
 }
-customElements.define('content-card-linky-gic', ContentCardLinkyTic);
+customElements.define('content-card-linky-tic', ContentCardLinkyTic);
