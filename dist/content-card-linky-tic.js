@@ -11,7 +11,7 @@ window.customCards.push({
   name: "Carte TIC Enedis",
   description: "Carte pour l'intégration Esphome TIC.",
   preview: true,
-  documentationURL: "https://github.com/pbranly/content-card-linky",
+  documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
@@ -204,7 +204,7 @@ class ContentCardLinkyTic extends LitElement {
                   ${this.config.showIcon
                     ? html`
                       <div class="icon-block">
-                      <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
+                      <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
                       </div>`
                     : html `` 
                   }
