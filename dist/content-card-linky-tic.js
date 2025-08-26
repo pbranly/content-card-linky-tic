@@ -8,7 +8,7 @@ const css = LitElement.prototype.css;
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky-tic",
-  name: "Carte Enedis",
+  name: "Carte TIC Enedis",
   description: "Carte pour l'intégration Esphome TIC.",
   preview: true,
   documentationURL: "https://github.com/pbranly/content-card-linky",
@@ -67,8 +67,8 @@ class ContentCardLinkyTic extends LitElement {
   }
 
   static async getConfigElement() {
-    await import("./content-card-linky-tic-editor.js");
-    return document.createElement("content-card-linky-tic-editor");
+    await import("./content-card-linky-editor.js");
+    return document.createElement("content-card-linky-editor");
   }
 
   render() {
