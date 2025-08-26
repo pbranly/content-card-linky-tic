@@ -67,8 +67,8 @@ class ContentCardLinkyTic extends LitElement {
   }
 
   static async getConfigElement() {
-    await import("./content-card-linky-editor.js");
-    return document.createElement("content-card-linky-editor");
+    await import("./content-card-linky-tic-editor.js");
+    return document.createElement("content-card-linky-tic-editor");
   }
 
   render() {
