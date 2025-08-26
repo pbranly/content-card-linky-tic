@@ -396,7 +396,7 @@ class ContentCardLinkyTic extends LitElement {
         `
     }
   }
-  r_enderTitreLigne(config) {
+  renderTitreLigne(config) {
     if (this.config.showTitleLign === true) {
         return html
         `
@@ -562,7 +562,7 @@ class ContentCardLinkyTic extends LitElement {
   
     renderDayMaxPowerTime(value, dayNumber, overMP, config) {
     if (config.showDayMaxPower) {
-       const valeur = value.toString.split(",")[dayNumber-1] ;
+       const valeur = value.toString()).split(",")[dayNumber-1] ;
        const over = overMP.toString().split(",")[dayNumber-1];
        if ( valeur === "-1" ){
           return this.renderNoData();
@@ -780,7 +780,7 @@ class ContentCardLinkyTic extends LitElement {
       showDayHCHP: false,
       showDayName: "long",
       showError: true,
-	  shoInformation: true,
+	  showInformation: true,
       showPrice: true,
       showTitle: false,
       showCurrentMonthRatio: true,
@@ -1127,7 +1127,7 @@ class ContentCardLinkyTic extends LitElement {
 	border: 2px solid var(--divider-color);
 	box-shadow: var(--ha-card-box-shadow,none);
 	background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-	background-size: 28.28px 28.28px;
+	background-size: 28.28px 28.28px;
 	text-transform: capitalize;
       }	  
       `;
