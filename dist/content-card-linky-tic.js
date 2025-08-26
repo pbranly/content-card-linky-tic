@@ -1,4 +1,8 @@
-import { LitElement, html, css } from "https://unpkg.com/lit@2.8.0/index.js?module";
+const LitElement = Object.getPrototypeOf(
+  customElements.get("ha-panel-lovelace")
+);
+const html = LitElement.prototype.html;
+const css = LitElement.prototype.css;
 
 
 window.customCards = window.customCards || [];
@@ -63,8 +67,8 @@ class ContentCardLinkyTic extends LitElement {
   }
 
   static async getConfigElement() {
-    await import("./content-card-linky-tic-editor.js");
-    return document.createElement("content-card-linky-tic-editor");
+    await import("./content-card-linky-editor.js");
+    return document.createElement("content-card-linky-editor");
   }
 
   render() {
@@ -392,7 +396,7 @@ class ContentCardLinkyTic extends LitElement {
         `
     }
   }
-  renderTitreLigne(config) {
+  r_enderTitreLigne(config) {
     if (this.config.showTitleLign === true) {
         return html
         `
@@ -558,7 +562,7 @@ class ContentCardLinkyTic extends LitElement {
   
     renderDayMaxPowerTime(value, dayNumber, overMP, config) {
     if (config.showDayMaxPower) {
-       const valeur = value.toString()).split(",")[dayNumber-1] ;
+       const valeur = value.toString.split(",")[dayNumber-1] ;
        const over = overMP.toString().split(",")[dayNumber-1];
        if ( valeur === "-1" ){
           return this.renderNoData();
@@ -776,7 +780,7 @@ class ContentCardLinkyTic extends LitElement {
       showDayHCHP: false,
       showDayName: "long",
       showError: true,
-	  showInformation: true,
+	  shoInformation: true,
       showPrice: true,
       showTitle: false,
       showCurrentMonthRatio: true,
@@ -1123,7 +1127,7 @@ class ContentCardLinkyTic extends LitElement {
 	border: 2px solid var(--divider-color);
 	box-shadow: var(--ha-card-box-shadow,none);
 	background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-	background-size: 28.28px 28.28px;
+	background-size: 28.28px 28.28px;
 	text-transform: capitalize;
       }	  
       `;
