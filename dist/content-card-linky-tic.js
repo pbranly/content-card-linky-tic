@@ -7,11 +7,11 @@ const css = LitElement.prototype.css;
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "content-card-linky-Tic",
+  type: "content-card-linky-tic",
   name: "Carte Enedis Tic",
   description: "Carte pour l'intégration Esphome Tic.",
   preview: true,
-  documentationURL: "https://github.com/pbranly/content-card-linky",
+  documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
@@ -58,7 +58,7 @@ function hasConfigOrEntityChanged(element, changedProps) {
   return true;
 }
 
-class ContentCardLinky extends LitElement {
+class ContentCardLinkyTic extends LitElement {
   static get properties() {
     return {
       config: {},
@@ -204,7 +204,7 @@ class ContentCardLinky extends LitElement {
                   ${this.config.showIcon
                     ? html`
                       <div class="icon-block">
-                      <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
+                      <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
                       </div>`
                     : html `` 
                   }
@@ -272,7 +272,7 @@ class ContentCardLinky extends LitElement {
     if ( this.config.showIcon ){
   	  return html `
 		<div class="icon-block">
-			<span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
+			<span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
 		</div>`
 	  }
     else{
@@ -1133,4 +1133,4 @@ class ContentCardLinky extends LitElement {
       `;
   }
 }
-customElements.define('content-card-linky-Tic', ContentCardLinkyTic);
+customElements.define('content-card-linky-tic', ContentCardLinkyTic);
