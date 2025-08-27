@@ -7,11 +7,11 @@ const css = LitElement.prototype.css;
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "content-card-linky-tic",
-  name: "Carte Enedis",
+  type: "content-card-linky-Tic",
+  name: "Carte Enedis Tic",
   description: "Carte pour l'intégration Esphome Tic.",
   preview: true,
-  documentationURL: "https://github.com/pbranly/content-card-linky-tic",
+  documentationURL: "https://github.com/pbranly/content-card-linky",
 });
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
@@ -42,7 +42,6 @@ const tempoValues = new Map([
 ]);
 
 
-
 function hasConfigOrEntityChanged(element, changedProps) {
   if (changedProps.has("config")) {
     return true;
@@ -59,7 +58,7 @@ function hasConfigOrEntityChanged(element, changedProps) {
   return true;
 }
 
-class ContentCardLinkyTic extends LitElement {
+class ContentCardLinky extends LitElement {
   static get properties() {
     return {
       config: {},
@@ -205,7 +204,7 @@ class ContentCardLinkyTic extends LitElement {
                   ${this.config.showIcon
                     ? html`
                       <div class="icon-block">
-                      <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
+                      <span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
                       </div>`
                     : html `` 
                   }
@@ -273,7 +272,7 @@ class ContentCardLinkyTic extends LitElement {
     if ( this.config.showIcon ){
   	  return html `
 		<div class="icon-block">
-			<span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky-tic/icons/linky.svg') no-repeat; background-size: contain;"></span>
+			<span class="linky-icon bigger" style="background: none, url('/local/community/content-card-linky/icons/linky.svg') no-repeat; background-size: contain;"></span>
 		</div>`
 	  }
     else{
@@ -1128,10 +1127,10 @@ class ContentCardLinkyTic extends LitElement {
 	border: 2px solid var(--divider-color);
 	box-shadow: var(--ha-card-box-shadow,none);
 	background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-	background-size: 28.28px 28.28px;
+	background-size: 28.28px 28.28px;
 	text-transform: capitalize;
       }	  
       `;
   }
 }
-customElements.define('content-card-linky-tic', ContentCardLinkyTic);
+customElements.define('content-card-linky-Tic', ContentCardLinkyTic);
