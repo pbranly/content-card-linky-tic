@@ -346,4 +346,4 @@ get _showTempoColor() {
   }
 }
 
-customElements.define("content-card-linky-editor", contentCardLinkyEditor);
+customElements.define("content-card-linky-tic-editor", contentCardLinkyTicEditor);
