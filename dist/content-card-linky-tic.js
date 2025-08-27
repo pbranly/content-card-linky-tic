@@ -8,8 +8,8 @@ const css = LitElement.prototype.css;
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "content-card-linky-tic",
-  name: "Carte TIC Enedis",
-  description: "Carte pour l'intégration Esphome TIC.",
+  name: "Carte Enedis Tic",
+  description: "Carte pour l'intégration Esphome Tic.",
   preview: true,
   documentationURL: "https://github.com/pbranly/content-card-linky-tic",
 });
@@ -67,8 +67,8 @@ class ContentCardLinkyTic extends LitElement {
   }
 
   static async getConfigElement() {
-    await import("./content-card-linky-editor.js");
-    return document.createElement("content-card-linky-editor");
+    await import("./content-card-linky-tic-editor.js");
+    return document.createElement("content-card-linky-tic-editor");
   }
 
   render() {
@@ -1127,7 +1127,8 @@ class ContentCardLinkyTic extends LitElement {
 	border: 2px solid var(--divider-color);
 	box-shadow: var(--ha-card-box-shadow,none);
 	background-image: linear-gradient(45deg, #d6d6d6 25%, #dedede 25%, #dedede 50%, #d6d6d6 50%, #d6d6d6 75%, #dedede 75%, #dedede 100%);
-	background-size: 28.28px 28.28px;
+	background-size: 28.28px 28.28px;
+
 	text-transform: capitalize;
       }	  
       `;
