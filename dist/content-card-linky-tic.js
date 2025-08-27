@@ -42,6 +42,7 @@ const tempoValues = new Map([
 ]);
 
 
+
 function hasConfigOrEntityChanged(element, changedProps) {
   if (changedProps.has("config")) {
     return true;
