@@ -225,24 +225,23 @@ class ContentCardLinkyTic extends LitElement {
   // --- NOUVELLES FONCTIONS POUR L'AFFICHAGE DES INDEX TEMPO ---
 
   _fetchTempoIndexes() {
-    if (!this.config.showTempoIndex) return null;
-
+    if (!this.config.esphomeIndexes) return null;
+    
     const indexes = {};
-    const index_types = ["bbrhcjw", "bbrhpjw", "bbrhcjb", "bbrhpjb", "bbrhcjr", "bbrhpjr"];
-    for (const type of index_types) {
-      const entity_id = this.config[`linkyTempoIndex${type}`];
+    for (const [key, entity_id] of Object.entries(this.config.esphomeIndexes)) {
       if (entity_id) {
         const state = this.hass.states[entity_id];
         if (state) {
-          indexes[type] = state.state;
+          indexes[key] = state.state;
         }
       }
     }
     return indexes;
   }
+
   
   renderTempoIndexes() {
-    if (this.config.showTempoIndex === false) return null;
+    if (!this.config.showTempoIndex) return null;
     const tempoIndexes = this._fetchTempoIndexes();
     if (!tempoIndexes || Object.keys(tempoIndexes).length === 0) return null;
 
@@ -256,17 +255,18 @@ class ContentCardLinkyTic extends LitElement {
             </tr>
           </thead>
           <tbody>
-            <tr><td>HC Blanc</td><td>${tempoIndexes.bbrhcjw || 'N/A'}</td></tr>
-            <tr><td>HP Blanc</td><td>${tempoIndexes.bbrhpjw || 'N/A'}</td></tr>
-            <tr><td>HC Bleu</td><td>${tempoIndexes.bbrhcjb || 'N/A'}</td></tr>
-            <tr><td>HP Bleu</td><td>${tempoIndexes.bbrhpjb || 'N/A'}</td></tr>
-            <tr><td>HC Rouge</td><td>${tempoIndexes.bbrhcjr || 'N/A'}</td></tr>
-            <tr><td>HP Rouge</td><td>${tempoIndexes.bbrhpjr || 'N/A'}</td></tr>
+            <tr><td>HC Bleu</td><td>${tempoIndexes.hcjb || 'N/A'}</td></tr>
+            <tr><td>HP Bleu</td><td>${tempoIndexes.hpjb || 'N/A'}</td></tr>
+            <tr><td>HC Blanc</td><td>${tempoIndexes.hcjw || 'N/A'}</td></tr>
+            <tr><td>HP Blanc</td><td>${tempoIndexes.hpjw || 'N/A'}</td></tr>
+            <tr><td>HC Rouge</td><td>${tempoIndexes.hcjr || 'N/A'}</td></tr>
+            <tr><td>HP Rouge</td><td>${tempoIndexes.hpjr || 'N/A'}</td></tr>
           </tbody>
         </table>
       </div>
     `;
   }
+
   
   // --- FIN NOUVELLES FONCTIONS ---
 
