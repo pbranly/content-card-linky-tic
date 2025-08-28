@@ -228,7 +228,7 @@ class ContentCardLinkyTic extends LitElement {
     if (!this.config.showTempoIndex) return null;
 
     const indexes = {};
-    const index_types = ["BBRHCJW", "BBRHPJW", "BBRHCJB", "BBRHPJB", "BBRHCJR", "BBRHPJR"];
+    const index_types = ["bbrhcjw", "bbrhpjw", "bbrhcjb", "bbrhpjb", "bbrhcjr", "bbrhpjr"];
     for (const type of index_types) {
       const entity_id = this.config[`linkyTempoIndex${type}`];
       if (entity_id) {
