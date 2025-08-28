@@ -1,198 +1,192 @@
-
 /* content-card-linky-tic-editor.js
- * Editor pour content-card-linky-tic (version Tempo Index compatible)
- * Permet de renseigner soit une entité "entity" (capteur consommation),
- * soit une liste de 6 entités "tempo_entities" (index Tempo).
- */
+   Editeur pour la carte : placeholders et champs pour ESPhome index sensors
+*/
 
-const LitElement = Object.getPrototypeOf(customElements.get("ha-panel-lovelace"));
+const fireEvent = (node, type, detail, options) => {
+  options = options || {};
+  detail = detail === null || detail === undefined ? {} : detail;
+  const event = new Event(type, {
+    bubbles: options.bubbles === undefined ? true : options.bubbles,
+    cancelable: Boolean(options.cancelable),
+    composed: options.composed === undefined ? true : options.composed,
+  });
+  event.detail = detail;
+  node.dispatchEvent(event);
+  return event;
+};
+
+if (!customElements.get("ha-switch") && customElements.get("paper-toggle-button")) {
+  customElements.define("ha-switch", customElements.get("paper-toggle-button"));
+}
+if (!customElements.get("ha-entity-picker")) {
+  (customElements.get("hui-entities-card")).getConfigElement();
+}
+
+const LitElement = customElements.get("hui-masonry-view")
+  ? Object.getPrototypeOf(customElements.get("hui-masonry-view"))
+  : Object.getPrototypeOf(customElements.get("hui-view"));
 const html = LitElement.prototype.html;
 const css = LitElement.prototype.css;
 
-class ContentCardLinkyTicEditor extends LitElement {
+const HELPERS = window.loadCardHelpers();
+
+export class contentCardLinkyTicEditor extends LitElement {
+  setConfig(config) {
+    this._config = { ...config };
+  }
+
   static get properties() {
     return { hass: {}, _config: {} };
   }
 
-  setConfig(config) {
-    this._config = {
-      showHistory: true,
-      showHeader: true,
-      showPeakOffPeak: true,
-      showIcon: false,
-      showInTableUnit: false,
-      showDayPrice: false,
-      showDayPriceHCHP: false,
-      showDayMaxPower: false,
-      showDayHCHP: false,
-      showDayName: "long",
-      showError: true,
-      shoInformation: true,
-      showPrice: true,
-      showTitle: false,
-      showCurrentMonthRatio: true,
-      showMonthRatio: true,
-      showWeekRatio: false,
-      showYesterdayRatio: false,
-      showTitleLign: false,
-      showEcoWatt: false,
-      showEcoWattJ12: false,
-      showTempo: false,
-      showTempoColor: false,
-      titleName: "LINKY",
-      nbJoursAffichage: "7",
-      kWhPrice: undefined,
-      tempo_entities: [],
-      ...config
-    };
+  firstUpdated() {
+    HELPERS.then(help => {
+      if (help.importMoreInfoControl) help.importMoreInfoControl("fan");
+    });
   }
 
-  _valueChanged(ev) {
-    const target = ev.target;
-    if (!this._config || !this.hass) return;
-    const newConfig = { ...this._config };
-
-    if (target.dataset?.field) {
-      const field = target.dataset.field;
-      if (target.type === "checkbox") {
-        newConfig[field] = target.checked;
-      } else if (target.type === "number") {
-        const v = Number(target.value);
-        newConfig[field] = Number.isNaN(v) ? undefined : v;
-      } else {
-        newConfig[field] = target.value;
-      }
-    }
-
-    // tempo_entities[]
-    if (target.dataset?.tempondx) {
-      const idx = Number(target.dataset.tempondx);
-      const arr = Array.isArray(newConfig.tempo_entities) ? [...newConfig.tempo_entities] : [];
-      arr[idx] = target.value;
-      newConfig.tempo_entities = arr;
-    }
-
-    this._config = newConfig;
-    this.dispatchEvent(new CustomEvent("config-changed", { detail: { config: this._config } }));
-  }
+  // getters with defaults + placeholders
+  get _entity() { return this._config.entity || ""; }
+  get _esphomeEntity() { return this._config.esphomeEntity || ""; }
+  get _ewEntity() { return this._config.ewEntity || ""; }
+  get _ewEntityJ1() { return this._config.ewEntityJ1 || ""; }
+  get _ewEntityJ2() { return this._config.ewEntityJ2 || ""; }
+  get _tempoEntityInfo() { return this._config.tempoEntityInfo || ""; }
+  get _tempoEntityJ0() { return this._config.tempoEntityJ0 || ""; }
+  get _tempoEntityJ1() { return this._config.tempoEntityJ1 || ""; }
+  get _nbJoursAffichage() { return this._config.nbJoursAffichage || 7; }
+  get _titleName() { return this._config.titleName || "LINKY"; }
+  get _showHistory() { return this._config.showHistory !== false; }
+  get _showTempo() { return this._config.showTempo !== false; }
+  get _showEcoWatt() { return this._config.showEcoWatt !== false; }
 
   render() {
     if (!this.hass) return html``;
-    const c = this._config || {};
-    const tempo = c.tempo_entities || [];
-
     return html`
       <div class="card-config">
-        <div class="row">
-          <ha-entity-picker
-            label="Entity (capteur consommation) — optionnel si tempo_entities"
-            .hass=${this.hass}
-            .value=${c.entity}
-            .configValue=${"entity"}
-            domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "entity" }; this._valueChanged(e); }}
-          ></ha-entity-picker>
-        </div>
+        <div>
+          ${this.renderTextField("Titre", this._titleName, "titleName")}
+          ${this.renderSensorPicker("Entité myElectricalData (optionnelle)", this._entity, "entity")}
+          ${this.renderSensorPicker("Entité ESPhome résumé (optionnelle)", this._esphomeEntity, "esphomeEntity")}
+          <hr />
+          <div><strong>ESPhome index sensors (placeholders)</strong></div>
+          <div class="help">Entrer les capteurs d'index cumulés (ex: sensor.linky_hpjb_index)</div>
 
-        <div class="row" style="margin-top:1em;">
-          <div class="title">Capteurs Tempo (6 index) — utilisez ceux-ci à la place de 'entity'</div>
-          ${[
-            "BBRHCJB (HC Bleu)",
-            "BBRHPJB (HP Bleu)",
-            "BBRHCJW (HC Blanc)",
-            "BBRHPJW (HP Blanc)",
-            "BBRHCJR (HC Rouge)",
-            "BBRHPJR (HP Rouge)",
-          ].map((label, i) => html`
-            <ha-entity-picker
-              .hass=${this.hass}
-              label=${label}
-              .value=${tempo[i] || ""}
-              domain-filter="sensor"
-              @value-changed=${(e)=>{ e.target.dataset = { tempondx: String(i) }; this._valueChanged(e); }}
-            ></ha-entity-picker>
-          `)}
-        </div>
+          ${this.renderTextField("Index HP JB (esphomeIndexes.hpjb)", this._config?.esphomeIndexes?.hpjb || "", "esphomeIndexes.hpjb")}
+          ${this.renderTextField("Index HC JB (esphomeIndexes.hcjb)", this._config?.esphomeIndexes?.hcjb || "", "esphomeIndexes.hcjb")}
+          ${this.renderTextField("Index HP JW (esphomeIndexes.hpjw)", this._config?.esphomeIndexes?.hpjw || "", "esphomeIndexes.hpjw")}
+          ${this.renderTextField("Index HC JW (esphomeIndexes.hcjw)", this._config?.esphomeIndexes?.hcjw || "", "esphomeIndexes.hcjw")}
+          ${this.renderTextField("Index HP JR (esphomeIndexes.hpjr)", this._config?.esphomeIndexes?.hpjr || "", "esphomeIndexes.hpjr")}
+          ${this.renderTextField("Index HC JR (esphomeIndexes.hcjr)", this._config?.esphomeIndexes?.hcjr || "", "esphomeIndexes.hcjr")}
 
-        <div class="row two">
-          <paper-input
-            label="Titre"
-            .value=${c.titleName || ""}
-            @value-changed=${(e)=>{ e.target.dataset = { field: "titleName" }; this._valueChanged(e); }}
-          ></paper-input>
-          <mwc-switch
-            title="Afficher le titre"
-            ?checked=${c.showTitle === true}
-            @change=${(e)=>{ e.target.dataset = { field: "showTitle" }; this._valueChanged(e); }}
-          ></mwc-switch>
-        </div>
+          <div class="help">Si possible, renseigner les capteurs d'index correspondant à la fin de la journée précédente pour permettre le calcul de consommation journalière.</div>
+          ${this.renderTextField("Prev Index HP JB (esphomePrevIndexes.hpjb)", this._config?.esphomePrevIndexes?.hpjb || "", "esphomePrevIndexes.hpjb")}
+          ${this.renderTextField("Prev Index HC JB (esphomePrevIndexes.hcjb)", this._config?.esphomePrevIndexes?.hcjb || "", "esphomePrevIndexes.hcjb")}
+          ${this.renderTextField("Prev Index HP JW (esphomePrevIndexes.hpjw)", this._config?.esphomePrevIndexes?.hpjw || "", "esphomePrevIndexes.hpjw")}
+          ${this.renderTextField("Prev Index HC JW (esphomePrevIndexes.hcjw)", this._config?.esphomePrevIndexes?.hcjw || "", "esphomePrevIndexes.hcjw")}
+          ${this.renderTextField("Prev Index HP JR (esphomePrevIndexes.hpjr)", this._config?.esphomePrevIndexes?.hpjr || "", "esphomePrevIndexes.hpjr")}
+          ${this.renderTextField("Prev Index HC JR (esphomePrevIndexes.hcjr)", this._config?.esphomePrevIndexes?.hcjr || "", "esphomePrevIndexes.hcjr")}
 
-        <div class="row two">
-          <mwc-switch title="En-tête" ?checked=${c.showHeader === true} @change=${(e)=>{ e.target.dataset = { field: "showHeader" }; this._valueChanged(e); }}></mwc-switch>
-          <mwc-switch title="Icône" ?checked=${c.showIcon === true} @change=${(e)=>{ e.target.dataset = { field: "showIcon" }; this._valueChanged(e); }}></mwc-switch>
-        </div>
+          <hr />
+          ${this.renderSensorPicker("EcoWatt J0 (sensor)", this._ewEntity, "ewEntity")}
+          ${this.renderSensorPicker("EcoWatt J+1", this._ewEntityJ1, "ewEntityJ1")}
+          ${this.renderSensorPicker("EcoWatt J+2", this._ewEntityJ2, "ewEntityJ2")}
 
-        <div class="row two">
-          <mwc-switch title="HP/HC en-tête" ?checked=${c.showPeakOffPeak === true} @change=${(e)=>{ e.target.dataset = { field: "showPeakOffPeak" }; this._valueChanged(e); }}></mwc-switch>
-          <mwc-switch title="% / Variations" ?checked=${c.showCurrentMonthRatio === true} @change=${(e)=>{ e.target.dataset = { field: "showCurrentMonthRatio" }; this._valueChanged(e); }}></mwc-switch>
-        </div>
+          ${this.renderSensorPicker("Tempo Info (sensor)", this._tempoEntityInfo, "tempoEntityInfo")}
+          ${this.renderSensorPicker("Tempo J0 (sensor)", this._tempoEntityJ0, "tempoEntityJ0")}
+          ${this.renderSensorPicker("Tempo J1 (sensor)", this._tempoEntityJ1, "tempoEntityJ1")}
 
-        <div class="row two">
-          <mwc-switch title="Historique" ?checked=${c.showHistory === true} @change=${(e)=>{ e.target.dataset = { field: "showHistory" }; this._valueChanged(e); }}></mwc-switch>
-          <paper-input
-            type="number"
-            label="Nb jours (historique)"
-            .value=${c.nbJoursAffichage || "7"}
-            @value-changed=${(e)=>{ e.target.dataset = { field: "nbJoursAffichage" }; this._valueChanged(e); }}
-          ></paper-input>
-        </div>
-
-        <div class="row two">
-          <mwc-switch title="Afficher prix journaliers" ?checked=${c.showDayPrice === true} @change=${(e)=>{ e.target.dataset = { field: "showDayPrice" }; this._valueChanged(e); }}></mwc-switch>
-          <paper-input
-            type="number"
-            label="Prix kWh (si pas de coûts fournis)"
-            .value=${c.kWhPrice || ""}
-            @value-changed=${(e)=>{ e.target.dataset = { field: "kWhPrice" }; this._valueChanged(e); }}
-          ></paper-input>
-        </div>
-
-        <div class="row">
-          <div class="title">EcoWatt (facultatif)</div>
-          <ha-entity-picker .hass=${this.hass} label="J+0" .value=${c.ewEntity || ""} domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "ewEntity" }; this._valueChanged(e); }}></ha-entity-picker>
-          <ha-entity-picker .hass=${this.hass} label="J+1" .value=${c.ewEntityJ1 || ""} domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "ewEntityJ1" }; this._valueChanged(e); }}></ha-entity-picker>
-          <ha-entity-picker .hass=${this.hass} label="J+2" .value=${c.ewEntityJ2 || ""} domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "ewEntityJ2" }; this._valueChanged(e); }}></ha-entity-picker>
-          <mwc-switch title="Afficher EcoWatt J+0" ?checked=${c.showEcoWatt === true} @change=${(e)=>{ e.target.dataset = { field: "showEcoWatt" }; this._valueChanged(e); }}></mwc-switch>
-          <mwc-switch title="Afficher EcoWatt J+1/J+2" ?checked=${c.showEcoWattJ12 === true} @change=${(e)=>{ e.target.dataset = { field: "showEcoWattJ12" }; this._valueChanged(e); }}></mwc-switch>
-        </div>
-
-        <div class="row">
-          <div class="title">Tempo (couleur du jour / lendemain)</div>
-          <ha-entity-picker .hass=${this.hass} label="Sensor info" .value=${c.tempoEntityInfo || ""} domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "tempoEntityInfo" }; this._valueChanged(e); }}></ha-entity-picker>
-          <ha-entity-picker .hass=${this.hass} label="J0" .value=${c.tempoEntityJ0 || ""} domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "tempoEntityJ0" }; this._valueChanged(e); }}></ha-entity-picker>
-          <ha-entity-picker .hass=${this.hass} label="J1" .value=${c.tempoEntityJ1 || ""} domain-filter="sensor"
-            @value-changed=${(e)=>{ e.target.dataset = { field: "tempoEntityJ1" }; this._valueChanged(e); }}></ha-entity-picker>
-          <mwc-switch title="Afficher Tempo" ?checked=${c.showTempo === true} @change=${(e)=>{ e.target.dataset = { field: "showTempo" }; this._valueChanged(e); }}></mwc-switch>
-          <mwc-switch title="Colorer l'historique par Tempo" ?checked=${c.showTempoColor === true} @change=${(e)=>{ e.target.dataset = { field: "showTempoColor" }; this._valueChanged(e); }}></mwc-switch>
+          ${this.renderSelectField("Nombre jours affichés", "nbJoursAffichage", [{value:1,label:"1"},{value:2,label:"2"},{value:3,label:"3"},{value:4,label:"4"},{value:5,label:"5"},{value:6,label:"6"},{value:7,label:"7"}], this._nbJoursAffichage)}
+          <ul class="switches">
+            ${this.renderSwitchOption("Afficher Historique", this._showHistory, "showHistory")}
+            ${this.renderSwitchOption("Afficher Tempo", this._showTempo, "showTempo")}
+            ${this.renderSwitchOption("Afficher EcoWatt", this._showEcoWatt, "showEcoWatt")}
+          </ul>
         </div>
       </div>
     `;
   }
 
+  // generic renderers
+  renderSensorPicker(label, entity, configAttr) {
+    return html`
+      <ha-entity-picker
+        label="${label}"
+        .hass="${this.hass}"
+        .value="${entity}"
+        .configValue="${configAttr}"
+        .includeDomains="sensor"
+        @change="${this._valueChanged}"
+        allow-custom-entity
+      ></ha-entity-picker>
+    `;
+  }
+
+  renderTextField(label, value, configAttr) {
+    // support nested config keys like "esphomeIndexes.hpjb" -> we handle in _valueChanged
+    const cv = configAttr;
+    return html`
+      <ha-textfield
+        label="${label}"
+        .value="${value || ''}"
+        .configValue="${cv}"
+        @input="${this._valueChanged}"
+      ></ha-textfield>
+    `;
+  }
+
+  renderSwitchOption(label, state, configAttr) {
+    return html`
+      <li class="switch">
+        <ha-switch .checked=${state} .configValue="${configAttr}" @change="${this._valueChanged}"></ha-switch>
+        <span>${label}</span>
+      </li>
+    `;
+  }
+
+  renderSelectField(label, config_key, options, value) {
+    const opts = options.map(o => html`<mwc-list-item value="${o.value}">${o.label}</mwc-list-item>`);
+    return html`
+      <ha-select label="${label}" .value="${value}" .configValue="${config_key}" @change="${this._valueChanged}">
+        ${opts}
+      </ha-select>
+    `;
+  }
+
+  _valueChanged(ev) {
+    if (!this._config) return;
+    const target = ev.target;
+    const key = target.configValue;
+    let value = (target.checked !== undefined) ? target.checked : (target.value !== undefined ? target.value : ev.detail?.value);
+
+    // support nested keys like "esphomeIndexes.hpjb"
+    if (typeof key === "string" && key.includes(".")) {
+      const parts = key.split(".");
+      const top = parts.shift();
+      const leaf = parts.join(".");
+      const nested = { ...(this._config[top] || {}) };
+      // set nested leaf (if further dot notation, we join remaining parts as key)
+      nested[leaf] = value;
+      this._config = { ...this._config, [top]: nested };
+    } else {
+      if (value === "") {
+        delete this._config[key];
+      } else {
+        this._config = { ...this._config, [key]: value };
+      }
+    }
+    fireEvent(this, "config-changed", { config: this._config });
+  }
+
   static get styles() {
     return css`
-      .card-config { padding: 16px; }
-      .row { display: grid; grid-gap: 8px; margin-bottom: 12px; }
-      .row.two { grid-template-columns: 1fr auto; align-items: center; }
-      .title { font-weight: 600; margin-bottom: 6px; }
-      ha-entity-picker, paper-input { width: 100%; }
+      .card-config { padding: 12px; }
+      .switches { list-style:none; padding:0; display:flex; flex-wrap:wrap; }
+      .switch { width:50%; display:flex; align-items:center; }
+      .help { font-size:0.85em; color:var(--secondary-text-color); margin-bottom:6px; }
+      hr { border: 0; border-top: 1px solid var(--divider-color); margin:8px 0; }
     `;
   }
 }
 
-customElements.define("content-card-linky-tic-editor", ContentCardLinkyTicEditor);
+customElements.define("content-card-linky-tic-editor", contentCardLinkyTicEditor);
