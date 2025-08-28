@@ -1,7 +1,3 @@
-/* content-card-linky-tic-editor.js
-   Editeur pour la carte : placeholders et champs pour ESPhome index sensors
-*/
-
 const fireEvent = (node, type, detail, options) => {
   options = options || {};
   detail = detail === null || detail === undefined ? {} : detail;
@@ -57,7 +53,7 @@ export class contentCardLinkyTicEditor extends LitElement {
     return this._config.ewEntityJ2 || "";
   }  
   
-  get _tempoEntityInfo() {
+  get _tempoEntity() {
     return this._config.tempoEntityInfo || "";
   }  
   
@@ -68,15 +64,6 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _tempoEntityJ1() {
     return this._config.tempoEntityJ1 || "";
   }    
-  
-  // New Tempo Index getters
-  get _linkyTempoIndexBBRHCJW() { return this._config.linkyTempoIndexBBRHCJW || ""; }
-  get _linkyTempoIndexBBRHPJW() { return this._config.linkyTempoIndexBBRHPJW || ""; }
-  get _linkyTempoIndexBBRHCJB() { return this._config.linkyTempoIndexBBRHCJB || ""; }
-  get _linkyTempoIndexBBRHPJB() { return this._config.linkyTempoIndexBBRHPJB || ""; }
-  get _linkyTempoIndexBBRHCJR() { return this._config.linkyTempoIndexBBRHCJR || ""; }
-  get _linkyTempoIndexBBRHPJR() { return this._config.linkyTempoIndexBBRHPJR || ""; }
-  get _showTempoIndex() { return this._config.showTempoIndex !== false; }
 
   get _name() {
     return this._config.name || "";
@@ -186,7 +173,7 @@ get _showTempoColor() {
   get _titleName() {
     return this._config.titleName || "LINKY";
   }
-  
+
   firstUpdated() {
     HELPERS.then(help => {
       if (help.importMoreInfoControl) {
@@ -211,19 +198,6 @@ get _showTempoColor() {
 		  ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
 		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
 		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
-          
-          <hr />
-          <div><strong>Capteurs d'index Tempo (pour l'affichage sur 3 lignes)</strong></div>
-          <div class="help">Seuls les index cumulés actuels sont nécessaires pour ces champs.</div>
-          ${this.renderSensorPicker("Index HP Blanc (JW)", this._linkyTempoIndexBBRHPJW, "linkyTempoIndexBBRHPJW")}
-          ${this.renderSensorPicker("Index HC Blanc (JW)", this._linkyTempoIndexBBRHCJW, "linkyTempoIndexBBRHCJW")}
-          ${this.renderSensorPicker("Index HP Bleu (JB)", this._linkyTempoIndexBBRHPJB, "linkyTempoIndexBBRHPJB")}
-          ${this.renderSensorPicker("Index HC Bleu (JB)", this._linkyTempoIndexBBRHCJB, "linkyTempoIndexBBRHCJB")}
-          ${this.renderSensorPicker("Index HP Rouge (JR)", this._linkyTempoIndexBBRHPJR, "linkyTempoIndexBBRHPJR")}
-          ${this.renderSensorPicker("Index HC Rouge (JR)", this._linkyTempoIndexBBRHCJR, "linkyTempoIndexBBRHCJR")}
-          
-          <hr />
-          
 		  ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
 		  ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
           <ul class="switches">
@@ -249,7 +223,6 @@ get _showTempoColor() {
 			${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
 			${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
 			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
-            ${this.renderSwitchOption("Afficher Index Tempo", this._showTempoIndex, "showTempoIndex")}
           </ul>
           </div>
       </div>
@@ -325,7 +298,7 @@ get _showTempoColor() {
 			${selectOptions}
 		</ha-select>
 	`
-  }  
+	}  
   
   _valueChanged(ev) {
     if (!this._config || !this.hass) {
