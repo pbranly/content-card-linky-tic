@@ -256,12 +256,12 @@ class ContentCardLinkyTic extends LitElement {
             </tr>
           </thead>
           <tbody>
-            <tr><td>HC Blanc</td><td>${tempoIndexes.BBRHCJW || 'N/A'}</td></tr>
-            <tr><td>HP Blanc</td><td>${tempoIndexes.BBRHPJW || 'N/A'}</td></tr>
-            <tr><td>HC Bleu</td><td>${tempoIndexes.BBRHCJB || 'N/A'}</td></tr>
-            <tr><td>HP Bleu</td><td>${tempoIndexes.BBRHPJB || 'N/A'}</td></tr>
-            <tr><td>HC Rouge</td><td>${tempoIndexes.BBRHCJR || 'N/A'}</td></tr>
-            <tr><td>HP Rouge</td><td>${tempoIndexes.BBRHPJR || 'N/A'}</td></tr>
+            <tr><td>HC Blanc</td><td>${tempoIndexes.bbrhcjw || 'N/A'}</td></tr>
+            <tr><td>HP Blanc</td><td>${tempoIndexes.bbrhpjw || 'N/A'}</td></tr>
+            <tr><td>HC Bleu</td><td>${tempoIndexes.bbrhcjb || 'N/A'}</td></tr>
+            <tr><td>HP Bleu</td><td>${tempoIndexes.bbrhpjb || 'N/A'}</td></tr>
+            <tr><td>HC Rouge</td><td>${tempoIndexes.bbrhcjr || 'N/A'}</td></tr>
+            <tr><td>HP Rouge</td><td>${tempoIndexes.bbrhpjr || 'N/A'}</td></tr>
           </tbody>
         </table>
       </div>
@@ -827,11 +827,11 @@ class ContentCardLinkyTic extends LitElement {
       showInTableUnit: false,
       showDayPrice: false,
       showDayPriceHCHP: false,
-	    showDayMaxPower: false,
+	  showDayMaxPower: false,
       showDayHCHP: false,
       showDayName: "long",
       showError: true,
-	    shoInformation: true,
+	  showInformation: true,
       showPrice: true,
       showTitle: false,
       showCurrentMonthRatio: true,
@@ -840,9 +840,9 @@ class ContentCardLinkyTic extends LitElement {
       showYesterdayRatio: false,
       showTitleLign: false,
       showEcoWatt: false,
-	    showEcoWattJ12: false,
-	    showTempo: false,
-	    showTempoColor: false,
+	  showEcoWattJ12: false,
+	  showTempo: false,
+	  showTempoColor: false,
       showTempoIndex: false,
       titleName: "LINKY",
       nbJoursAffichage: "7",
