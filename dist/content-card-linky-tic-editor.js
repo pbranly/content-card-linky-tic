@@ -53,7 +53,7 @@ export class contentCardLinkyTicEditor extends LitElement {
     return this._config.ewEntityJ2 || "";
   }  
   
-  get _tempoEntity() {
+  get _tempoEntityInfo() {
     return this._config.tempoEntityInfo || "";
   }  
   
@@ -64,6 +64,10 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _tempoEntityJ1() {
     return this._config.tempoEntityJ1 || "";
   }    
+  
+  get _esphomeIndexes() {
+    return this._config.esphomeIndexes || {};
+  }
 
   get _name() {
     return this._config.name || "";
@@ -147,8 +151,11 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _showTempo() {
     return this._config.showTempo !== false;
   }
-get _showTempoColor() {
+  get _showTempoColor() {
     return this._config.showTempoColor !== false;
+  }
+  get _showTempoIndex() {
+    return this._config.showTempoIndex !== false;
   }  
   get _title() {
     return this._config.showTitle !== false;
@@ -190,16 +197,29 @@ get _showTempoColor() {
     return html`
       <div class="card-config">
         <div>
-		  ${this.renderTextField("Titre", this._titleName, "titleName")}
+		      ${this.renderTextField("Titre", this._titleName, "titleName")}
           ${this.renderSensorPicker("Entity", this._entity, "entity")}
-		  ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
-		  ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
+		      ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
+		      ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
           ${this.renderSensorPicker("EcoWattJ2", this._ewEntityJ2, "ewEntityJ2")}
-		  ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
-		  ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
-		  ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
-		  ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
-		  ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
+		      ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
+		      ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
+		      ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
+		      ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
+		      ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
+
+          <hr>
+          
+          <div style="font-weight: bold; margin: 10px 0;">Index Linky ESPHome</div>
+          ${this.renderSensorPicker("HC Blanc", this._esphomeIndexes.hcjw, "esphomeIndexes.hcjw")}
+          ${this.renderSensorPicker("HP Blanc", this._esphomeIndexes.hpjw, "esphomeIndexes.hpjw")}
+          ${this.renderSensorPicker("HC Bleu", this._esphomeIndexes.hcjb, "esphomeIndexes.hcjb")}
+          ${this.renderSensorPicker("HP Bleu", this._esphomeIndexes.hpjb, "esphomeIndexes.hpjb")}
+          ${this.renderSensorPicker("HC Rouge", this._esphomeIndexes.hcjr, "esphomeIndexes.hcjr")}
+          ${this.renderSensorPicker("HP Rouge", this._esphomeIndexes.hpjr, "esphomeIndexes.hpjr")}
+        
+          <hr>
+
           <ul class="switches">
             ${this.renderSwitchOption("Show icon", this._showIcon, "showIcon")}
             ${this.renderSwitchOption("Show titre", this._showTitle, "showTitle")}
@@ -210,7 +230,7 @@ get _showTempoColor() {
             ${this.renderSwitchOption("Show prix HC/HP", this._showDayPriceHCHP, "showDayPriceHCHP")}
             ${this.renderSwitchOption("Show prix", this._showPrice, "showPrice")}
             ${this.renderSwitchOption("Show jours HC/HP", this._showDayHCHP, "showDayHCHP")}
-			${this.renderSwitchOption("Show jours Max Puissance", this._showDayMaxPower, "showDayMaxPower")}
+			      ${this.renderSwitchOption("Show jours Max Puissance", this._showDayMaxPower, "showDayMaxPower")}
             ${this.renderSwitchOption("Show ratio year", this._showYearRatio, "showYearRatio")}
             ${this.renderSwitchOption("Show ratio mois", this._showCurrentMonthRatio, "showCurrentMonthRatio")}
             ${this.renderSwitchOption("Show ratio mois precedent", this._showMonthRatio, "showMonthRatio")}
@@ -220,11 +240,12 @@ get _showTempoColor() {
             ${this.renderSwitchOption("Show error", this._showError, "showError")}
             ${this.renderSwitchOption("Show header", this._showHeader, "showHeader")}
             ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
-			${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
-			${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
-			${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
+			      ${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
+			      ${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
+			      ${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
+            ${this.renderSwitchOption("Show Tempo Index", this._showTempoIndex, "showTempoIndex")}
           </ul>
-          </div>
+        </div>
       </div>
     `;
   }
@@ -272,8 +293,7 @@ get _showTempoColor() {
       <li class="switch">
               <ha-switch
                 .checked=${state}
-                .configValue="${configAttr}"
-                @change="${this._valueChanged}">
+                .configValue="${configAttr}">
                 </ha-switch><span>${label}</span>
             </div>
           </li>
@@ -308,7 +328,20 @@ get _showTempoColor() {
     if (this[`_${target.configValue}`] === target.value) {
       return;
     }
-    if (target.configValue) {
+    
+    // Manage nested properties like esphomeIndexes
+    if (target.configValue && target.configValue.includes('.')) {
+      const parts = target.configValue.split('.');
+      let currentConfig = this._config;
+      for (let i = 0; i < parts.length - 1; i++) {
+        const part = parts[i];
+        if (!currentConfig[part]) {
+          currentConfig[part] = {};
+        }
+        currentConfig = currentConfig[part];
+      }
+      currentConfig[parts[parts.length - 1]] = target.checked !== undefined ? target.checked : target.value;
+    } else if (target.configValue) {
       if (target.value === "") {
         delete this._config[target.configValue];
       } else {
