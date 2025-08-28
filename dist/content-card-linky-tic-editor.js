@@ -54,10 +54,20 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _tempoEntityInfo() { return this._config.tempoEntityInfo || ""; }
   get _tempoEntityJ0() { return this._config.tempoEntityJ0 || ""; }
   get _tempoEntityJ1() { return this._config.tempoEntityJ1 || ""; }
+
+  // New Tempo Index fields
+  get _linkyTempoIndexBBRHCJW() { return this._config.linkyTempoIndexBBRHCJW || ""; }
+  get _linkyTempoIndexBBRHPJW() { return this._config.linkyTempoIndexBBRHPJW || ""; }
+  get _linkyTempoIndexBBRHCJB() { return this._config.linkyTempoIndexBBRHCJB || ""; }
+  get _linkyTempoIndexBBRHPJB() { return this._config.linkyTempoIndexBBRHPJB || ""; }
+  get _linkyTempoIndexBBRHCJR() { return this._config.linkyTempoIndexBBRHCJR || ""; }
+  get _linkyTempoIndexBBRHPJR() { return this._config.linkyTempoIndexBBRHPJR || ""; }
+  
   get _nbJoursAffichage() { return this._config.nbJoursAffichage || 7; }
   get _titleName() { return this._config.titleName || "LINKY"; }
   get _showHistory() { return this._config.showHistory !== false; }
   get _showTempo() { return this._config.showTempo !== false; }
+  get _showTempoIndex() { return this._config.showTempoIndex !== false; } // Added this getter
   get _showEcoWatt() { return this._config.showEcoWatt !== false; }
 
   render() {
@@ -95,11 +105,23 @@ export class contentCardLinkyTicEditor extends LitElement {
           ${this.renderSensorPicker("Tempo Info (sensor)", this._tempoEntityInfo, "tempoEntityInfo")}
           ${this.renderSensorPicker("Tempo J0 (sensor)", this._tempoEntityJ0, "tempoEntityJ0")}
           ${this.renderSensorPicker("Tempo J1 (sensor)", this._tempoEntityJ1, "tempoEntityJ1")}
+          
+          <hr />
+          <div><strong>Capteurs d'index Tempo (pour l'affichage sur 3 lignes)</strong></div>
+          ${this.renderSensorPicker("Index HP Blanc (JW)", this._linkyTempoIndexBBRHPJW, "linkyTempoIndexBBRHPJW")}
+          ${this.renderSensorPicker("Index HC Blanc (JW)", this._linkyTempoIndexBBRHCJW, "linkyTempoIndexBBRHCJW")}
+          ${this.renderSensorPicker("Index HP Bleu (JB)", this._linkyTempoIndexBBRHPJB, "linkyTempoIndexBBRHPJB")}
+          ${this.renderSensorPicker("Index HC Bleu (JB)", this._linkyTempoIndexBBRHCJB, "linkyTempoIndexBBRHCJB")}
+          ${this.renderSensorPicker("Index HP Rouge (JR)", this._linkyTempoIndexBBRHPJR, "linkyTempoIndexBBRHPJR")}
+          ${this.renderSensorPicker("Index HC Rouge (JR)", this._linkyTempoIndexBBRHCJR, "linkyTempoIndexBBRHCJR")}
+          
+          <hr />
 
           ${this.renderSelectField("Nombre jours affichés", "nbJoursAffichage", [{value:1,label:"1"},{value:2,label:"2"},{value:3,label:"3"},{value:4,label:"4"},{value:5,label:"5"},{value:6,label:"6"},{value:7,label:"7"}], this._nbJoursAffichage)}
           <ul class="switches">
             ${this.renderSwitchOption("Afficher Historique", this._showHistory, "showHistory")}
             ${this.renderSwitchOption("Afficher Tempo", this._showTempo, "showTempo")}
+            ${this.renderSwitchOption("Afficher Index Tempo", this._showTempoIndex, "showTempoIndex")}
             ${this.renderSwitchOption("Afficher EcoWatt", this._showEcoWatt, "showEcoWatt")}
           </ul>
         </div>
@@ -158,6 +180,12 @@ export class contentCardLinkyTicEditor extends LitElement {
     const target = ev.target;
     const key = target.configValue;
     let value = (target.checked !== undefined) ? target.checked : (target.value !== undefined ? target.value : ev.detail?.value);
+    
+    // Check if the value is a boolean for switches and handle it correctly
+    if (typeof value === "string") {
+        if (value === "true") value = true;
+        if (value === "false") value = false;
+    }
 
     // support nested keys like "esphomeIndexes.hpjb"
     if (typeof key === "string" && key.includes(".")) {
