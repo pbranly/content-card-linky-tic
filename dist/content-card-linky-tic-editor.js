@@ -197,16 +197,16 @@ export class contentCardLinkyTicEditor extends LitElement {
     return html`
       <div class="card-config">
         <div>
-		      ${this.renderTextField("Titre", this._titleName, "titleName")}
+              ${this.renderTextField("Titre", this._titleName, "titleName")}
           ${this.renderSensorPicker("Entity", this._entity, "entity")}
-		      ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
-		      ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
+              ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
+              ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
           ${this.renderSensorPicker("EcoWattJ2", this._ewEntityJ2, "ewEntityJ2")}
-		      ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}		  
-		      ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
-		      ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
-		      ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
-		      ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
+              ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}            
+              ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
+              ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
+              ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
+              ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
 
           <hr>
           
@@ -230,7 +230,7 @@ export class contentCardLinkyTicEditor extends LitElement {
             ${this.renderSwitchOption("Show prix HC/HP", this._showDayPriceHCHP, "showDayPriceHCHP")}
             ${this.renderSwitchOption("Show prix", this._showPrice, "showPrice")}
             ${this.renderSwitchOption("Show jours HC/HP", this._showDayHCHP, "showDayHCHP")}
-			      ${this.renderSwitchOption("Show jours Max Puissance", this._showDayMaxPower, "showDayMaxPower")}
+              ${this.renderSwitchOption("Show jours Max Puissance", this._showDayMaxPower, "showDayMaxPower")}
             ${this.renderSwitchOption("Show ratio year", this._showYearRatio, "showYearRatio")}
             ${this.renderSwitchOption("Show ratio mois", this._showCurrentMonthRatio, "showCurrentMonthRatio")}
             ${this.renderSwitchOption("Show ratio mois precedent", this._showMonthRatio, "showMonthRatio")}
@@ -240,9 +240,9 @@ export class contentCardLinkyTicEditor extends LitElement {
             ${this.renderSwitchOption("Show error", this._showError, "showError")}
             ${this.renderSwitchOption("Show header", this._showHeader, "showHeader")}
             ${this.renderSwitchOption("Show EcoWatt J", this._showEcoWatt, "showEcoWatt")}
-			      ${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
-			      ${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
-			      ${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
+              ${this.renderSwitchOption("Show EcoWatt J+1 et J+2", this._showEcoWattJ12, "showEcoWattJ12")}
+              ${this.renderSwitchOption("Show Tempo", this._showTempo, "showTempo")}
+              ${this.renderSwitchOption("Show Tempo Color Day", this._showTempoColor, "showTempoColor")}
             ${this.renderSwitchOption("Show Tempo Index", this._showTempoIndex, "showTempoIndex")}
           </ul>
         </div>
@@ -301,24 +301,24 @@ export class contentCardLinkyTicEditor extends LitElement {
   }
   
   renderSelectField(label, config_key, options, value, default_value) {
-	let selectOptions = [];
-	for (let i = 0; i < options.length; i++) {
-		let currentOption = options[i];
-		selectOptions.push(html`<ha-list-item .value="${currentOption.value}">${currentOption.label}</ha-list-item>`);
-	}
+    let selectOptions = [];
+    for (let i = 0; i < options.length; i++) {
+        let currentOption = options[i];
+        selectOptions.push(html`<ha-list-item .value="${currentOption.value}">${currentOption.label}</ha-list-item>`);
+    }
 
-	return html`
-		<ha-select
-			label="${label}"
-			.value=${value || default_value}
-			.configValue=${config_key}                
-			@change=${this._valueChanged}
-			@closed=${(ev) => ev.stopPropagation()}
-		>
-			${selectOptions}
-		</ha-select>
-	`
-	}  
+    return html`
+        <ha-select
+            label="${label}"
+            .value=${value || default_value}
+            .configValue=${config_key}                
+            @change=${this._valueChanged}
+            @closed=${(ev) => ev.stopPropagation()}
+        >
+            ${selectOptions}
+        </ha-select>
+    `
+    }  
   
   _valueChanged(ev) {
     if (!this._config || !this.hass) {
