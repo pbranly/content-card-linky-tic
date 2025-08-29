@@ -24,13 +24,13 @@ DB_CONFIG = {
     "database": m.group(4),
 }
 
-@time_trigger("cron(0 0 * * *)")  # Tous les jours à minuit
-def update_linky_history():
+
+def _update_linky_history_internal():
     try:
         conn = mariadb.connect(**DB_CONFIG)
         cur = conn.cursor()
 
-        # Récupérer tous les sensors linky tempo existants dans states
+        # Récupérer tous les sensors linky tempo existants
         cur.execute("""
             SELECT DISTINCT entity_id
             FROM states
@@ -62,6 +62,8 @@ def update_linky_history():
             sensor_name = sensor + "_week"
             state.set(sensor_name, state=state_value, attributes=history)
 
+        log.info(f"Linky History: {len(sensors)} sensors mis à jour")
+
     except Exception as e:
         log.error(f"Erreur Linky History : {e}")
     finally:
@@ -69,3 +71,17 @@ def update_linky_history():
             conn.close()
         except:
             pass
+
+
+@time_trigger("cron(0 0 * * *)")  # Exécution automatique chaque jour à minuit
+def update_linky_history():
+    _update_linky_history_internal()
+
+
+@service
+def refresh_linky_history():
+    """
+    Service manuel : pyscript.refresh_linky_history
+    Met à jour immédiatement tous les sensors *_week
+    """
+    _update_linky_history_internal()
