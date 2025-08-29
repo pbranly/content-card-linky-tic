@@ -40,31 +40,31 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _entity() {
     return this._config.entity || "";
   }
-  
+
   get _ewEntity() {
     return this._config.ewEntity || "";
   }
-  
+
   get _ewEntityJ1() {
     return this._config.ewEntityJ1 || "";
   }
 
   get _ewEntityJ2() {
     return this._config.ewEntityJ2 || "";
-  }  
-  
+  }
+
   get _tempoEntityInfo() {
     return this._config.tempoEntityInfo || "";
-  }  
-  
+  }
+
   get _tempoEntityJ0() {
     return this._config.tempoEntityJ0 || "";
   }
 
   get _tempoEntityJ1() {
     return this._config.tempoEntityJ1 || "";
-  }    
-  
+  }
+
   get _esphomeIndexes() {
     return this._config.esphomeIndexes || {};
   }
@@ -84,19 +84,19 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _showHistory() {
     return this._config.showHistory !== false;
   }
-  
+
   get _showPeakOffPeak() {
     return this._config.showPeakOffPeak !== false;
   }
-  
+
   get _showInTableUnit() {
     return this._config.showInTableUnit !== false;
   }
-  
+
   get _showDayPrice() {
     return this._config.showDayPrice !== false;
   }
-  
+
   get _showDayPriceHCHP() {
     return this._config.showDayPriceHCHP !== false;
   }
@@ -104,35 +104,35 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _showDayMaxPower() {
     return this._config.showDayMaxPower !== false;
   }
-  
+
   get _showPrice() {
     return this._config.showPrice !== false;
   }
-  
+
   get _showTitle() {
     return this._config.showTitle !== false;
   }
-  
+
   get _showDayHCHP() {
     return this._config.showDayHCHP !== false;
   }
-  
+
   get _showCurrentMonthRatio() {
     return this._config.showCurrentMonthRatio !== false;
   }
-  
+
   get _showMonthRatio() {
     return this._config.showMonthRatio !== false;
   }
-  
+
   get _showYearRatio() {
     return this._config.showYearRatio !== false;
   }
-  
+
   get _showWeekRatio() {
     return this._config.showWeekRatio !== false;
   }
-  
+
   get _showYesterdayRatio() {
     return this._config.showYesterdayRatio !== false;
   }
@@ -156,11 +156,11 @@ export class contentCardLinkyTicEditor extends LitElement {
   }
   get _showTempoIndex() {
     return this._config.showTempoIndex !== false;
-  }  
+  }
   get _title() {
     return this._config.showTitle !== false;
   }
-  
+
   get _current() {
     return this._config.current !== false;
   }
@@ -176,7 +176,7 @@ export class contentCardLinkyTicEditor extends LitElement {
   get _showDayName() {
     return this._config.showDayName || "long";
   }
-  
+
   get _titleName() {
     return this._config.titleName || "LINKY";
   }
@@ -202,14 +202,14 @@ export class contentCardLinkyTicEditor extends LitElement {
               ${this.renderSensorPicker("EcoWatt", this._ewEntity, "ewEntity")}
               ${this.renderSensorPicker("EcoWattJ1", this._ewEntityJ1, "ewEntityJ1")}
           ${this.renderSensorPicker("EcoWattJ2", this._ewEntityJ2, "ewEntityJ2")}
-              ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}            
+              ${this.renderSensorPicker("TempoInfo", this._tempoEntityInfo, "tempoEntityInfo")}
               ${this.renderSensorPicker("TempoJ0", this._tempoEntityJ0, "tempoEntityJ0")}
               ${this.renderSensorPicker("TempoJ1", this._tempoEntityJ1, "tempoEntityJ1")}
               ${this.renderSelectField("Nombre jours", "nbJoursAffichage", [{value: "1", label: "1"}, {value: "2", label: "2"}, {value: "3", label: "3"}, {value: "4", label: "4"}, {value: "5", label: "5"}, {value: "6", label: "6"}, {value: "7", label: "7"}],this._nbJoursAffichage)}
               ${this.renderSelectField("Format jour", "showDayName", [{value: "long", label: "Long"}, {value: "short", label: "Short"}, {value: "narrow", label: "Narrow"}],this._showDayName)}
 
           <hr>
-          
+
           <div style="font-weight: bold; margin: 10px 0;">Index Linky ESPHome</div>
           ${this.renderSensorPicker("HC Blanc", this._esphomeIndexes.hcjw, "esphomeIndexes.hcjw")}
           ${this.renderSensorPicker("HP Blanc", this._esphomeIndexes.hpjw, "esphomeIndexes.hpjw")}
@@ -217,7 +217,7 @@ export class contentCardLinkyTicEditor extends LitElement {
           ${this.renderSensorPicker("HP Bleu", this._esphomeIndexes.hpjb, "esphomeIndexes.hpjb")}
           ${this.renderSensorPicker("HC Rouge", this._esphomeIndexes.hcjr, "esphomeIndexes.hcjr")}
           ${this.renderSensorPicker("HP Rouge", this._esphomeIndexes.hpjr, "esphomeIndexes.hpjr")}
-        
+
           <hr>
 
           <ul class="switches">
@@ -249,7 +249,7 @@ export class contentCardLinkyTicEditor extends LitElement {
       </div>
     `;
   }
-   
+
   renderSensorPicker(label, entity, configAttr) {
     return this.renderPicker(label, entity, configAttr, "sensor");
   }
@@ -267,7 +267,7 @@ export class contentCardLinkyTicEditor extends LitElement {
               ></ha-entity-picker>
             `
   }
-  
+
   renderTextField(label, state, configAttr) {
     return this.renderField(label, state, configAttr, "text");
   }
@@ -286,20 +286,20 @@ export class contentCardLinkyTicEditor extends LitElement {
         @input=${this._valueChanged}
       ></ha-textfield>
     `;
-  }  
-  
+  }
+
   renderSwitchOption(label, state, configAttr) {
     return html`
       <li class="switch">
               <ha-switch
                 .checked=${state}
-                .configValue="${configAttr}">
-                </ha-switch><span>${label}</span>
-            </div>
-          </li>
+                .configValue="${configAttr}"
+                @change=${this._valueChanged}
+              ></ha-switch><span>${label}</span>
+      </li>
     `
   }
-  
+
   renderSelectField(label, config_key, options, value, default_value) {
     let selectOptions = [];
     for (let i = 0; i < options.length; i++) {
@@ -311,15 +311,15 @@ export class contentCardLinkyTicEditor extends LitElement {
         <ha-select
             label="${label}"
             .value=${value || default_value}
-            .configValue=${config_key}                
+            .configValue=${config_key}
             @change=${this._valueChanged}
             @closed=${(ev) => ev.stopPropagation()}
         >
             ${selectOptions}
         </ha-select>
     `
-    }  
-  
+    }
+
   _valueChanged(ev) {
     if (!this._config || !this.hass) {
       return;
@@ -328,7 +328,7 @@ export class contentCardLinkyTicEditor extends LitElement {
     if (this[`_${target.configValue}`] === target.value) {
       return;
     }
-    
+
     // Manage nested properties like esphomeIndexes
     if (target.configValue && target.configValue.includes('.')) {
       const parts = target.configValue.split('.');
